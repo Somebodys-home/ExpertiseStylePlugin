@@ -1,0 +1,13 @@
+name: ExpertiseStylePlugin
+version: '1.0-SNAPSHOT'
+main: io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin
+api-version: '1.21'
+authors: [ Gabriel Nicolas ]
+description: Plugin for my expertises and styles
+commands:
+  chooseExpertise:
+    description: Opens the menu to choose your expertise
+    usage: /<command>
+  chooseStyle:
+    description: Opens the menu to choose your style
+    usage: /<command>
