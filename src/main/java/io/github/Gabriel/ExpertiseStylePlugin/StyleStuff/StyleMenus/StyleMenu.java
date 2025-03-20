@@ -33,29 +33,6 @@ public class StyleMenu extends Menu {
 
     @Override
     public void setMenuItems() {
-        ItemStack wip = new ItemStack(Material.OAK_SIGN, 1);
-        ItemMeta wipMeta = wip.getItemMeta();
-        wipMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&eMENU CURRENTLY UNDER CONSTRUCTION"));
-        wip.setItemMeta(wipMeta);
-
-        inventory.setItem(18, new ItemStack(YELLOW_TERRACOTTA));
-        inventory.setItem(19, new ItemStack(BLACK_TERRACOTTA));
-        inventory.setItem(20, new ItemStack(YELLOW_TERRACOTTA));
-        inventory.setItem(21, new ItemStack(BLACK_TERRACOTTA));
-        inventory.setItem(22, wip);
-        inventory.setItem(23, new ItemStack(YELLOW_TERRACOTTA));
-        inventory.setItem(24, new ItemStack(BLACK_TERRACOTTA));
-        inventory.setItem(25, new ItemStack(YELLOW_TERRACOTTA));
-        inventory.setItem(26, new ItemStack(BLACK_TERRACOTTA));
-
-        inventory.setItem(27, new ItemStack(YELLOW_TERRACOTTA));
-        inventory.setItem(28, new ItemStack(BLACK_TERRACOTTA));
-        inventory.setItem(29, new ItemStack(YELLOW_TERRACOTTA));
-        inventory.setItem(30, new ItemStack(BLACK_TERRACOTTA));
-        inventory.setItem(31, wip);
-        inventory.setItem(32, new ItemStack(YELLOW_TERRACOTTA));
-        inventory.setItem(33, new ItemStack(BLACK_TERRACOTTA));
-        inventory.setItem(34, new ItemStack(YELLOW_TERRACOTTA));
-        inventory.setItem(35, new ItemStack(BLACK_TERRACOTTA));
+        underConstruction();
     }
 }

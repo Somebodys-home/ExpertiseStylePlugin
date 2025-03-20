@@ -2,9 +2,7 @@
   <artifact type="jar" name="ExpertiseStylePlugin:jar">
     <output-path>$PROJECT_DIR$/..</output-path>
     <root id="archive" name="ExpertiseStylePlugin.jar">
-      <element id="module-output" name="expertisestyleplugin" />
-      <element id="module-output" name="expertisestyleplugin (1)" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/24.1.0/annotations-24.1.0.jar" path-in-jar="/" />
+      <element id="module-output" name="ExpertiseStylePlugin" />
     </root>
   </artifact>
 </component>
