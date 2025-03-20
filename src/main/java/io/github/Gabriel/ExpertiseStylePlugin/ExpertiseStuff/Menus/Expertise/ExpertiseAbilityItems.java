@@ -68,7 +68,7 @@ public class ExpertiseAbilityItems extends AbilityItems {
                 expertiseItem = new ItemStack(Material.SHIELD);
                 color = ChatColor.DARK_AQUA;
             }
-            case "blunt" -> {
+            case "cavalier" -> {
                 expertiseItem = new ItemStack(Material.DIAMOND_SHOVEL);
                 color = ChatColor.BLUE;
             }

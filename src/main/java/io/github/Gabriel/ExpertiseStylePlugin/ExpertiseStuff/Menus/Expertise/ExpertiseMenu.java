@@ -22,7 +22,7 @@ public class ExpertiseMenu extends Menu {
 
     @Override
     public int getSlots() {
-        return 9 * 4;
+        return 9 * 5;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class ExpertiseMenu extends Menu {
         ItemStack item = event.getCurrentItem();
 
         if (item != null) {
-            if (item.equals(ExpertiseMenuItems.swordsman())) {
+            if (item.equals(ExpertiseMenuItems.soldier())) {
                 new SwordsmanMenu(ExpertiseStylePlugin.getPlayerMenuUtility(player)).open();
             } else if (item.equals(ExpertiseMenuItems.resetAbilities())) {
                 player.getInventory().setItem(0, StyleAbilityItems.emptyStyleAbilityItem());
@@ -46,18 +46,17 @@ public class ExpertiseMenu extends Menu {
 
     @Override
     public void setMenuItems() {
-        inventory.setItem(10, ExpertiseMenuItems.swordsman());
+        inventory.setItem(10, ExpertiseMenuItems.soldier());
         inventory.setItem(11, ExpertiseMenuItems.ninja());
         inventory.setItem(12, ExpertiseMenuItems.marauder());
-        inventory.setItem(13, ExpertiseMenuItems.jouster());
-        inventory.setItem(14, ExpertiseMenuItems.shieldHero());
-        inventory.setItem(15, ExpertiseMenuItems.blunt());
-        inventory.setItem(16, ExpertiseMenuItems.martialArtist());
-        inventory.setItem(20, ExpertiseMenuItems.archer());
-        inventory.setItem(21, ExpertiseMenuItems.sorcerer());
-        inventory.setItem(22, ExpertiseMenuItems.druid());
-        inventory.setItem(23, ExpertiseMenuItems.hallowed());
-        inventory.setItem(24, ExpertiseMenuItems.annulled());
-        inventory.setItem(27, ExpertiseMenuItems.resetAbilities());
+        inventory.setItem(16, ExpertiseMenuItems.shieldHero());
+        inventory.setItem(14, ExpertiseMenuItems.cavalier());
+        inventory.setItem(15, ExpertiseMenuItems.martialArtist());
+        inventory.setItem(22, ExpertiseMenuItems.archer());
+        inventory.setItem(29, ExpertiseMenuItems.sorcerer());
+        inventory.setItem(30, ExpertiseMenuItems.druid());
+        inventory.setItem(32, ExpertiseMenuItems.hallowed());
+        inventory.setItem(33, ExpertiseMenuItems.annulled());
+        inventory.setItem(44, ExpertiseMenuItems.resetAbilities());
     }
 }

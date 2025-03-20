@@ -9,13 +9,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 
 public class ExpertiseMenuItems {
-    public static ItemStack swordsman() {
+    public static ItemStack soldier() {
         ItemStack swordsman = new ItemStack(Material.IRON_SWORD, 1);
         ItemMeta meta = swordsman.getItemMeta();
         ArrayList<String> lore = new ArrayList<>();
 
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&c&lSwordsman"));
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&c&lSoldier"));
         lore.add(ChatColor.translateAlternateColorCodes('&', "&7I mean, technically, everything's a sword."));
         lore.add(ChatColor.translateAlternateColorCodes('&', "&bCLICK TO SELECT!"));
         meta.setLore(lore);
@@ -55,19 +55,6 @@ public class ExpertiseMenuItems {
         return marauder;
     }
 
-    public static ItemStack jouster() {
-        ItemStack jouster = new ItemStack(Material.STICK, 1);
-        ItemMeta meta = jouster.getItemMeta();
-        ArrayList<String> lore = new ArrayList<>();
-
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&8&lJouster"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&7Social distancing"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&bCLICK TO SELECT!"));
-        meta.setLore(lore);
-        jouster.setItemMeta(meta);
-
-        return jouster;
-    }
 
     public static ItemStack shieldHero() {
         ItemStack shieldHero = new ItemStack(Material.SHIELD, 1);
@@ -83,13 +70,13 @@ public class ExpertiseMenuItems {
         return shieldHero;
     }
 
-    public static ItemStack blunt() {
+    public static ItemStack cavalier() {
         ItemStack blunt = new ItemStack(Material.IRON_SHOVEL, 1);
         ItemMeta meta = blunt.getItemMeta();
         ArrayList<String> lore = new ArrayList<>();
 
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&1&lBlunt (Working title)"));
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&1&lCavalier"));
         lore.add(ChatColor.translateAlternateColorCodes('&', "&7TBD, ill figure something out"));
         lore.add(ChatColor.translateAlternateColorCodes('&', "&bCLICK TO SELECT!"));
         meta.setLore(lore);
