@@ -1,4 +1,4 @@
-package io.github.Gabriel.expertiseStylePlugin.ExpertiseStuff.Menus.Expertise;
+package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

@@ -1,6 +1,5 @@
-package io.github.Gabriel.expertiseStylePlugin.ExpertiseStuff.Menus.Expertise;
+package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus;
 
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.MenuSystem.Menu;
 import io.github.Gabriel.expertiseStylePlugin.MenuSystem.PlayerMenuUtility;
 import org.bukkit.ChatColor;

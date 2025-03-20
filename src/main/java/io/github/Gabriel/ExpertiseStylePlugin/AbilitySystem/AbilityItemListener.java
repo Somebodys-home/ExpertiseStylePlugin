@@ -1,8 +1,8 @@
-package io.github.Gabriel.expertiseStylePlugin.AbilityStuff;
+package io.github.Gabriel.expertiseStylePlugin.AbilitySystem;
 
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseStuff.Menus.Expertise.ExpertiseAbilityItems;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.Gabriel.expertiseStylePlugin.StyleStuff.StyleMenus.AbilityItems.StyleAbilityItems;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
+import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleAbilityItemTemplate;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,13 +15,13 @@ import org.bukkit.inventory.PlayerInventory;
 
 import java.util.Objects;
 
-public class AbilityListener implements Listener {
-    private final ItemStack expertiseAbilityItem = ExpertiseAbilityItems.emptyExpertiseAbilityItem();
-    private final ItemStack styleAbilityItem = StyleAbilityItems.emptyStyleAbilityItem();
-    private final ItemStack cooldownItem = AbilityItems.abilityCooldownItem();
+public class AbilityItemListener implements Listener {
+    private final ItemStack expertiseAbilityItem = ExpertiseItemTemplate.emptyExpertiseAbilityItem();
+    private final ItemStack styleAbilityItem = StyleAbilityItemTemplate.emptyStyleAbilityItem();
+    private final ItemStack cooldownItem = AbilityItemTemplate.abilityCooldownItem();
     private static ExpertiseStylePlugin instance;
 
-    public AbilityListener(ExpertiseStylePlugin plugin) {
+    public AbilityItemListener(ExpertiseStylePlugin plugin) {
         instance = plugin;
     }
 
@@ -39,7 +39,7 @@ public class AbilityListener implements Listener {
 
     @EventHandler
     public void onPlayerDropAbilityItem(PlayerDropItemEvent event) {
-        if (AbilityItems.isImmovable(event.getItemDrop().getItemStack())) {
+        if (AbilityItemTemplate.isImmovable(event.getItemDrop().getItemStack())) {
             event.setCancelled(true);
         }
     }
@@ -49,7 +49,7 @@ public class AbilityListener implements Listener {
         if (event.getClickedInventory() instanceof PlayerInventory playerInventory) {
             ItemStack clickedItem = event.getCurrentItem();
 
-            if (AbilityItems.isImmovable(clickedItem)) {
+            if (AbilityItemTemplate.isImmovable(clickedItem)) {
                 if (event.getClick() == ClickType.SHIFT_LEFT ||
                         event.getClick() == ClickType.SHIFT_RIGHT ||
                         event.getClick() == ClickType.DOUBLE_CLICK ||
@@ -82,7 +82,7 @@ public class AbilityListener implements Listener {
 
     @EventHandler
     public void onPlayerSwapHandAbilityItem(PlayerSwapHandItemsEvent event) {
-        if (AbilityItems.isImmovable(Objects.requireNonNull(event.getOffHandItem()))) {
+        if (AbilityItemTemplate.isImmovable(Objects.requireNonNull(event.getOffHandItem()))) {
             event.setCancelled(true);
         }
     }
@@ -107,7 +107,7 @@ public class AbilityListener implements Listener {
             ItemStack item = player.getInventory().getItem(event.getHotbarButton());
 
             assert item != null;
-            if (AbilityItems.isImmovable(item)) {
+            if (AbilityItemTemplate.isImmovable(item)) {
                 event.setCancelled(true);
             }
         }
@@ -119,15 +119,15 @@ public class AbilityListener implements Listener {
         ItemStack item = event.getPlayer().getInventory().getItem(newSlot);
         assert item != null;
 
-        if (AbilityItems.isImmovable(item)) {
+        if (AbilityItemTemplate.isImmovable(item)) {
             event.setCancelled(true);
 
-            if (AbilityItems.getCooldown(item) != -1) { // if the item has a cooldown timer
+            if (AbilityItemTemplate.getCooldown(item) != -1) { // if the item has a cooldown timer
                 event.getPlayer().getInventory().setItem(newSlot, cooldownItem);
 
                 Bukkit.getScheduler().runTaskLater(instance, () -> {
                     event.getPlayer().getInventory().setItem(newSlot, item);
-                }, 20L * AbilityItems.getCooldown(item)); // 20L = 1s
+                }, 20L * AbilityItemTemplate.getCooldown(item)); // 20L = 1s
             }
         }
     }

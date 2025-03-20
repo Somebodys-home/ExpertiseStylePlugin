@@ -1,14 +1,9 @@
-package io.github.Gabriel.expertiseStylePlugin.StyleStuff.StyleMenus;
+package io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleMenus;
 
 import io.github.Gabriel.expertiseStylePlugin.MenuSystem.Menu;
 import io.github.Gabriel.expertiseStylePlugin.MenuSystem.PlayerMenuUtility;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import static org.bukkit.Material.BLACK_TERRACOTTA;
-import static org.bukkit.Material.YELLOW_TERRACOTTA;
 
 public class StyleMenu extends Menu {
 

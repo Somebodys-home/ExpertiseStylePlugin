@@ -1,10 +1,11 @@
-package io.github.Gabriel.expertiseStylePlugin.ExpertiseStuff.Menus.Expertise;
+package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus;
 
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseStuff.Menus.Swordsman.SwordsmanMenu;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.MenuSystem.Menu;
 import io.github.Gabriel.expertiseStylePlugin.MenuSystem.PlayerMenuUtility;
-import io.github.Gabriel.expertiseStylePlugin.StyleStuff.StyleMenus.AbilityItems.StyleAbilityItems;
+import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleAbilityItemTemplate;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -32,12 +33,12 @@ public class ExpertiseMenu extends Menu {
 
         if (item != null) {
             if (item.equals(ExpertiseMenuItems.soldier())) {
-                new SwordsmanMenu(ExpertiseStylePlugin.getPlayerMenuUtility(player)).open();
+                new SoldierMenu(ExpertiseStylePlugin.getPlayerMenuUtility(player)).open();
             } else if (item.equals(ExpertiseMenuItems.resetAbilities())) {
-                player.getInventory().setItem(0, StyleAbilityItems.emptyStyleAbilityItem());
-                player.getInventory().setItem(1, StyleAbilityItems.emptyStyleAbilityItem());
-                player.getInventory().setItem(2, ExpertiseAbilityItems.emptyExpertiseAbilityItem());
-                player.getInventory().setItem(3, ExpertiseAbilityItems.emptyExpertiseAbilityItem());
+                player.getInventory().setItem(0, StyleAbilityItemTemplate.emptyStyleAbilityItem());
+                player.getInventory().setItem(1, StyleAbilityItemTemplate.emptyStyleAbilityItem());
+                player.getInventory().setItem(2, ExpertiseItemTemplate.emptyExpertiseAbilityItem());
+                player.getInventory().setItem(3, ExpertiseItemTemplate.emptyExpertiseAbilityItem());
             } else {
                 player.sendMessage("nothing works other than swordsman, sorry.");
             }
