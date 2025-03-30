@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ExpertiseStylePlugin.iml" filepath="$PROJECT_DIR$/ExpertiseStylePlugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/expertisestyleplugin.iml" filepath="$PROJECT_DIR$/expertisestyleplugin.iml" />
     </modules>
   </component>
 </project>

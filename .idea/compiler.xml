@@ -7,10 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="expertisestyleplugin" />
-        <module name="ExpertiseStylePlugin" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="expertisestyleplugin" target="21" />
       <module name="expertisestyleplugin (1)" target="21" />
     </bytecodeTargetLevel>
   </component>

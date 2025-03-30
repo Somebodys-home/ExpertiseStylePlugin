@@ -113,8 +113,9 @@ public class AbilityItemListener implements Listener {
         }
     }
 
+    // listener to put items on cd when selecting them (using the ability)
     @EventHandler
-    public void onAbilityItemInHeldHand(PlayerItemHeldEvent event) {
+    public void onUseAbility(PlayerItemHeldEvent event) {
         int newSlot = event.getNewSlot();
         ItemStack item = event.getPlayer().getInventory().getItem(newSlot);
         assert item != null;

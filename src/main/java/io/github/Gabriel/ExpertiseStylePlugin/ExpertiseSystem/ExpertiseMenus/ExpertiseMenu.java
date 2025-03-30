@@ -1,17 +1,18 @@
 package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus;
 
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierMenu;
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.Gabriel.expertiseStylePlugin.MenuSystem.Menu;
-import io.github.Gabriel.expertiseStylePlugin.MenuSystem.PlayerMenuUtility;
 import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleAbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
+import io.github.Gabriel.menuSystem.Menu;
+import io.github.Gabriel.menuSystem.PlayerMenuUtility;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class ExpertiseMenu extends Menu {
+    PlayerMenuUtility playerMenuUtility;
+
     public ExpertiseMenu(PlayerMenuUtility playerMenuUtility) {
         super(playerMenuUtility);
     }
@@ -33,7 +34,7 @@ public class ExpertiseMenu extends Menu {
 
         if (item != null) {
             if (item.equals(ExpertiseMenuItems.soldier())) {
-                new SoldierMenu(ExpertiseStylePlugin.getPlayerMenuUtility(player)).open();
+                new SoldierMenu(playerMenuUtility).
             } else if (item.equals(ExpertiseMenuItems.resetAbilities())) {
                 player.getInventory().setItem(0, StyleAbilityItemTemplate.emptyStyleAbilityItem());
                 player.getInventory().setItem(1, StyleAbilityItemTemplate.emptyStyleAbilityItem());
