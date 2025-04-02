@@ -4,6 +4,7 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierMen
 import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleAbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
 import io.github.Gabriel.menuSystem.Menu;
+import io.github.Gabriel.menuSystem.MenuSystem;
 import io.github.Gabriel.menuSystem.PlayerMenuUtility;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -34,7 +35,7 @@ public class ExpertiseMenu extends Menu {
 
         if (item != null) {
             if (item.equals(ExpertiseMenuItems.soldier())) {
-                new SoldierMenu(playerMenuUtility).
+                new SoldierMenu(MenuSystem.getPlayerMenuUtility(player)).open();
             } else if (item.equals(ExpertiseMenuItems.resetAbilities())) {
                 player.getInventory().setItem(0, StyleAbilityItemTemplate.emptyStyleAbilityItem());
                 player.getInventory().setItem(1, StyleAbilityItemTemplate.emptyStyleAbilityItem());
@@ -56,7 +57,7 @@ public class ExpertiseMenu extends Menu {
         inventory.setItem(15, ExpertiseMenuItems.martialArtist());
         inventory.setItem(22, ExpertiseMenuItems.archer());
         inventory.setItem(29, ExpertiseMenuItems.sorcerer());
-        inventory.setItem(30, ExpertiseMenuItems.druid());
+        inventory.setItem(30, ExpertiseMenuItems.primordial());
         inventory.setItem(32, ExpertiseMenuItems.hallowed());
         inventory.setItem(33, ExpertiseMenuItems.annulled());
         inventory.setItem(44, ExpertiseMenuItems.resetAbilities());

@@ -128,18 +128,18 @@ public class ExpertiseMenuItems {
         return sorcerer;
     }
 
-    public static ItemStack druid() {
-        ItemStack druid = new ItemStack(Material.OAK_SAPLING, 1);
-        ItemMeta meta = druid.getItemMeta();
+    public static ItemStack primordial() {
+        ItemStack primordial = new ItemStack(Material.OAK_SAPLING, 1);
+        ItemMeta meta = primordial.getItemMeta();
         ArrayList<String> lore = new ArrayList<>();
 
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&2&lDruid"));
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&2&lPrimordial"));
         lore.add(ChatColor.translateAlternateColorCodes('&', "&7F&kuck&r&7in hippie."));
         lore.add(ChatColor.translateAlternateColorCodes('&', "&bCLICK TO SELECT!"));
         meta.setLore(lore);
-        druid.setItemMeta(meta);
+        primordial.setItemMeta(meta);
 
-        return druid;
+        return primordial;
     }
 
     public static ItemStack hallowed() {

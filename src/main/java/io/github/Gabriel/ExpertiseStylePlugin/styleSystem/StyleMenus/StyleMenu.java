@@ -1,7 +1,8 @@
 package io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleMenus;
 
-import io.github.Gabriel.expertiseStylePlugin.MenuSystem.Menu;
-import io.github.Gabriel.expertiseStylePlugin.MenuSystem.PlayerMenuUtility;
+
+import io.github.Gabriel.menuSystem.Menu;
+import io.github.Gabriel.menuSystem.PlayerMenuUtility;
 import org.bukkit.ChatColor;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
