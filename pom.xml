@@ -45,7 +45,7 @@
         <dependency>
             <groupId>com.github.Somebodys-home</groupId>
             <artifactId>MenuSystem</artifactId>
-            <version>-SNAPSHOT</version>
+            <version>-173b105a59-1</version>
         </dependency>
     </dependencies>
 

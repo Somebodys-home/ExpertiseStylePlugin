@@ -8,13 +8,11 @@ import java.util.Map;
 import java.util.UUID;
 
 public class SelectedManager {
-    private ExpertiseStylePlugin expertiseStylePlugin;
     private static Map<UUID, AbilityProfile> profileMap = new HashMap<>(); // hashmap of all the profiles of all the players online atm
     private FileConfiguration config;
     private SelectedConfig profileConfig;
 
     public SelectedManager(ExpertiseStylePlugin expertiseStylePlugin) {
-        this.expertiseStylePlugin = expertiseStylePlugin;
         profileConfig = expertiseStylePlugin.getSelectedConfig();
         config = profileConfig.getConfig();
     }

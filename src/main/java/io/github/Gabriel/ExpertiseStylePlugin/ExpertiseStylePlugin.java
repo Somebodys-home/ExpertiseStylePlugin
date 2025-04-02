@@ -20,21 +20,21 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        instance = this;
+        menuSystem = (MenuSystem) getServer().getPluginManager().getPlugin("MenuSystem");
         new AbilityItemTemplate(instance);
         new ExpertiseItemTemplate(instance);
         new StyleAbilityItemTemplate(instance);
-        instance = this;
-        menuSystem = (MenuSystem) getServer().getPluginManager().getPlugin("MenuSystem");
 
         selectedConfig = new SelectedConfig(this, "profiles");
         selectedConfig.loadConfig();
 
         selectedManager = new SelectedManager(this);
         selectedManager.loadProfilesFromConfig();
+
         getCommand("chooseexpertise").setExecutor(new ChooseExpertiseCommand());
         getCommand("choosestyle").setExecutor(new ChooseStyleCommand());
-        getCommand("testability").setExecutor(new testabilitycommand());
-
+        getCommand("test").setExecutor(new test(this));
         getServer().getPluginManager().registerEvents(new AbilityItemListener(this), this);
         getServer().getPluginManager().registerEvents(new SoldierListener(), this);
     }

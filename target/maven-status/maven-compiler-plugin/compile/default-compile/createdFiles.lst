@@ -1,8 +1,8 @@
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\selectedSystem\SelectedListener.class
-io\github\Gabriel\expertiseStylePlugin\testabilitycommand.class
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\AbilityItemListener.class
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\selectedSystem\AbilityProfile.class
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\selectedSystem\SelectedManager.class
+io\github\Gabriel\expertiseStylePlugin\test.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Soldier\SoldierAbilityItems.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseMenus\ExpertiseConfirmMenu.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Soldier\SoldierMenu.class
