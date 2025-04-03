@@ -1,9 +1,6 @@
 package io.github.Gabriel.expertiseStylePlugin.AbilitySystem.selectedSystem;
 
-import org.bukkit.inventory.ItemStack;
-
 public class SelectedAbilities {
-    // CORE STATS: stats that get saved to the file
     private String[] abilities;
     private String style1;
     private String style2;
@@ -18,20 +15,16 @@ public class SelectedAbilities {
         this.expertise2 = expertise2;
     }
 
+    public String[] getAbilities() {
+        return abilities;
+    }
+
     public String getStyle1() {
         return style1;
     }
 
-    public void setStyle1(String style1) {
-        this.style1 = style1;
-    }
-
     public String getStyle2() {
         return style2;
-    }
-
-    public void setStyle2(String style2) {
-        this.style2 = style2;
     }
 
     public String getExpertise1() {
@@ -40,13 +33,5 @@ public class SelectedAbilities {
 
     public String getExpertise2() {
         return expertise2;
-    }
-
-    public void setExpertise2(String expertise2) {
-        this.expertise2 = expertise2;
-    }
-
-    public void setExpertise1(String expertise1) {
-        this.expertise1 = expertise1;
     }
 }

@@ -3,6 +3,7 @@ package io.github.Gabriel.expertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemListener;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.selectedSystem.SelectedConfig;
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.selectedSystem.SelectedListener;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.selectedSystem.SelectedManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierListener;
@@ -35,8 +36,9 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         getCommand("chooseexpertise").setExecutor(new ChooseExpertiseCommand());
         getCommand("choosestyle").setExecutor(new ChooseStyleCommand());
         getCommand("test").setExecutor(new test(this));
+        getServer().getPluginManager().registerEvents(new SelectedListener(this), this);
         getServer().getPluginManager().registerEvents(new AbilityItemListener(this), this);
-        getServer().getPluginManager().registerEvents(new SoldierListener(), this);
+        getServer().getPluginManager().registerEvents(new SoldierListener(this), this);
     }
 
     @Override
