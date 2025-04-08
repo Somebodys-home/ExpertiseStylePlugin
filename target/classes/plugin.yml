@@ -4,7 +4,6 @@ main: io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin
 api-version: '1.21'
 authors: [ Gabriel Nicolas ]
 description: Plugin for my expertises and styles
-depends: [MenuSystem]
 commands:
   chooseExpertise:
     description: Opens the menu to choose your expertise

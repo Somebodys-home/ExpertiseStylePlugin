@@ -8,7 +8,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 
-public class ExpertiseMenuItems {
+public class ExpertiseMenuItems { // Todo: edit descriptions to include usable weapons
     public static ItemStack soldier() {
         ItemStack swordsman = new ItemStack(Material.IRON_SWORD, 1);
         ItemMeta meta = swordsman.getItemMeta();
@@ -16,7 +16,7 @@ public class ExpertiseMenuItems {
 
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&c&lSoldier"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&7I mean, technically, everything's a sword."));
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7[TBD]"));
         lore.add(ChatColor.translateAlternateColorCodes('&', "&bCLICK TO SELECT!"));
         meta.setLore(lore);
         swordsman.setItemMeta(meta);
@@ -77,7 +77,7 @@ public class ExpertiseMenuItems {
 
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&1&lCavalier"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&7TBD, ill figure something out"));
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7[TBD]"));
         lore.add(ChatColor.translateAlternateColorCodes('&', "&bCLICK TO SELECT!"));
         meta.setLore(lore);
         blunt.setItemMeta(meta);

@@ -1,7 +1,7 @@
 package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier;
 
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus.ExpertiseConfirmMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus.ExpertiseConfirmMenu;
 import io.github.Gabriel.menuSystem.Menu;
 import io.github.Gabriel.menuSystem.MenuSystem;
 import io.github.Gabriel.menuSystem.PlayerMenuUtility;
@@ -11,8 +11,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class SoldierMenu extends Menu {
+    private ExpertiseStylePlugin expertiseStylePlugin;
+
     public SoldierMenu(PlayerMenuUtility playerMenuUtility) {
         super(playerMenuUtility);
+        expertiseStylePlugin = ExpertiseStylePlugin.getInstance();
     }
 
     @Override
@@ -30,16 +33,17 @@ public class SoldierMenu extends Menu {
         Player player = (Player) event.getWhoClicked();
         ItemStack selected = event.getCurrentItem();
 
-        if (selected.equals(SoldierAbilityItems.stab())) {
+        assert selected != null;
+        if (selected.isSimilar(SoldierAbilityItems.stab())) {
             new ExpertiseConfirmMenu(MenuSystem.getPlayerMenuUtility(player), selected, this).open();
-        } else if (selected.equals(SoldierAbilityItems.slash())) {
+        } else if (selected.isSimilar(SoldierAbilityItems.slash())) {
             new ExpertiseConfirmMenu(MenuSystem.getPlayerMenuUtility(player), selected, this).open();
         }
     }
 
     @Override
     public void setMenuItems() {
-        inventory.setItem(10, SoldierAbilityItems.stab());
-        inventory.setItem(11, SoldierAbilityItems.slash());
+        inventory.setItem(10, SoldierAbilityItems.slash());
+        inventory.setItem(11, SoldierAbilityItems.stab());
     }
 }

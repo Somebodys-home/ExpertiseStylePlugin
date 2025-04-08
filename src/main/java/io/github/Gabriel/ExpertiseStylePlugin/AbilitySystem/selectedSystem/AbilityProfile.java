@@ -14,4 +14,5 @@ public class AbilityProfile {
     public void setSelectedAbilities(SelectedAbilities selectedAbilities) {
         this.selectedAbilities = selectedAbilities;
     }
+
 }

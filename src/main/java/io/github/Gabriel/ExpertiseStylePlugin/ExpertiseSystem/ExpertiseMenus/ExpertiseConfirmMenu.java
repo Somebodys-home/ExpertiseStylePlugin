@@ -1,6 +1,10 @@
 package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus;
 
 
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.selectedSystem.AbilityProfile;
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.selectedSystem.SelectedAbilities;
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.selectedSystem.SelectedManager;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.menuSystem.Menu;
 import io.github.Gabriel.menuSystem.PlayerMenuUtility;
 import org.bukkit.ChatColor;
@@ -9,12 +13,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class ExpertiseConfirmMenu extends Menu {
     private final ItemStack i3;
     private final ItemStack i4;
     private final ItemStack selected;
     private final Menu previous;
+    private SelectedManager selectedManager;
 
     public ExpertiseConfirmMenu(PlayerMenuUtility playerMenuUtility, ItemStack selected, Menu previous) {
         super(playerMenuUtility);
@@ -22,6 +28,7 @@ public class ExpertiseConfirmMenu extends Menu {
         this.i4 = playerMenuUtility.getOwner().getInventory().getItem(3);
         this.selected = selected;
         this.previous = previous;
+        selectedManager = new SelectedManager(JavaPlugin.getPlugin(ExpertiseStylePlugin.class));
     }
 
     @Override
@@ -37,14 +44,20 @@ public class ExpertiseConfirmMenu extends Menu {
     @Override
     public void handleMenu(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
+        ItemStack item = event.getCurrentItem();
 
-        if (event.getCurrentItem().equals(i3)) {
-            player.getInventory().setItem(2, selected);
-            previous.open();
-        } else if (event.getCurrentItem().equals(i4)) {
-            player.getInventory().setItem(3, selected);
-            previous.open();
-        } else if (event.getCurrentItem().getType() == Material.RED_DYE) {
+        if (item.isSimilar(i3) || item.isSimilar(i4)) {
+            if (item.isSimilar(i3)) {
+                player.getInventory().setItem(2, selected);
+                previous.open();
+            } else if (item.isSimilar(i4)) {
+                player.getInventory().setItem(3, selected);
+                previous.open();
+            }
+
+            selectedManager.createnewProfile(player);
+            selectedManager.saveAProfileToConfig(player);
+        } else if (item.getType() == Material.RED_DYE) {
             previous.open();
         }
     }

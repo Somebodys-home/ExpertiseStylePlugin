@@ -34,4 +34,12 @@ public class SelectedAbilities {
     public String getExpertise2() {
         return expertise2;
     }
+
+    public void setExpertise1(String expertise1) {
+        this.expertise1 = expertise1;
+    }
+
+    public void setExpertise2(String expertise2) {
+        this.expertise2 = expertise2;
+    }
 }

@@ -10,19 +10,19 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierLis
 import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleAbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.commands.ChooseExpertiseCommand;
 import io.github.Gabriel.expertiseStylePlugin.commands.ChooseStyleCommand;
-import io.github.Gabriel.menuSystem.MenuSystem;
+import io.github.Gabriel.menuSystem.MenuListener;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ExpertiseStylePlugin extends JavaPlugin {
     private static ExpertiseStylePlugin instance;
-    private static MenuSystem menuSystem;
     private SelectedManager selectedManager;
     private SelectedConfig selectedConfig;
 
     @Override
     public void onEnable() {
         instance = this;
-        menuSystem = (MenuSystem) getServer().getPluginManager().getPlugin("MenuSystem");
         new AbilityItemTemplate(instance);
         new ExpertiseItemTemplate(instance);
         new StyleAbilityItemTemplate(instance);
@@ -33,12 +33,13 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         selectedManager = new SelectedManager(this);
         selectedManager.loadProfilesFromConfig();
 
-        getCommand("chooseexpertise").setExecutor(new ChooseExpertiseCommand());
-        getCommand("choosestyle").setExecutor(new ChooseStyleCommand());
+        getCommand("chooseexpertise").setExecutor(new ChooseExpertiseCommand(this));
+        getCommand("choosestyle").setExecutor(new ChooseStyleCommand(this));
         getCommand("test").setExecutor(new test(this));
         getServer().getPluginManager().registerEvents(new SelectedListener(this), this);
         getServer().getPluginManager().registerEvents(new AbilityItemListener(this), this);
         getServer().getPluginManager().registerEvents(new SoldierListener(this), this);
+        getServer().getPluginManager().registerEvents(new MenuListener(), this);
     }
 
     @Override
