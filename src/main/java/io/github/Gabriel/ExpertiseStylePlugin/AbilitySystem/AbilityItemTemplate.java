@@ -40,7 +40,7 @@ public class AbilityItemTemplate {
     }
 
     public static boolean isImmovable(ItemStack item) {
-        if (item != null &&  item.getItemMeta() != null) {
+        if (item != null && item.getItemMeta() != null) {
             PersistentDataContainer pdc = item.getItemMeta().getPersistentDataContainer();
 
             return pdc.has(immovableKey, PersistentDataType.INTEGER);
@@ -49,7 +49,7 @@ public class AbilityItemTemplate {
     }
 
     public static int getCooldown(ItemStack item) {
-        if (item != null &&  item.getItemMeta() != null) {
+        if (item != null && item.getItemMeta() != null) {
             PersistentDataContainer pdc = item.getItemMeta().getPersistentDataContainer();
 
             if (pdc.has(cooldownKey, PersistentDataType.INTEGER)) {

@@ -1,7 +1,6 @@
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\selectedSystem\SelectedListener.class
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\selectedSystem\AbilityProfile.class
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\selectedSystem\SelectedManager.class
-io\github\Gabriel\expertiseStylePlugin\test.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Soldier\SoldierAbilityItems$1.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Soldier\SoldierListener.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseMenus\ExpertiseMenuItems.class
@@ -10,7 +9,7 @@ io\github\Gabriel\expertiseStylePlugin\ExpertiseStylePlugin.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseItemTemplate.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseMenus\ExpertiseMenu.class
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\selectedSystem\SelectedConfig.class
-io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Soldier\SoldierAbilityItems$2.class
+io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseItemTemplate$1.class
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\AbilityItemListener.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Soldier\SoldierAbilityItems.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseMenus\ExpertiseConfirmMenu.class

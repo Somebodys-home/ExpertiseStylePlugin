@@ -48,6 +48,12 @@
             <artifactId>MenuSystem</artifactId>
             <version>9457f8d4c5</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.Somebodys-home</groupId>
+            <artifactId>DamagePlugin</artifactId>
+            <version>39d9153bef</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>

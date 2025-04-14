@@ -6,19 +6,20 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+
 public class CastAbilityEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     private final Player player;
     private final int previousSlot;
     private final int newSlot;
-    private final ItemStack abilityItem;
-    private boolean cancelled;
+    private final ItemStack weapon;
+    private final boolean cancelled;
 
-    public CastAbilityEvent(@NotNull Player player, int previousSlot, int newSlot, ItemStack abilityItem) {
+    public CastAbilityEvent(@NotNull Player player, int previousSlot, int newSlot, ItemStack weapon) {
         this.player = player;
         this.previousSlot = previousSlot;
         this.newSlot = newSlot;
-        this.abilityItem = abilityItem;
+        this.weapon = weapon;
         this.cancelled = false;
     }
 
@@ -29,7 +30,7 @@ public class CastAbilityEvent extends Event {
 
     public Player getPlayer() { return player; }
 
-    public ItemStack getAbilityItem() { return abilityItem; }
+    public ItemStack getWeapon() { return weapon; }
 
     public int getPreviousSlot() {
         return previousSlot;

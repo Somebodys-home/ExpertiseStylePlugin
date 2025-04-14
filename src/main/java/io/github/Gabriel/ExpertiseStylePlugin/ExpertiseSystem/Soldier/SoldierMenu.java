@@ -34,16 +34,11 @@ public class SoldierMenu extends Menu {
         ItemStack selected = event.getCurrentItem();
 
         assert selected != null;
-        if (selected.isSimilar(SoldierAbilityItems.stab())) {
-            new ExpertiseConfirmMenu(MenuSystem.getPlayerMenuUtility(player), selected, this).open();
-        } else if (selected.isSimilar(SoldierAbilityItems.slash())) {
-            new ExpertiseConfirmMenu(MenuSystem.getPlayerMenuUtility(player), selected, this).open();
-        }
+        new ExpertiseConfirmMenu(MenuSystem.getPlayerMenuUtility(player), selected, this).open();
     }
 
     @Override
     public void setMenuItems() {
         inventory.setItem(10, SoldierAbilityItems.slash());
-        inventory.setItem(11, SoldierAbilityItems.stab());
     }
 }

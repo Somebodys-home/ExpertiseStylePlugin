@@ -1,5 +1,6 @@
 package io.github.Gabriel.expertiseStylePlugin;
 
+import io.github.Gabriel.damagePlugin.DamagePlugin;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemListener;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.selectedSystem.SelectedConfig;
@@ -12,16 +13,18 @@ import io.github.Gabriel.expertiseStylePlugin.commands.ChooseExpertiseCommand;
 import io.github.Gabriel.expertiseStylePlugin.commands.ChooseStyleCommand;
 import io.github.Gabriel.menuSystem.MenuListener;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ExpertiseStylePlugin extends JavaPlugin {
     private static ExpertiseStylePlugin instance;
     private SelectedManager selectedManager;
     private SelectedConfig selectedConfig;
+    private DamagePlugin damagePlugin;
 
     @Override
     public void onEnable() {
+        damagePlugin = (DamagePlugin) Bukkit.getPluginManager().getPlugin("DamagePlugin");
+
         instance = this;
         new AbilityItemTemplate(instance);
         new ExpertiseItemTemplate(instance);
@@ -35,7 +38,6 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
 
         getCommand("chooseexpertise").setExecutor(new ChooseExpertiseCommand(this));
         getCommand("choosestyle").setExecutor(new ChooseStyleCommand(this));
-        getCommand("test").setExecutor(new test(this));
         getServer().getPluginManager().registerEvents(new SelectedListener(this), this);
         getServer().getPluginManager().registerEvents(new AbilityItemListener(this), this);
         getServer().getPluginManager().registerEvents(new SoldierListener(this), this);
@@ -59,5 +61,9 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
 
     public SelectedConfig getSelectedConfig() {
         return selectedConfig;
+    }
+
+    public DamagePlugin getDamagePlugin() {
+        return damagePlugin;
     }
 }

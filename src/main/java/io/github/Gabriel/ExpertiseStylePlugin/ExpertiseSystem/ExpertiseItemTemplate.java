@@ -1,5 +1,6 @@
 package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem;
 
+import io.github.Gabriel.damagePlugin.customDamage.DamageType;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import org.bukkit.ChatColor;
@@ -38,7 +39,7 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         return expertise;
     }
 
-    public static ItemStack makeExpertiseAbilityItem(String expertise, String name, int cooldown, String description, HashMap<String, Integer> damageStats) {
+    public static ItemStack makeExpertiseAbilityItem(String expertise, String name, int cooldown, String description, HashMap<DamageType, Integer> damageStats) {
         ItemStack expertiseItem = new ItemStack(Material.CRYING_OBSIDIAN);
         ChatColor color = ChatColor.DARK_PURPLE;
         ItemMeta meta = expertiseItem.getItemMeta();
@@ -49,6 +50,7 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         pdc.set(expertiseKey, PersistentDataType.INTEGER, 1);
         pdc.set(cooldownKey, PersistentDataType.INTEGER, cooldown);
 
+        // name of ability
         switch (expertise) {
             case "swordsman" -> {
                 expertiseItem = new ItemStack(Material.IRON_SWORD);
@@ -101,47 +103,24 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
 
         meta.setDisplayName(color + ChatColor.translateAlternateColorCodes('&', "&l" + name));
         lore.add(ChatColor.GRAY + description);
+
+        // damage stats of ability
         lore.add(ChatColor.translateAlternateColorCodes('&', "&b&l--------Damage Stats--------"));
 
-        for (String i : damageStats.keySet()) {
-            switch (i) {
-                case "physical" -> {
-                    color = ChatColor.DARK_RED;
-                    lore.add(color + String.valueOf(damageStats.get(i)) + "% Physical \uD83D\uDDE1");
-                }
-                case "fire" -> {
-                    color = ChatColor.RED;
-                    lore.add(color + String.valueOf(damageStats.get(i)) + "% Fire \uD83D\uDD25");
-                }
-                case "ice" -> {
-                    color = ChatColor.AQUA;
-                    lore.add(color + String.valueOf(damageStats.get(i)) + "% Ice ❄");
-                }
-                case "earth" -> {
-                    color = ChatColor.DARK_GREEN;
-                    lore.add(color + String.valueOf(damageStats.get(i)) + "% Earth \uD83E\uDEA8");
-                }
-                case "lightning" -> {
-                    color = ChatColor.YELLOW;
-                    lore.add(color + String.valueOf(damageStats.get(i)) + "% Lightning \uD83D\uDDF2");
-                }
-                case "air" -> {
-                    color = ChatColor.GRAY;
-                    lore.add(color + String.valueOf(damageStats.get(i)) + "% Air ☁");
-                }
-                case "light" -> {
-                    color = ChatColor.WHITE;
-                    lore.add(color + String.valueOf(damageStats.get(i)) + "% Light ✦");
-                }
-                case "dark" -> {
-                    color = ChatColor.DARK_PURPLE;
-                    lore.add(color + String.valueOf(damageStats.get(i)) + "% Dark \uD83C\uDF00");
-                }
-                case "pure" -> {
-                    color = ChatColor.WHITE;
-                    lore.add(color + String.valueOf(damageStats.get(i)) + "% Pure \uD83D\uDCA2");
-                }
+        String icon = "";
+        for (DamageType type : damageStats.keySet()) {
+            switch (type) {
+                case PHYSICAL -> icon = "\uD83D\uDDE1";
+                case FIRE -> icon = "\uD83D\uDD25";
+                case COLD -> icon = "❄";
+                case EARTH -> icon = "\uD83E\uDEA8";
+                case LIGHTNING -> icon = "\uD83D\uDDF2";
+                case AIR -> icon = "☁";
+                case LIGHT -> icon = "✦";
+                case DARK -> icon = "\uD83C\uDF00";
+                case PURE -> icon = "\uD83D\uDCA2";
             }
+            lore.add(DamageType.getDamageColor(type) + String.valueOf(damageStats.get(type)) + "% " + DamageType.getDamageString(type) + " " + icon);
         }
 
         meta.setLore(lore);

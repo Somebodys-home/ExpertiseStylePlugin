@@ -3,32 +3,32 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CastAbilityEvent;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.selectedSystem.SelectedManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 
 public class SoldierListener implements Listener {
+    private ExpertiseStylePlugin expertiseStylePlugin;
     private SelectedManager selectedManager;
     private SoldierAbilityEffects soldierAbilityEffects;
 
     public SoldierListener(ExpertiseStylePlugin expertiseStylePlugin) {
+        this.expertiseStylePlugin = expertiseStylePlugin;
         selectedManager = expertiseStylePlugin.getSelectedManager();
     }
 
+    // go from helditemevent -> castabilityevent -> specific listener
     @EventHandler
     public void onUseAbility(CastAbilityEvent event) {
-        if (event.getAbilityItem() != null) {
-            soldierAbilityEffects = new SoldierAbilityEffects(event.getPlayer());
-            String abilityName = event.getAbilityItem().getItemMeta().getDisplayName();
+        if (event.getWeapon() != null) {
+            soldierAbilityEffects = new SoldierAbilityEffects(expertiseStylePlugin, event.getPlayer());
+            String abilityName = event.getWeapon().getItemMeta().getDisplayName();
             String[] selectedAbilities = selectedManager.getPlayerProfile(event.getPlayer().getUniqueId()).getSelectedAbilities().getAbilities();
 
             if (Arrays.asList(selectedAbilities).contains(abilityName)) {
                 if (abilityName.contains("Slash")) {
-                    soldierAbilityEffects.slash();
+                    soldierAbilityEffects.slash(event.getWeapon());
                 }
             }
         }
