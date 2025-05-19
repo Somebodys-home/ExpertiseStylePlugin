@@ -33,18 +33,15 @@ public class ExpertiseMenu extends Menu {
     @Override
     public void handleMenu(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-        ItemStack item = event.getCurrentItem();
+        int slot = event.getSlot();
 
-        if (item != null) {
-            if (item.equals(ExpertiseMenuItems.soldier())) {
-                new SoldierMenu(MenuSystem.getPlayerMenuUtility(player)).open();
-            } else if (item.equals(ExpertiseMenuItems.resetAbilities())) {
+        switch (slot) {
+            case 10 -> new SoldierMenu(MenuSystem.getPlayerMenuUtility(player)).open();
+            case 44 -> {
                 player.getInventory().setItem(0, StyleAbilityItemTemplate.emptyStyleAbilityItem());
                 player.getInventory().setItem(1, StyleAbilityItemTemplate.emptyStyleAbilityItem());
                 player.getInventory().setItem(2, ExpertiseItemTemplate.emptyExpertiseAbilityItem());
                 player.getInventory().setItem(3, ExpertiseItemTemplate.emptyExpertiseAbilityItem());
-            } else {
-                player.sendMessage("nothing works other than swordsman, sorry.");
             }
         }
     }

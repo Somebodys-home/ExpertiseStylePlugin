@@ -1,6 +1,6 @@
 package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier;
 
-import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CastAbilityEvent;
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.UseAbilityEvent;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.selectedSystem.SelectedManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import org.bukkit.event.EventHandler;
@@ -20,9 +20,9 @@ public class SoldierListener implements Listener {
 
     // go from helditemevent -> castabilityevent -> specific listener
     @EventHandler
-    public void onUseAbility(CastAbilityEvent event) {
+    public void onUseAbility(UseAbilityEvent event) {
         if (event.getWeapon() != null) {
-            soldierAbilityEffects = new SoldierAbilityEffects(expertiseStylePlugin, event.getPlayer());
+            soldierAbilityEffects = new SoldierAbilityEffects(event.getPlayer());
             String abilityName = event.getWeapon().getItemMeta().getDisplayName();
             String[] selectedAbilities = selectedManager.getPlayerProfile(event.getPlayer().getUniqueId()).getSelectedAbilities().getAbilities();
 

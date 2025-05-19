@@ -19,12 +19,9 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
     private static ExpertiseStylePlugin instance;
     private SelectedManager selectedManager;
     private SelectedConfig selectedConfig;
-    private DamagePlugin damagePlugin;
 
     @Override
     public void onEnable() {
-        damagePlugin = (DamagePlugin) Bukkit.getPluginManager().getPlugin("DamagePlugin");
-
         instance = this;
         new AbilityItemTemplate(instance);
         new ExpertiseItemTemplate(instance);
@@ -61,9 +58,5 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
 
     public SelectedConfig getSelectedConfig() {
         return selectedConfig;
-    }
-
-    public DamagePlugin getDamagePlugin() {
-        return damagePlugin;
     }
 }

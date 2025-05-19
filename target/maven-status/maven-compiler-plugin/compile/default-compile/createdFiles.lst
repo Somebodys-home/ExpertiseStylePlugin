@@ -6,6 +6,7 @@ io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Soldier\SoldierListener.c
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseMenus\ExpertiseMenuItems.class
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\AbilityItemTemplate.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseStylePlugin.class
+io\github\Gabriel\expertiseStylePlugin\AbilitySystem\UseAbilityEvent.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseItemTemplate.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseMenus\ExpertiseMenu.class
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\selectedSystem\SelectedConfig.class
@@ -14,7 +15,6 @@ io\github\Gabriel\expertiseStylePlugin\AbilitySystem\AbilityItemListener.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Soldier\SoldierAbilityItems.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseMenus\ExpertiseConfirmMenu.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Soldier\SoldierMenu.class
-io\github\Gabriel\expertiseStylePlugin\AbilitySystem\CastAbilityEvent.class
 io\github\Gabriel\expertiseStylePlugin\commands\ChooseStyleCommand.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Soldier\SoldierAbilityEffects.class
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\selectedSystem\SelectedAbilities.class

@@ -39,7 +39,7 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         return expertise;
     }
 
-    public static ItemStack makeExpertiseAbilityItem(String expertise, String name, int cooldown, String description, HashMap<DamageType, Integer> damageStats) {
+    public static ItemStack makeExpertiseAbilityItem(String expertise, String name, String description, int cooldown, int physicalMultiplier, String[][] damageStats) {
         ItemStack expertiseItem = new ItemStack(Material.CRYING_OBSIDIAN);
         ChatColor color = ChatColor.DARK_PURPLE;
         ItemMeta meta = expertiseItem.getItemMeta();
@@ -104,23 +104,55 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         meta.setDisplayName(color + ChatColor.translateAlternateColorCodes('&', "&l" + name));
         lore.add(ChatColor.GRAY + description);
 
-        // damage stats of ability
+        // ability damage stats divider
         lore.add(ChatColor.translateAlternateColorCodes('&', "&b&l--------Damage Stats--------"));
 
-        String icon = "";
-        for (DamageType type : damageStats.keySet()) {
-            switch (type) {
-                case PHYSICAL -> icon = "\uD83D\uDDE1";
-                case FIRE -> icon = "\uD83D\uDD25";
-                case COLD -> icon = "❄";
-                case EARTH -> icon = "\uD83E\uDEA8";
-                case LIGHTNING -> icon = "\uD83D\uDDF2";
-                case AIR -> icon = "☁";
-                case LIGHT -> icon = "✦";
-                case DARK -> icon = "\uD83C\uDF00";
-                case PURE -> icon = "\uD83D\uDCA2";
+        // elemental multipliers
+        lore.add(ChatColor.DARK_RED + "" + physicalMultiplier + "% Physical \uD83D\uDDE1");
+
+        if (damageStats != null) {
+
+            for (int i = 0; i < damageStats[0].length; i++) {
+                String damageType = damageStats[i][0];
+                String icon = "";
+
+                switch (damageType) {
+                    case "Fire" -> {
+                        icon = "\uD83D\uDD25";
+                        color = ChatColor.RED;
+                    }
+                    case "Cold" -> {
+                        icon = "❄";
+                        color = ChatColor.AQUA;
+                    }
+                    case "Earth" -> {
+                        icon = "\uD83E\uDEA8";
+                        color = ChatColor.DARK_GREEN;
+                    }
+                    case "Lightning" -> {
+                        icon = "\uD83D\uDDF2";
+                        color = ChatColor.YELLOW;
+                    }
+                    case "Air" -> {
+                        icon = "☁";
+                        color = ChatColor.GRAY;
+                    }
+                    case "Light" -> {
+                        icon = "✦";
+                        color = ChatColor.WHITE;
+                    }
+                    case "Dark" -> {
+                        icon = "\uD83C\uDF00";
+                        color = ChatColor.DARK_PURPLE;
+                    }
+                    case "Pure" -> {
+                        icon = "\uD83D\uDCA2";
+                        color = ChatColor.WHITE;
+                    }
+                }
+
+                lore.add(color + "" + Integer.parseInt(damageStats[i][1]) + " % " + damageType + " " + icon);
             }
-            lore.add(DamageType.getDamageColor(type) + String.valueOf(damageStats.get(type)) + "% " + DamageType.getDamageString(type) + " " + icon);
         }
 
         meta.setLore(lore);

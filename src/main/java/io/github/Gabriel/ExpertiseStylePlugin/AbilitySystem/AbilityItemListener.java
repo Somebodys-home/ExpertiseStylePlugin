@@ -123,8 +123,8 @@ public class AbilityItemListener implements Listener {
         if (AbilityItemTemplate.isImmovable(item)) {
             event.setCancelled(true);
 
-            CastAbilityEvent castAbilityEvent = new CastAbilityEvent(event.getPlayer(), event.getPreviousSlot(), event.getNewSlot(), item);
-            Bukkit.getPluginManager().callEvent(castAbilityEvent);
+            UseAbilityEvent useAbilityEvent = new UseAbilityEvent(event.getPlayer(), event.getPreviousSlot(), event.getNewSlot(), item);
+            Bukkit.getPluginManager().callEvent(useAbilityEvent);
 
             if (AbilityItemTemplate.getCooldown(item) != -1) { // if the item has a cooldown timer
                 event.getPlayer().getInventory().setItem(newSlot, cooldownItem);

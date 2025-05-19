@@ -3,8 +3,8 @@
     <output-path>$PROJECT_DIR$/..</output-path>
     <root id="archive" name="expertisestyleplugin.jar">
       <element id="module-output" name="expertisestyleplugin" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/24.1.0/annotations-24.1.0.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/Somebodys-home/MenuSystem/b97ca75378/MenuSystem-b97ca75378.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/Somebodys-home/MenuSystem/9457f8d4c5/MenuSystem-9457f8d4c5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/Somebodys-home/DamagePlugin/2d9de2779a/DamagePlugin-2d9de2779a.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

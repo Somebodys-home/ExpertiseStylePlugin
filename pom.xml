@@ -51,7 +51,7 @@
         <dependency>
             <groupId>com.github.Somebodys-home</groupId>
             <artifactId>DamagePlugin</artifactId>
-            <version>39d9153bef</version>
+            <version>c0d40b42cf</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -71,14 +71,6 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <filters>
-                                <filter>
-                                    <artifact>*:*</artifact>
-                                    <excludes>
-                                        <exclude>META-INF/**</exclude>
-                                    </excludes>
-                                </filter>
-                            </filters>
                             <relocations>
                                 <relocation>
                                     <pattern>io.github.Gabriel.menuSystem</pattern>

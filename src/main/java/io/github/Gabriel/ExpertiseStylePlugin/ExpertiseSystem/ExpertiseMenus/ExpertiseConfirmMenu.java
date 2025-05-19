@@ -44,22 +44,15 @@ public class ExpertiseConfirmMenu extends Menu {
     @Override
     public void handleMenu(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-        ItemStack item = event.getCurrentItem();
+        int slot = event.getSlot();
 
-        if (item.isSimilar(i3) || item.isSimilar(i4)) {
-            if (item.isSimilar(i3)) {
-                player.getInventory().setItem(2, selected);
-                previous.open();
-            } else if (item.isSimilar(i4)) {
-                player.getInventory().setItem(3, selected);
-                previous.open();
-            }
-
-            selectedManager.createnewProfile(player);
-            selectedManager.saveAProfileToConfig(player);
-        } else if (item.getType() == Material.RED_DYE) {
-            previous.open();
+        switch (slot) {
+            case 11 -> player.getInventory().setItem(2, selected);
+            case 15 -> player.getInventory().setItem(3, selected);
+            case 22 -> previous.open();
         }
+
+        previous.open();
     }
 
     @Override
