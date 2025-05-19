@@ -14,10 +14,13 @@ public class SoldierAbilityItems extends AbilityItemTemplate {
     }
 
     public static ItemStack slash() {
-        HashMap<DamageType, Integer> damageStats = new HashMap<>() {{
-            put(DamageType.PHYSICAL, 120);
-        }};
 
-        return ExpertiseItemTemplate.makeExpertiseAbilityItem("swordsman", "Slash", 2, "Yep.", damageStats);
+        return ExpertiseItemTemplate.makeExpertiseAbilityItem(
+                "swordsman",
+                "Slash",
+                "You get the idea, right?",
+                2,
+                120,
+                null);
     }
 }
