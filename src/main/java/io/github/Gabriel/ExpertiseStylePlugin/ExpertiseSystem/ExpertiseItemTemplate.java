@@ -1,6 +1,5 @@
 package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem;
 
-import io.github.Gabriel.damagePlugin.customDamage.DamageType;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import org.bukkit.ChatColor;
@@ -12,7 +11,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class ExpertiseItemTemplate extends AbilityItemTemplate {
@@ -39,7 +37,8 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         return expertise;
     }
 
-    public static ItemStack makeExpertiseAbilityItem(String expertise, String name, String description, int cooldown, int physicalMultiplier, String[][] damageStats) {
+    // todo: finish the description of expertise ability items
+    public static ItemStack makeExpertiseAbilityItem(String expertise, String name, String description, String targeting, int range, int duration, int cooldown, int cost, int physicalMultiplier, String[][] damageStats) {
         ItemStack expertiseItem = new ItemStack(Material.CRYING_OBSIDIAN);
         ChatColor color = ChatColor.DARK_PURPLE;
         ItemMeta meta = expertiseItem.getItemMeta();
@@ -50,7 +49,7 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         pdc.set(expertiseKey, PersistentDataType.INTEGER, 1);
         pdc.set(cooldownKey, PersistentDataType.INTEGER, cooldown);
 
-        // name of ability
+        // color and itemstack of ability
         switch (expertise) {
             case "swordsman" -> {
                 expertiseItem = new ItemStack(Material.IRON_SWORD);
@@ -103,15 +102,28 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
 
         meta.setDisplayName(color + ChatColor.translateAlternateColorCodes('&', "&l" + name));
         lore.add(ChatColor.GRAY + description);
+        lore.add("");
 
-        // ability damage stats divider
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&b&l--------Damage Stats--------"));
+        // misc stats
+        lore.add(ChatColor.WHITE + "Targeting: " + ChatColor.BLUE + targeting);
+        lore.add(ChatColor.WHITE + "Range: " + ChatColor.GREEN + range + "m");
+
+        if (duration != 0) {
+            lore.add(ChatColor.WHITE + "Duration: " + ChatColor.DARK_AQUA + duration + "s");
+        }
+
+        lore.add(ChatColor.WHITE + "Cooldown: " + ChatColor.AQUA + cooldown + "s");
+        lore.add(ChatColor.WHITE + "Cost: " + ChatColor.GOLD + cost + "⚡");
+
+        // damage stats
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&b&l--------Damage--------"));
 
         // elemental multipliers
-        lore.add(ChatColor.DARK_RED + "" + physicalMultiplier + "% Physical \uD83D\uDDE1");
+        if (physicalMultiplier != 0) {
+            lore.add(ChatColor.DARK_RED + "" + physicalMultiplier + "% Physical \uD83D\uDDE1");
+        }
 
         if (damageStats != null) {
-
             for (int i = 0; i < damageStats[0].length; i++) {
                 String damageType = damageStats[i][0];
                 String icon = "";

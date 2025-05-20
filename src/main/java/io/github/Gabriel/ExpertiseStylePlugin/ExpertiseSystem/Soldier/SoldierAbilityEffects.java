@@ -3,8 +3,6 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier;
 import io.github.Gabriel.damagePlugin.DamagePlugin;
 import io.github.Gabriel.damagePlugin.customDamage.DamageKey;
 import io.github.Gabriel.damagePlugin.customDamage.DamageType;
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
@@ -20,6 +18,7 @@ public class SoldierAbilityEffects {
         this.user = user;
     }
 
+    // todo: what the fuck is going on with the imports on this
     public void slash(ItemStack weapon) {
         DamageKey damageKey = new DamageKey(weapon);
         Location location = user.getLocation();
@@ -39,5 +38,6 @@ public class SoldierAbilityEffects {
                 }
             }
         }
+
     }
 }

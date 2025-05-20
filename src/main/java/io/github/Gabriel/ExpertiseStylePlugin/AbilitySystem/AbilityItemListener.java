@@ -12,7 +12,6 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-
 import java.util.Objects;
 
 public class AbilityItemListener implements Listener {
@@ -113,7 +112,7 @@ public class AbilityItemListener implements Listener {
         }
     }
 
-    // listener to put items on cd when selecting them (using the ability)
+    // listener to put items on cooldown when selecting them (using the ability)
     @EventHandler
     public void onUseAbility(PlayerItemHeldEvent event) {
         int newSlot = event.getNewSlot();

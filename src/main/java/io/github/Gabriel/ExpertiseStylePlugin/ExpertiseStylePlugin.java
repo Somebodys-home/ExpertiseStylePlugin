@@ -1,6 +1,5 @@
 package io.github.Gabriel.expertiseStylePlugin;
 
-import io.github.Gabriel.damagePlugin.DamagePlugin;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemListener;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.selectedSystem.SelectedConfig;
@@ -12,7 +11,6 @@ import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleAbilityItemTempla
 import io.github.Gabriel.expertiseStylePlugin.commands.ChooseExpertiseCommand;
 import io.github.Gabriel.expertiseStylePlugin.commands.ChooseStyleCommand;
 import io.github.Gabriel.menuSystem.MenuListener;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ExpertiseStylePlugin extends JavaPlugin {
