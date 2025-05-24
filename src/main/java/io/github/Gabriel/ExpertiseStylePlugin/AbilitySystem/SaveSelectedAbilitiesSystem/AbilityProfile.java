@@ -1,4 +1,4 @@
-package io.github.Gabriel.expertiseStylePlugin.AbilitySystem.selectedSystem;
+package io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveSelectedAbilitiesSystem;
 
 public class AbilityProfile {
     private SelectedAbilities selectedAbilities;

@@ -1,4 +1,4 @@
-package io.github.Gabriel.expertiseStylePlugin.AbilitySystem.selectedSystem;
+package io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveSelectedAbilitiesSystem;
 
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import org.bukkit.entity.Player;

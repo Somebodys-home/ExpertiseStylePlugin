@@ -1,7 +1,7 @@
 package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier;
 
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.UseAbilityEvent;
-import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.selectedSystem.SelectedManager;
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveSelectedAbilitiesSystem.SelectedManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,7 +18,6 @@ public class SoldierListener implements Listener {
         selectedManager = expertiseStylePlugin.getSelectedManager();
     }
 
-    // go from helditemevent -> castabilityevent -> specific listener
     @EventHandler
     public void onUseAbility(UseAbilityEvent event) {
         if (event.getWeapon() != null) {

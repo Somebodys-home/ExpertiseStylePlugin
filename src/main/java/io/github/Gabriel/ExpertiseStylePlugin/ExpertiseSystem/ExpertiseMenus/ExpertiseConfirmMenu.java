@@ -1,9 +1,7 @@
 package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus;
 
 
-import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.selectedSystem.AbilityProfile;
-import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.selectedSystem.SelectedAbilities;
-import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.selectedSystem.SelectedManager;
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveSelectedAbilitiesSystem.SelectedManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.menuSystem.Menu;
 import io.github.Gabriel.menuSystem.PlayerMenuUtility;

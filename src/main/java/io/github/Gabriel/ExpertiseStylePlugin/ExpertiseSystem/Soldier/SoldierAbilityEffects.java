@@ -18,8 +18,9 @@ public class SoldierAbilityEffects {
         this.user = user;
     }
 
-    // todo: what the fuck is going on with the imports on this
+    // todo: plugin is null when importing
     public void slash(ItemStack weapon) {
+        // vv this is the problematic line vv
         DamageKey damageKey = new DamageKey(weapon);
         Location location = user.getLocation();
         int damage = (int) (damageKey.getDamageValue(DamageType.PHYSICAL) * 1.2);

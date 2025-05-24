@@ -20,6 +20,7 @@ public class SoldierAbilityItems extends AbilityItemTemplate {
                 0,
                 2,
                 15,
-                120, null);
+                120,
+                null);
     }
 }
