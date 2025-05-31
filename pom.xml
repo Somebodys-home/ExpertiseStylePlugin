@@ -51,7 +51,7 @@
         <dependency>
             <groupId>com.github.Somebodys-home</groupId>
             <artifactId>DamagePlugin</artifactId>
-            <version>2d57eba008</version>
+            <version>4ef5945190</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -77,6 +77,8 @@
                                     <shadedPattern>${shade.prefix}.menuSystem</shadedPattern>
                                 </relocation>
                             </relocations>
+                            <outputDirectory>C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins</outputDirectory>
+                            <shadedArtifactAttached>false</shadedArtifactAttached>
                         </configuration>
                     </execution>
                 </executions>

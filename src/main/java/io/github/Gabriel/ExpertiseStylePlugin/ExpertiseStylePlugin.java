@@ -17,15 +17,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ExpertiseStylePlugin extends JavaPlugin {
     private static ExpertiseStylePlugin instance;
+    private static DamagePlugin damagePlugin;
     private SelectedManager selectedManager;
     private SelectedConfig selectedConfig;
 
     @Override
     public void onEnable() {
         instance = this;
-        new AbilityItemTemplate(instance);
-        new ExpertiseItemTemplate(instance);
-        new StyleAbilityItemTemplate(instance);
+        damagePlugin = JavaPlugin.getPlugin(DamagePlugin.class);
+
+        new AbilityItemTemplate(this);
+        new ExpertiseItemTemplate(this);
+        new StyleAbilityItemTemplate(this);
 
         selectedConfig = new SelectedConfig(this, "profiles");
         selectedConfig.loadConfig();
@@ -39,12 +42,6 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new AbilityItemListener(this), this);
         getServer().getPluginManager().registerEvents(new SoldierListener(this), this);
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
-
-        if (Bukkit.getPluginManager().getPlugin("DamagePlugin").getClass() == DamagePlugin.class) {
-            System.out.println("damage plugin is here");
-        } else {
-            System.out.println("damage plugin is not here");
-        }
     }
 
     @Override
@@ -56,6 +53,11 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
 
     public static ExpertiseStylePlugin getInstance() {
         return instance;
+    }
+
+    public static DamagePlugin getDamagePlugin() {
+        System.out.println(damagePlugin);
+        return damagePlugin;
     }
 
     public SelectedManager getSelectedManager() {

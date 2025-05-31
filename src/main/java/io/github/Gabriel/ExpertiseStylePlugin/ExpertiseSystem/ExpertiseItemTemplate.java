@@ -1,5 +1,6 @@
 package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem;
 
+import io.github.Gabriel.damagePlugin.customDamage.DamageType;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import org.bukkit.ChatColor;
@@ -12,6 +13,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ExpertiseItemTemplate extends AbilityItemTemplate {
     private static NamespacedKey expertiseKey;
@@ -37,8 +39,8 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         return expertise;
     }
 
-    // todo: finish the description of expertise ability items
-    public static ItemStack makeExpertiseAbilityItem(String expertise, String name, String description, String targeting, int range, int duration, int cooldown, int cost, int physicalMultiplier, String[][] damageStats) {
+    // todo: rename archer to marksman
+    public static ItemStack makeExpertiseAbilityItem(String expertise, String name, String description, String targeting, int range, int duration, int cooldown, int cost, int weaponDamageMultiplier, Map<DamageType, Double> damageStats) {
         ItemStack expertiseItem = new ItemStack(Material.CRYING_OBSIDIAN);
         ChatColor color = ChatColor.DARK_PURPLE;
         ItemMeta meta = expertiseItem.getItemMeta();
@@ -116,56 +118,53 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         lore.add(ChatColor.WHITE + "Cost: " + ChatColor.GOLD + cost + "⚡");
 
         // damage stats
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&b&l--------Damage--------"));
+        lore.add("§b§l--------Damage--------");
 
         // elemental multipliers
-        if (physicalMultiplier != 0) {
-            lore.add(ChatColor.DARK_RED + "" + physicalMultiplier + "% Physical \uD83D\uDDE1");
+        if (weaponDamageMultiplier != 0) {
+            lore.add("§f§n" + weaponDamageMultiplier + "%" + "§r§f" + " Weapon Damage \uD83D\uDDE1");
         }
 
         if (damageStats != null) {
-            for (int i = 0; i < damageStats[0].length; i++) {
-                String damageType = damageStats[i][0];
+            for (Map.Entry<DamageType, Double> damageStat : damageStats.entrySet()) {
+                DamageType damageType = damageStat.getKey();
                 String icon = "";
 
                 switch (damageType) {
-                    case "Fire" -> {
+                    case FIRE -> {
                         icon = "\uD83D\uDD25";
-                        color = ChatColor.RED;
                     }
-                    case "Cold" -> {
+                    case COLD -> {
                         icon = "❄";
-                        color = ChatColor.AQUA;
                     }
-                    case "Earth" -> {
+                    case EARTH -> {
                         icon = "\uD83E\uDEA8";
-                        color = ChatColor.DARK_GREEN;
                     }
-                    case "Lightning" -> {
+                    case LIGHTNING -> {
                         icon = "\uD83D\uDDF2";
-                        color = ChatColor.YELLOW;
                     }
-                    case "Air" -> {
+                    case AIR -> {
                         icon = "☁";
-                        color = ChatColor.GRAY;
                     }
-                    case "Light" -> {
+                    case LIGHT -> {
                         icon = "✦";
-                        color = ChatColor.WHITE;
                     }
-                    case "Dark" -> {
+                    case DARK -> {
                         icon = "\uD83C\uDF00";
-                        color = ChatColor.DARK_PURPLE;
                     }
-                    case "Pure" -> {
+                    case PURE -> {
                         icon = "\uD83D\uDCA2";
-                        color = ChatColor.WHITE;
                     }
                 }
 
-                lore.add(color + "" + Integer.parseInt(damageStats[i][1]) + " % " + damageType + " " + icon);
+                lore.add(DamageType.getDamageColor(damageType) + "" + damageStat.getValue() + " % " + damageType + " " + icon);
             }
         }
+
+        // todo: add stats effects (when i eventually get to that)
+
+        // todo: add useable weapons (when i eventually get to that)
+        lore.add("§b§l--------Weapons--------");
 
         meta.setLore(lore);
         expertiseItem.setItemMeta(meta);

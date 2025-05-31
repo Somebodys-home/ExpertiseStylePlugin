@@ -10,7 +10,6 @@ import io.github.Gabriel.menuSystem.PlayerMenuUtility;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class ExpertiseMenu extends Menu {
     private ExpertiseStylePlugin expertiseStylePlugin;

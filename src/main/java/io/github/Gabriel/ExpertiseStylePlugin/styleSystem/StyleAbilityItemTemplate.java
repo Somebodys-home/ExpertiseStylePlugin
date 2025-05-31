@@ -9,15 +9,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class StyleAbilityItemTemplate extends AbilityItemTemplate {
     private static NamespacedKey styleKey;
 
-    public StyleAbilityItemTemplate(ExpertiseStylePlugin plugin) {
-        super(ExpertiseStylePlugin.getInstance());
+    public StyleAbilityItemTemplate(ExpertiseStylePlugin expertiseStylePlugin) {
+        super(expertiseStylePlugin);
         styleKey = new NamespacedKey(expertiseStylePlugin, "style");
     }
 
