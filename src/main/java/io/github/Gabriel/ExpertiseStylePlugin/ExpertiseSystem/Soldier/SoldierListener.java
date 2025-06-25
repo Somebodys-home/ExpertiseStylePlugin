@@ -9,12 +9,10 @@ import org.bukkit.event.Listener;
 import java.util.Arrays;
 
 public class SoldierListener implements Listener {
-    private ExpertiseStylePlugin expertiseStylePlugin;
     private SelectedManager selectedManager;
     private SoldierAbilityEffects soldierAbilityEffects;
 
     public SoldierListener(ExpertiseStylePlugin expertiseStylePlugin) {
-        this.expertiseStylePlugin = expertiseStylePlugin;
         selectedManager = expertiseStylePlugin.getSelectedManager();
     }
 

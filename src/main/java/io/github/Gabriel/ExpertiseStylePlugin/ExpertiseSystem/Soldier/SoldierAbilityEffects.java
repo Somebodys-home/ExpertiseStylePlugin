@@ -19,7 +19,7 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 
-public class SoldierAbilityEffects {
+public class SoldierAbilityEffects { // todo: make the damage calc work
     private Player user;
 
     public SoldierAbilityEffects(Player user) {
@@ -27,7 +27,7 @@ public class SoldierAbilityEffects {
     }
 
     public void slash(ItemStack weapon) {
-        DamageKey damageKey = new DamageKey(weapon, ExpertiseStylePlugin.getDamagePlugin());
+        DamageKey damageKey = new DamageKey(weapon);
         Location location = user.getLocation();
         Set<UUID> hitEntityUUIDs = new HashSet<>();
         HashMap<DamageType, Double> damage = damageKey.multiplyAllDamageStats(1.2);
