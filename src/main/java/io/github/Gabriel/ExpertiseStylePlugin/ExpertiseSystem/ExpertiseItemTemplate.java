@@ -39,7 +39,6 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         return expertise;
     }
 
-    // todo: rename archer to marksman
     public static ItemStack makeExpertiseAbilityItem(String expertise, String name, String description, String targeting, int range, int duration, int cooldown, int cost, int weaponDamageMultiplier, Map<DamageType, Double> damageStats) {
         ItemStack expertiseItem = new ItemStack(Material.CRYING_OBSIDIAN);
         ChatColor color = ChatColor.DARK_PURPLE;

@@ -19,9 +19,10 @@ public class SoldierListener implements Listener {
     @EventHandler
     public void onUseAbility(UseAbilityEvent event) {
         if (event.getWeapon() != null) {
-            soldierAbilityEffects = new SoldierAbilityEffects(event.getPlayer());
-            String abilityName = event.getWeapon().getItemMeta().getDisplayName();
             String[] selectedAbilities = selectedManager.getPlayerProfile(event.getPlayer().getUniqueId()).getSelectedAbilities().getAbilities();
+
+            soldierAbilityEffects = new SoldierAbilityEffects(event.getPlayer());
+            String abilityName = event.getAbility().getItemMeta().getDisplayName();
 
             if (Arrays.asList(selectedAbilities).contains(abilityName)) {
                 if (abilityName.contains("Slash")) {

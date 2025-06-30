@@ -16,12 +16,7 @@ public class ExpertiseMenuItems {
 
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&c&lSoldier"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&7[TBD]"));
-        lore.add("");
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&eUsable Weapons:"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Swords"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Axes"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Spears"));
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7Me when military proletarianism is kinda based actually"));
         lore.add("");
         lore.add(ChatColor.translateAlternateColorCodes('&', "&bCLICK TO SELECT!"));
         meta.setLore(lore);
@@ -40,10 +35,6 @@ public class ExpertiseMenuItems {
         lore.add(ChatColor.translateAlternateColorCodes('&',  "&7\"A knife!\""));
         lore.add(ChatColor.translateAlternateColorCodes('&', "&7\"NO!\""));
         lore.add("");
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&eUsable Weapons:"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Swords"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Daggers"));
-        lore.add("");
         lore.add(ChatColor.translateAlternateColorCodes('&', "&bCLICK TO SELECT!"));
         meta.setLore(lore);
         ninja.setItemMeta(meta);
@@ -59,11 +50,6 @@ public class ExpertiseMenuItems {
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4&lMarauder"));
         lore.add(ChatColor.translateAlternateColorCodes('&', "&7Marauder? I barely know her!"));
-        lore.add("");
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&eUsable Weapons:"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Swords"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Axes"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Spears"));
         lore.add("");
         lore.add(ChatColor.translateAlternateColorCodes('&', "&bCLICK TO SELECT!"));
         meta.setLore(lore);
@@ -81,9 +67,6 @@ public class ExpertiseMenuItems {
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&3&lShield Hero"));
         lore.add(ChatColor.translateAlternateColorCodes('&', "&7WARNING: If you play this expertise, you will be hate crimed."));
         lore.add("");
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&eUsable Weapons:"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Shields"));
-        lore.add("");
         lore.add(ChatColor.translateAlternateColorCodes('&', "&bCLICK TO SELECT!"));
         meta.setLore(lore);
         shieldHero.setItemMeta(meta);
@@ -100,11 +83,6 @@ public class ExpertiseMenuItems {
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&1&lCavalier"));
         lore.add(ChatColor.translateAlternateColorCodes('&', "&7[TBD]"));
         lore.add("");
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&eUsable Weapons:"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Spears"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Maces"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Hammers"));
-        lore.add("");
         lore.add(ChatColor.translateAlternateColorCodes('&', "&bCLICK TO SELECT!"));
         meta.setLore(lore);
         blunt.setItemMeta(meta);
@@ -118,12 +96,7 @@ public class ExpertiseMenuItems {
         ArrayList<String> lore = new ArrayList<>();
 
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4&lMartial Artist"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&7RUN THESE HANDS. YOUR FADE IS IMMINENT."));
-        lore.add("");
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&eUsable Weapons:"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Gloves"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Wraps"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Quarterstaves"));
+        lore.add(ChatColor.translateAlternateColorCodes('&', "&7Beating up homeless people in the back alley of an Arby's™ pro max"));
         lore.add("");
         lore.add(ChatColor.translateAlternateColorCodes('&', "&bCLICK TO SELECT!"));
         meta.setLore(lore);
@@ -139,10 +112,6 @@ public class ExpertiseMenuItems {
 
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&a&lArcher"));
         lore.add(ChatColor.translateAlternateColorCodes('&', "&7SPOILER ALERT: This is the closest thing you're getting to a gun."));
-        lore.add("");
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&eUsable Weapons:"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Bows"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Crossbows"));
         lore.add("");
         lore.add(ChatColor.translateAlternateColorCodes('&', "&bCLICK TO SELECT!"));
         meta.setLore(lore);
@@ -160,11 +129,6 @@ public class ExpertiseMenuItems {
         lore.add(ChatColor.translateAlternateColorCodes('&', "&7There's no I in team, but there's 6 Is in"));
         lore.add(ChatColor.translateAlternateColorCodes('&', "&7&o\"F&kuck&r&7&o it, I don't care how big the room is, I cast fireball.\""));
         lore.add("");
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&eUsable Weapons:"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Wands"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Staves"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Catalysts"));
-        lore.add("");
         lore.add(ChatColor.translateAlternateColorCodes('&', "&bCLICK TO SELECT!"));
         meta.setLore(lore);
         sorcerer.setItemMeta(meta);
@@ -179,11 +143,6 @@ public class ExpertiseMenuItems {
 
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&2&lPrimordial"));
         lore.add(ChatColor.translateAlternateColorCodes('&', "&7F&kuck&r&7in hippie."));
-        lore.add("");
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&eUsable Weapons:"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Wands"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Staves"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Catalysts"));
         lore.add("");
         lore.add(ChatColor.translateAlternateColorCodes('&', "&bCLICK TO SELECT!"));
         meta.setLore(lore);
@@ -200,11 +159,6 @@ public class ExpertiseMenuItems {
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&f&lHallowed"));
         lore.add(ChatColor.translateAlternateColorCodes('&', "&7\"Say Drake, I hear you like 'em young.\""));
         lore.add("");
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&eUsable Weapons:"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Wands"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Staves"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Catalysts"));
-        lore.add("");
         lore.add(ChatColor.translateAlternateColorCodes('&', "&bCLICK TO SELECT!"));
         meta.setLore(lore);
         hallowed.setItemMeta(meta);
@@ -220,11 +174,6 @@ public class ExpertiseMenuItems {
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&5&lAnnulled"));
         lore.add(ChatColor.translateAlternateColorCodes('&', "&7Welcome home."));
         lore.add("");
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&eUsable Weapons:"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Wands"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Staves"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&e- Catalysts"));
-        lore.add("");
         lore.add(ChatColor.translateAlternateColorCodes('&', "&bCLICK TO SELECT!"));
         meta.setLore(lore);
         annulled.setItemMeta(meta);
@@ -233,7 +182,7 @@ public class ExpertiseMenuItems {
     }
 
     public static ItemStack resetAbilities() {
-        ItemStack reset = new ItemStack(Material.RED_CONCRETE, 1);
+        ItemStack reset = new ItemStack(Material.BARRIER, 1);
         ItemMeta meta = reset.getItemMeta();
 
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4&lReset Abilities"));

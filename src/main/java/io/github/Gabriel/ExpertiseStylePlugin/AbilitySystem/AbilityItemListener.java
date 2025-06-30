@@ -116,21 +116,23 @@ public class AbilityItemListener implements Listener {
     @EventHandler
     public void onUseAbility(PlayerItemHeldEvent event) {
         int newSlot = event.getNewSlot();
-        ItemStack item = event.getPlayer().getInventory().getItem(newSlot);
-        assert item != null;
+        ItemStack abilityItem = event.getPlayer().getInventory().getItem(newSlot);
+        ItemStack weapon = event.getPlayer().getInventory().getItem(event.getPreviousSlot());
+        assert abilityItem != null;
+        assert weapon != null;
 
-        if (AbilityItemTemplate.isImmovable(item)) {
+        if (AbilityItemTemplate.isImmovable(abilityItem)) {
             event.setCancelled(true);
 
-            UseAbilityEvent useAbilityEvent = new UseAbilityEvent(event.getPlayer(), event.getPreviousSlot(), event.getNewSlot(), item);
+            UseAbilityEvent useAbilityEvent = new UseAbilityEvent(event.getPlayer(), weapon, abilityItem);
             Bukkit.getPluginManager().callEvent(useAbilityEvent);
 
-            if (AbilityItemTemplate.getCooldown(item) != -1) { // if the item has a cooldown timer
+            if (AbilityItemTemplate.getCooldown(abilityItem) != -1) { // if the item has a cooldown timer
                 event.getPlayer().getInventory().setItem(newSlot, cooldownItem);
 
                 Bukkit.getScheduler().runTaskLater(instance, () -> {
-                    event.getPlayer().getInventory().setItem(newSlot, item);
-                }, 20L * AbilityItemTemplate.getCooldown(item)); // 20L = 1s
+                    event.getPlayer().getInventory().setItem(newSlot, abilityItem);
+                }, 20L * AbilityItemTemplate.getCooldown(abilityItem)); // 20L = 1s
             }
         }
     }

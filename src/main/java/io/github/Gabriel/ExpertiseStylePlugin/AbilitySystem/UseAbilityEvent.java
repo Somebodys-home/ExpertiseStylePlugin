@@ -10,31 +10,23 @@ import org.jetbrains.annotations.NotNull;
 public class UseAbilityEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     private final Player player;
-    private final int previousSlot;
-    private final int newSlot;
     private final ItemStack weapon;
+    private final ItemStack ability;
 
-    public UseAbilityEvent(@NotNull Player player, int previousSlot, int newSlot, ItemStack weapon) {
+    public UseAbilityEvent(@NotNull Player player, ItemStack weapon, ItemStack ability) {
         this.player = player;
-        this.previousSlot = previousSlot;
-        this.newSlot = newSlot;
         this.weapon = weapon;
+        this.ability = ability;
     }
 
     @Override
     public HandlerList getHandlers() { return handlers; }
-    
-    public static HandlerList getHandlerList() { return handlers; }
+
+    public static HandlerList getHandlerList() { return handlers; } // deleting this breaks things, apparently
 
     public Player getPlayer() { return player; }
 
     public ItemStack getWeapon() { return weapon; }
 
-    public int getPreviousSlot() {
-        return previousSlot;
-    }
-
-    public int getNewSlot() {
-        return newSlot;
-    }
+    public ItemStack getAbility() { return ability; }
 }
