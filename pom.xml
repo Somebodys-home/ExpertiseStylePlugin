@@ -15,6 +15,31 @@
         <shade.prefix>io.github.Gabriel.expertisestyleplugin.shaded</shade.prefix>
     </properties>
 
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <profiles>
+        <profile>
+            <id>export-to-server</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <configuration>
+                            <!-- Optional: escape spaces or use a relative path -->
+                            <outputDirectory>C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins</outputDirectory>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <repositories>
         <repository>
             <id>spigotmc-repo</id>
@@ -51,7 +76,13 @@
         <dependency>
             <groupId>com.github.Somebodys-home</groupId>
             <artifactId>DamagePlugin</artifactId>
-            <version>c66c8a01b1</version>
+            <version>b1f8da9c60</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.Somebodys-home</groupId>
+            <artifactId>NMLAttributes</artifactId>
+            <version>51f52d0b90</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -59,6 +90,14 @@
     <build>
         <defaultGoal>clean package</defaultGoal>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.2</version>
+                <configuration>
+                    <outputDirectory>C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins</outputDirectory>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -73,11 +112,10 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <relocations>
                                 <relocation>
-                                    <pattern>io.github.Gabriel.menuSystem</pattern>
+                                    <pattern>com.somebodyshome.menusystem</pattern>
                                     <shadedPattern>${shade.prefix}.menuSystem</shadedPattern>
                                 </relocation>
                             </relocations>
-                            <outputDirectory>C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins</outputDirectory>
                             <shadedArtifactAttached>false</shadedArtifactAttached>
                         </configuration>
                     </execution>

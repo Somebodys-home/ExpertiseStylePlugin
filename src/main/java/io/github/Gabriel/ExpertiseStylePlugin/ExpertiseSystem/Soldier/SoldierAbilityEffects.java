@@ -1,9 +1,9 @@
 package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier;
 
+import io.github.Gabriel.NMLAttributes.energySystem.EnergyManager;
 import io.github.Gabriel.damagePlugin.customDamage.CustomDamager;
 import io.github.Gabriel.damagePlugin.customDamage.DamageKey;
 import io.github.Gabriel.damagePlugin.customDamage.DamageType;
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -11,12 +11,11 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
 import java.util.*;
 
-public class SoldierAbilityEffects { // todo: make the damage calc work
+public class SoldierAbilityEffects {
     private Player user;
 
     public SoldierAbilityEffects(Player user) {
@@ -50,5 +49,7 @@ public class SoldierAbilityEffects { // todo: make the damage calc work
                 CustomDamager.doDamage(livingEntity, user, multipliedDamageMap);
             }
         }
+
+        EnergyManager.useEnergy(user, 15);
     }
 }
