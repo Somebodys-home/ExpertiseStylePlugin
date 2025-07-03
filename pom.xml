@@ -76,7 +76,7 @@
         <dependency>
             <groupId>com.github.Somebodys-home</groupId>
             <artifactId>DamagePlugin</artifactId>
-            <version>b1f8da9c60</version>
+            <version>e928b28f44</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
