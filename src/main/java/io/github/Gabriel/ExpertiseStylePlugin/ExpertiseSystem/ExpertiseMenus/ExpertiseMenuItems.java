@@ -25,12 +25,12 @@ public class ExpertiseMenuItems {
         return swordsman;
     }
 
-    public static ItemStack ninja() {
+    public static ItemStack assassin() {
         ItemStack ninja = new ItemStack(Material.BLACK_WOOL, 1);
         ItemMeta meta = ninja.getItemMeta();
         ArrayList<String> lore = new ArrayList<>();
 
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&0&lNinja"));
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&0&lAssassin"));
         lore.add(ChatColor.translateAlternateColorCodes('&', "&7\"Hey what do you got there?\""));
         lore.add(ChatColor.translateAlternateColorCodes('&',  "&7\"A knife!\""));
         lore.add(ChatColor.translateAlternateColorCodes('&', "&7\"NO!\""));
@@ -105,12 +105,12 @@ public class ExpertiseMenuItems {
         return martialArtist;
     }
 
-    public static ItemStack archer() {
+    public static ItemStack marksman() {
         ItemStack archer = new ItemStack(Material.BOW, 1);
         ItemMeta meta = archer.getItemMeta();
         ArrayList<String> lore = new ArrayList<>();
 
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&a&lArcher"));
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&a&lMarksman"));
         lore.add(ChatColor.translateAlternateColorCodes('&', "&7SPOILER ALERT: This is the closest thing you're getting to a gun."));
         lore.add("");
         lore.add(ChatColor.translateAlternateColorCodes('&', "&bCLICK TO SELECT!"));

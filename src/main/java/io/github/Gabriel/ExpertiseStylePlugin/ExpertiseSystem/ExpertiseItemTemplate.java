@@ -57,7 +57,7 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
                 color = ChatColor.RED;
                 meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             }
-            case "ninja" -> {
+            case "assassin" -> {
                 expertiseItem = new ItemStack(Material.BLACK_WOOL);
                 color = ChatColor.DARK_GRAY;
             }
@@ -83,7 +83,7 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
                 expertiseItem = new ItemStack(Material.RED_GLAZED_TERRACOTTA);
                 color = ChatColor.DARK_RED;
             }
-            case "archer" -> {
+            case "marksman" -> {
                 expertiseItem = new ItemStack(Material.BOW);
                 color = ChatColor.GREEN;
             }
@@ -161,6 +161,7 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         }
 
         // todo: add stats effects (when i eventually get to that)
+        lore.add("§b§l--------Status--------");
 
         // todo: add useable weapons (when i eventually get to that)
         lore.add("§b§l--------Weapons--------");
