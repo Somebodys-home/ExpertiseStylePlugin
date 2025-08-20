@@ -118,7 +118,7 @@
         <dependency>
             <groupId>com.github.Somebodys-home</groupId>
             <artifactId>MenuSystem</artifactId>
-            <version>544f743dee</version>
+            <version>80dfed5099</version>
         </dependency>
         <dependency>
             <groupId>com.github.Somebodys-home</groupId>

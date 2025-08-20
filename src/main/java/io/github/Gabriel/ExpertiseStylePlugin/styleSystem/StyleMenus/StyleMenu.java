@@ -1,8 +1,7 @@
 package io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleMenus;
 
-
-import io.github.Gabriel.menuSystem.Menu;
-import io.github.Gabriel.menuSystem.PlayerMenuUtility;
+import io.github.NoOne.menuSystem.Menu;
+import io.github.NoOne.menuSystem.PlayerMenuUtility;
 import org.bukkit.ChatColor;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
@@ -24,6 +23,11 @@ public class StyleMenu extends Menu {
 
     @Override
     public void handleMenu(InventoryClickEvent event) {
+
+    }
+
+    @Override
+    public void handlePlayerMenu(InventoryClickEvent inventoryClickEvent) {
 
     }
 

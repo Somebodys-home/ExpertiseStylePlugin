@@ -4,7 +4,9 @@ main: io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin
 api-version: '1.21'
 authors: [ Gabriel Nicolas ]
 description: Plugin for my expertises and styles
-depend: [DamagePlugin]
+depend:
+  - DamagePlugin
+  - NMLEnergySystem
 commands:
   chooseExpertise:
     description: Opens the menu to choose your expertise

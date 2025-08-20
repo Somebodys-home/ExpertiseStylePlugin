@@ -2,7 +2,7 @@ package io.github.Gabriel.expertiseStylePlugin.commands;
 
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleMenus.StyleMenu;
-import io.github.Gabriel.menuSystem.MenuSystem;
+import io.github.NoOne.menuSystem.MenuSystem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

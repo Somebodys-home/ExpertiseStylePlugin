@@ -2,8 +2,8 @@ package io.github.Gabriel.expertiseStylePlugin.commands;
 
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus.ExpertiseMenu;
-import io.github.Gabriel.menuSystem.MenuSystem;
-import io.github.Gabriel.menuSystem.PlayerMenuUtility;
+import io.github.NoOne.menuSystem.MenuSystem;
+import io.github.NoOne.menuSystem.PlayerMenuUtility;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

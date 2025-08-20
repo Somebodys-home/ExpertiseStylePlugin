@@ -4,9 +4,9 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierMenu;
 import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleAbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
-import io.github.Gabriel.menuSystem.Menu;
-import io.github.Gabriel.menuSystem.MenuSystem;
-import io.github.Gabriel.menuSystem.PlayerMenuUtility;
+import io.github.NoOne.menuSystem.Menu;
+import io.github.NoOne.menuSystem.MenuSystem;
+import io.github.NoOne.menuSystem.PlayerMenuUtility;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -43,6 +43,11 @@ public class ExpertiseMenu extends Menu {
                 player.getInventory().setItem(3, ExpertiseItemTemplate.emptyExpertiseAbilityItem());
             }
         }
+    }
+
+    @Override
+    public void handlePlayerMenu(InventoryClickEvent inventoryClickEvent) {
+
     }
 
     @Override

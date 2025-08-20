@@ -11,7 +11,6 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierLis
 import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleAbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.commands.ChooseExpertiseCommand;
 import io.github.Gabriel.expertiseStylePlugin.commands.ChooseStyleCommand;
-import io.github.Gabriel.menuSystem.MenuListener;
 import io.github.NoOne.nMLEnergySystem.NMLEnergySystem;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -43,7 +42,6 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SelectedListener(this), this);
         getServer().getPluginManager().registerEvents(new AbilityItemListener(this), this);
         getServer().getPluginManager().registerEvents(new SoldierListener(this), this);
-        getServer().getPluginManager().registerEvents(new MenuListener(), this);
     }
 
     @Override

@@ -3,8 +3,8 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus;
 
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveSelectedAbilitiesSystem.SelectedManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.Gabriel.menuSystem.Menu;
-import io.github.Gabriel.menuSystem.PlayerMenuUtility;
+import io.github.NoOne.menuSystem.Menu;
+import io.github.NoOne.menuSystem.PlayerMenuUtility;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -51,6 +51,11 @@ public class ExpertiseConfirmMenu extends Menu {
         }
 
         previous.open();
+    }
+
+    @Override
+    public void handlePlayerMenu(InventoryClickEvent inventoryClickEvent) {
+        inventoryClickEvent.setCancelled(true);
     }
 
     @Override
