@@ -1,9 +1,9 @@
 package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier;
 
 import io.github.Gabriel.damagePlugin.customDamage.CustomDamageEvent;
-import io.github.Gabriel.damagePlugin.customDamage.CustomDamager;
 import io.github.Gabriel.damagePlugin.customDamage.DamageConverter;
 import io.github.Gabriel.damagePlugin.customDamage.DamageType;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLItems.ItemSystem;
 import org.bukkit.Bukkit;
@@ -13,22 +13,24 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
 import java.util.*;
 
 public class SoldierAbilityEffects {
+    private ExpertiseStylePlugin expertiseStylePlugin;
     private Player user;
+    private Set<UUID> hitEntityUUIDs = new HashSet<>();
 
-    public SoldierAbilityEffects(Player user) {
+    public SoldierAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin, Player user) {
+        this.expertiseStylePlugin = expertiseStylePlugin;
         this.user = user;
     }
 
     public void slash(ItemStack weapon) {
         Location location = user.getLocation();
-        Set<UUID> hitEntityUUIDs = new HashSet<>();
-        HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.getAllDamageStats(weapon
-        ));
+        HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.multiplyAllDamageStats(weapon, 1.2));
 
         for (double i = -Math.PI / 2; i <= Math.PI / 2; i += Math.PI / 10) {
             double x = Math.sin(i) * 2;
@@ -40,18 +42,20 @@ public class SoldierAbilityEffects {
 
             for (Entity entity : user.getWorld().getNearbyEntities(particleLocation, 1.5, 1.5, 1.5)) {
                 if (!entity.equals(user)) {
-                    UUID uuid = entity.getUniqueId();
-                    hitEntityUUIDs.add(uuid);
+                    entity.setMetadata("ability hit", new FixedMetadataValue(expertiseStylePlugin, true));
+                    hitEntityUUIDs.add(entity.getUniqueId());
                 }
             }
         }
 
         for (UUID uuid : hitEntityUUIDs) {
-            if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
+            if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity && livingEntity.hasMetadata("ability hit")) {
                 Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                livingEntity.removeMetadata("ability hit", expertiseStylePlugin);
             }
         }
 
+        hitEntityUUIDs.clear();
         EnergyManager.useEnergy(user, 15);
     }
 }

@@ -1,8 +1,8 @@
 package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem;
 
-import io.github.Gabriel.damagePlugin.customDamage.DamageType;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
+import io.github.NoOne.nMLItems.ItemType;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -13,13 +13,15 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import static io.github.NoOne.nMLItems.ItemType.*;
 
 public class ExpertiseItemTemplate extends AbilityItemTemplate {
+    private static ExpertiseStylePlugin expertiseStylePlugin;
     private static NamespacedKey expertiseKey;
 
     public ExpertiseItemTemplate(ExpertiseStylePlugin expertiseStylePlugin) {
         super(expertiseStylePlugin);
+        this.expertiseStylePlugin = expertiseStylePlugin;
         expertiseKey = new NamespacedKey(expertiseStylePlugin, "expertise");
     }
 
@@ -39,7 +41,9 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         return expertise;
     }
 
-    public static ItemStack makeExpertiseAbilityItem(String expertise, String name, String description, String targeting, int range, int duration, int cooldown, int cost, int weaponDamageMultiplier, Map<DamageType, Double> damageStats) {
+    public static ItemStack makeExpertiseAbilityItem(String expertise, String name, String description, String targeting, int range, int duration, int cooldown, int cost,
+                                                     List<String> damage, List<String> statuses, List<ItemType> weapons) {
+
         ItemStack expertiseItem = new ItemStack(Material.BARRIER);
         ChatColor color = null;
         ItemMeta meta = expertiseItem.getItemMeta();
@@ -101,69 +105,36 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         }
 
         meta.setDisplayName(color + ChatColor.translateAlternateColorCodes('&', "&l" + name));
+        lore.add("");
         lore.add(ChatColor.GRAY + description);
         lore.add("");
 
         // misc stats
         lore.add(ChatColor.WHITE + "Targeting: " + ChatColor.BLUE + targeting);
         lore.add(ChatColor.WHITE + "Range: " + ChatColor.GREEN + range + "m");
-
-        if (duration != 0) {
-            lore.add(ChatColor.WHITE + "Duration: " + ChatColor.DARK_AQUA + duration + "s");
-        }
-
+        if (duration != 0) lore.add(ChatColor.WHITE + "Duration: " + ChatColor.DARK_AQUA + duration + "s");
         lore.add(ChatColor.WHITE + "Cooldown: " + ChatColor.AQUA + cooldown + "s");
         lore.add(ChatColor.WHITE + "Cost: " + ChatColor.GOLD + cost + "⚡");
 
         // damage stats
-        lore.add("§b§l--------Damage--------");
-
-        // elemental multipliers
-        if (weaponDamageMultiplier != 0) {
-            lore.add("§f§n" + weaponDamageMultiplier + "%" + "§r§f" + " Weapon Damage \uD83D\uDDE1");
-        }
-
-        if (damageStats != null) {
-            for (Map.Entry<DamageType, Double> damageStat : damageStats.entrySet()) {
-                DamageType damageType = damageStat.getKey();
-                String icon = "";
-
-                switch (damageType) {
-                    case FIRE -> {
-                        icon = "\uD83D\uDD25";
-                    }
-                    case COLD -> {
-                        icon = "❄";
-                    }
-                    case EARTH -> {
-                        icon = "\uD83E\uDEA8";
-                    }
-                    case LIGHTNING -> {
-                        icon = "\uD83D\uDDF2";
-                    }
-                    case AIR -> {
-                        icon = "☁";
-                    }
-                    case LIGHT -> {
-                        icon = "✦";
-                    }
-                    case DARK -> {
-                        icon = "\uD83C\uDF00";
-                    }
-                    case PURE -> {
-                        icon = "\uD83D\uDCA2";
-                    }
-                }
-
-                lore.add(DamageType.getDamageColor(damageType) + "" + damageStat.getValue() + " % " + damageType + " " + icon);
-            }
+        if (damage != null) {
+            lore.add("§b§l--------Damage--------");
+            for (String damageString : damage) { lore.add(damageString); }
         }
 
         // todo: add stats effects (when i eventually get to that)
-        lore.add("§b§l--------Status--------");
+        if (statuses != null) {
+            lore.add("§b§l--------Statuses--------");
+            for (String statusString : statuses) { lore.add(statusString); }
+        }
 
-        // todo: add useable weapons (when i eventually get to that)
-        lore.add("§b§l--------Weapons--------");
+        if (weapons != null) {
+            lore.add("§b§l--------Weapons-------");
+            for (ItemType weapon : weapons) {
+                lore.add("§e- " + ItemType.getItemTypeString(weapon));
+                pdc.set(new NamespacedKey(expertiseStylePlugin, ItemType.getItemTypeString(weapon)), PersistentDataType.BOOLEAN, true);
+            }
+        }
 
         meta.setLore(lore);
         expertiseItem.setItemMeta(meta);
@@ -171,4 +142,19 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         return expertiseItem;
     }
 
+    public static List<ItemType> getWeaponsForAbility(ItemStack item) {
+        PersistentDataContainer pdc = item.getItemMeta().getPersistentDataContainer();
+        List<ItemType> weapons = new ArrayList<>(List.of(SWORD, DAGGER, AXE, HAMMER, SPEAR, GLOVE, BOW, WAND, STAFF, CATALYST));
+        List<ItemType> weaponsToRemove = new ArrayList<>();
+
+        for (ItemType weapon : weapons) {
+            NamespacedKey weaponKey = new NamespacedKey(expertiseStylePlugin, ItemType.getItemTypeString(weapon));
+            if (!pdc.has(weaponKey)) {
+                weaponsToRemove.add(weapon);
+            }
+        }
+
+        weapons.removeAll(weaponsToRemove);
+        return weapons;
+    }
 }

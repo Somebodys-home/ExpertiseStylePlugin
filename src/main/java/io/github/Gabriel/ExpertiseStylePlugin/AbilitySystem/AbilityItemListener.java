@@ -12,16 +12,21 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.metadata.FixedMetadataValue;
+
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.UUID;
 
 public class AbilityItemListener implements Listener {
+    private static ExpertiseStylePlugin expertiseStylePlugin;
     private final ItemStack expertiseAbilityItem = ExpertiseItemTemplate.emptyExpertiseAbilityItem();
     private final ItemStack styleAbilityItem = StyleAbilityItemTemplate.emptyStyleAbilityItem();
     private final ItemStack cooldownItem = AbilityItemTemplate.abilityCooldownItem();
-    private static ExpertiseStylePlugin instance;
+    private final ArrayList<UUID> triggeringPlayer = new ArrayList<>();
 
-    public AbilityItemListener(ExpertiseStylePlugin plugin) {
-        instance = plugin;
+    public AbilityItemListener(ExpertiseStylePlugin expertiseStylePlugin) {
+        this.expertiseStylePlugin = expertiseStylePlugin;
     }
 
     @EventHandler
@@ -112,28 +117,37 @@ public class AbilityItemListener implements Listener {
         }
     }
 
-    // listener to put items on cooldown when selecting them (using the ability)
+    // put items on cooldown when selecting them (using the ability)
     @EventHandler
     public void onUseAbility(PlayerItemHeldEvent event) {
+        Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
+
+        if (triggeringPlayer.contains(uuid)) { // recursion guard
+            triggeringPlayer.remove(uuid);
+            return;
+        }
+
         int newSlot = event.getNewSlot();
-        ItemStack abilityItem = event.getPlayer().getInventory().getItem(newSlot);
-        ItemStack weapon = event.getPlayer().getInventory().getItem(event.getPreviousSlot());
-        assert abilityItem != null;
-        assert weapon != null;
+        ItemStack abilityItem = player.getInventory().getItem(newSlot);
+        ItemStack weapon = player.getInventory().getItem(event.getPreviousSlot());
 
         if (AbilityItemTemplate.isImmovable(abilityItem)) {
             event.setCancelled(true);
+            player.setMetadata("usingAbility", new FixedMetadataValue(expertiseStylePlugin, true));
 
-            UseAbilityEvent useAbilityEvent = new UseAbilityEvent(event.getPlayer(), weapon, abilityItem);
-            Bukkit.getPluginManager().callEvent(useAbilityEvent);
+            triggeringPlayer.add(uuid);
+            Bukkit.getPluginManager().callEvent(new UseAbilityEvent(player, weapon, abilityItem));
 
             if (AbilityItemTemplate.getCooldown(abilityItem) != -1) { // if the item has a cooldown timer
-                event.getPlayer().getInventory().setItem(newSlot, cooldownItem);
+                player.getInventory().setItem(newSlot, cooldownItem);
 
-                Bukkit.getScheduler().runTaskLater(instance, () -> {
-                    event.getPlayer().getInventory().setItem(newSlot, abilityItem);
+                Bukkit.getScheduler().runTaskLater(expertiseStylePlugin, () -> {
+                    player.getInventory().setItem(newSlot, abilityItem);
                 }, 20L * AbilityItemTemplate.getCooldown(abilityItem)); // 20L = 1s
             }
+
+            player.removeMetadata("usingAbility", expertiseStylePlugin);
         }
     }
 
