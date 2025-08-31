@@ -40,11 +40,10 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
     }
 
     public static ItemStack makeExpertiseAbilityItem(String expertise, String name, String description, String targeting, int range, int duration, int cooldown, int cost, int weaponDamageMultiplier, Map<DamageType, Double> damageStats) {
-        ItemStack expertiseItem = new ItemStack(Material.CRYING_OBSIDIAN);
-        ChatColor color = ChatColor.DARK_PURPLE;
+        ItemStack expertiseItem = new ItemStack(Material.BARRIER);
+        ChatColor color = null;
         ItemMeta meta = expertiseItem.getItemMeta();
         List<String> lore = new ArrayList<>();
-        assert meta != null;
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
         pdc.set(immovableKey, PersistentDataType.INTEGER, 1);
         pdc.set(expertiseKey, PersistentDataType.INTEGER, 1);
@@ -65,10 +64,6 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
                 expertiseItem = new ItemStack(Material.GOLDEN_AXE);
                 color = ChatColor.DARK_RED;
                 meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            }
-            case "jouster" -> {
-                expertiseItem = new ItemStack(Material.STICK);
-                color = ChatColor.DARK_GRAY;
             }
             case "shield" -> {
                 expertiseItem = new ItemStack(Material.SHIELD);
@@ -98,6 +93,10 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
             case "hallowed" -> {
                 expertiseItem = new ItemStack(Material.OXEYE_DAISY);
                 color = ChatColor.WHITE;
+            }
+            case "abyssnian" -> {
+                expertiseItem = new ItemStack(Material.CRYING_OBSIDIAN);
+                color = ChatColor.DARK_PURPLE;
             }
         }
 

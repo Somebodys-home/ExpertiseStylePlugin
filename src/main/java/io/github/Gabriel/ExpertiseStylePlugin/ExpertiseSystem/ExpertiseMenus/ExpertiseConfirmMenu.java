@@ -1,8 +1,5 @@
 package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus;
 
-
-import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveSelectedAbilitiesSystem.SelectedManager;
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.menuSystem.Menu;
 import io.github.NoOne.menuSystem.PlayerMenuUtility;
 import org.bukkit.ChatColor;
@@ -11,14 +8,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class ExpertiseConfirmMenu extends Menu {
     private final ItemStack i3;
     private final ItemStack i4;
     private final ItemStack selected;
     private final Menu previous;
-    private SelectedManager selectedManager;
 
     public ExpertiseConfirmMenu(PlayerMenuUtility playerMenuUtility, ItemStack selected, Menu previous) {
         super(playerMenuUtility);
@@ -26,7 +21,6 @@ public class ExpertiseConfirmMenu extends Menu {
         this.i4 = playerMenuUtility.getOwner().getInventory().getItem(3);
         this.selected = selected;
         this.previous = previous;
-        selectedManager = new SelectedManager(JavaPlugin.getPlugin(ExpertiseStylePlugin.class));
     }
 
     @Override

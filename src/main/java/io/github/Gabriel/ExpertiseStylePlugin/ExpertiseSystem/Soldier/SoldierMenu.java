@@ -45,8 +45,8 @@ public class SoldierMenu extends Menu {
     }
 
     @Override
-    public void handlePlayerMenu(InventoryClickEvent inventoryClickEvent) {
-
+    public void handlePlayerMenu(InventoryClickEvent event) {
+        event.setCancelled(true);
     }
 
     @Override

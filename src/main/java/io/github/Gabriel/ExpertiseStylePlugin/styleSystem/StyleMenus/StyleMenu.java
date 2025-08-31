@@ -27,12 +27,11 @@ public class StyleMenu extends Menu {
     }
 
     @Override
-    public void handlePlayerMenu(InventoryClickEvent inventoryClickEvent) {
+    public void handlePlayerMenu(InventoryClickEvent event) {
 
     }
 
     @Override
     public void setMenuItems() {
-        underConstruction();
     }
 }

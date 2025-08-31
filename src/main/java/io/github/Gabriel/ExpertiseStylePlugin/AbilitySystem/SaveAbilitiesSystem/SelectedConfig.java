@@ -1,4 +1,4 @@
-package io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveSelectedAbilitiesSystem;
+package io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem;
 
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import org.bukkit.configuration.InvalidConfigurationException;

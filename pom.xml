@@ -118,18 +118,24 @@
         <dependency>
             <groupId>com.github.Somebodys-home</groupId>
             <artifactId>MenuSystem</artifactId>
-            <version>80dfed5099</version>
+            <version>d4d4a012c9</version>
         </dependency>
         <dependency>
             <groupId>com.github.Somebodys-home</groupId>
             <artifactId>DamagePlugin</artifactId>
-            <version>3507a76f6c</version>
+            <version>cd6eca73ff</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.Somebodys-home</groupId>
             <artifactId>NMLEnergySystem</artifactId>
-            <version>fc5a03da0a</version>
+            <version>4dd6002d90</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.Somebodys-home</groupId>
+            <artifactId>NMLItems</artifactId>
+            <version>a32090f992</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

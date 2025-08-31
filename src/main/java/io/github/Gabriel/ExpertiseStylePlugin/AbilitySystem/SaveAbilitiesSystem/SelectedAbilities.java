@@ -1,4 +1,4 @@
-package io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveSelectedAbilitiesSystem;
+package io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem;
 
 public class SelectedAbilities {
     private String[] abilities;

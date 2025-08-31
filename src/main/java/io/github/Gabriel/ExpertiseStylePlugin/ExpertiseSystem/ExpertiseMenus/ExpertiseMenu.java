@@ -12,11 +12,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class ExpertiseMenu extends Menu {
-    private ExpertiseStylePlugin expertiseStylePlugin;
 
     public ExpertiseMenu(PlayerMenuUtility playerMenuUtility) {
         super(playerMenuUtility);
-        this.expertiseStylePlugin = ExpertiseStylePlugin.getInstance();
     }
 
     @Override
@@ -31,6 +29,8 @@ public class ExpertiseMenu extends Menu {
 
     @Override
     public void handleMenu(InventoryClickEvent event) {
+        event.setCancelled(true);
+
         Player player = (Player) event.getWhoClicked();
         int slot = event.getSlot();
 
@@ -46,8 +46,8 @@ public class ExpertiseMenu extends Menu {
     }
 
     @Override
-    public void handlePlayerMenu(InventoryClickEvent inventoryClickEvent) {
-
+    public void handlePlayerMenu(InventoryClickEvent event) {
+        event.setCancelled(true);
     }
 
     @Override

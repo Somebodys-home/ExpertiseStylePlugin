@@ -1,7 +1,7 @@
 package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier;
 
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.UseAbilityEvent;
-import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveSelectedAbilitiesSystem.SelectedManager;
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

@@ -1,6 +1,5 @@
-package io.github.Gabriel.expertiseStylePlugin.commands;
+package io.github.Gabriel.expertiseStylePlugin.StyleSystem;
 
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleMenus.StyleMenu;
 import io.github.NoOne.menuSystem.MenuSystem;
 import org.bukkit.command.Command;
@@ -9,10 +8,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class ChooseStyleCommand implements CommandExecutor {
-    private ExpertiseStylePlugin expertiseStylePlugin;
 
-    public ChooseStyleCommand(ExpertiseStylePlugin expertiseStylePlugin) {
-        this.expertiseStylePlugin = expertiseStylePlugin;
+    public ChooseStyleCommand() {
     }
 
     @Override

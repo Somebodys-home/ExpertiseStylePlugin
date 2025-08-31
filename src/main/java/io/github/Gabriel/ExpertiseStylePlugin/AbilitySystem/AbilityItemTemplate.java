@@ -17,10 +17,10 @@ public class AbilityItemTemplate {
     protected static NamespacedKey immovableKey;
     protected static NamespacedKey cooldownKey;
 
-    public AbilityItemTemplate(ExpertiseStylePlugin plugin){
-        expertiseStylePlugin = plugin;
-        immovableKey = new NamespacedKey(plugin, "immovable");
-        cooldownKey = new NamespacedKey(plugin, "cooldown");
+    public AbilityItemTemplate(ExpertiseStylePlugin expertiseStylePlugin) {
+        this.expertiseStylePlugin = expertiseStylePlugin;
+        immovableKey = new NamespacedKey(expertiseStylePlugin, "immovable");
+        cooldownKey = new NamespacedKey(expertiseStylePlugin, "cooldown");
     }
 
     public static ItemStack abilityCooldownItem() {

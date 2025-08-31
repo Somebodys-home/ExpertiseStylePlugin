@@ -1,9 +1,11 @@
 package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier;
 
+import io.github.Gabriel.damagePlugin.customDamage.CustomDamageEvent;
 import io.github.Gabriel.damagePlugin.customDamage.CustomDamager;
-import io.github.Gabriel.damagePlugin.customDamage.DamageKey;
+import io.github.Gabriel.damagePlugin.customDamage.DamageConverter;
 import io.github.Gabriel.damagePlugin.customDamage.DamageType;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
+import io.github.NoOne.nMLItems.ItemSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -23,10 +25,10 @@ public class SoldierAbilityEffects {
     }
 
     public void slash(ItemStack weapon) {
-        DamageKey damageKey = new DamageKey(weapon);
         Location location = user.getLocation();
         Set<UUID> hitEntityUUIDs = new HashSet<>();
-        HashMap<DamageType, Double> multipliedDamageMap = damageKey.multiplyAllDamageStats(1.2);
+        HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.getAllDamageStats(weapon
+        ));
 
         for (double i = -Math.PI / 2; i <= Math.PI / 2; i += Math.PI / 10) {
             double x = Math.sin(i) * 2;
@@ -46,7 +48,7 @@ public class SoldierAbilityEffects {
 
         for (UUID uuid : hitEntityUUIDs) {
             if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                CustomDamager.doDamage(livingEntity, user, multipliedDamageMap);
+                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
             }
         }
 
