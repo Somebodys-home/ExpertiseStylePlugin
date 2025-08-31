@@ -26,14 +26,10 @@ public class AbilityItemTemplate {
     public static ItemStack abilityCooldownItem() {
         ItemStack cooldown = new ItemStack(Material.GRAY_DYE);
         ItemMeta meta = cooldown.getItemMeta();
-        assert meta != null;
-        List<String> lore = new ArrayList<>();
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
 
         pdc.set(immovableKey, PersistentDataType.INTEGER, 1);
-        meta.setDisplayName(ChatColor.GRAY + "Ability On Cooldown!");
-        lore.add(ChatColor.GRAY + "This ability is on cooldown!");
-        meta.setLore(lore);
+        meta.setDisplayName(ChatColor.GRAY + "This ability is on cooldown!");
         cooldown.setItemMeta(meta);
 
         return cooldown;

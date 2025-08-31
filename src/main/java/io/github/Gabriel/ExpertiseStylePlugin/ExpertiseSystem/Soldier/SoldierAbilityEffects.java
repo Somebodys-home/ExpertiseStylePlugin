@@ -9,6 +9,7 @@ import io.github.NoOne.nMLItems.ItemSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -55,6 +56,7 @@ public class SoldierAbilityEffects {
             }
         }
 
+        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
         hitEntityUUIDs.clear();
         EnergyManager.useEnergy(user, 15);
     }

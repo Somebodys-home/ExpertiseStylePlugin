@@ -42,7 +42,6 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // DO NOT CHANGE THE ORDER OF THIS, IT WILL BREAK
         selectedManager.saveProfilesToConfig();
         selectedConfig.saveConfig();
     }

@@ -14,11 +14,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class SoldierMenu extends Menu {
-    private ExpertiseStylePlugin expertiseStylePlugin;
-
     public SoldierMenu(PlayerMenuUtility playerMenuUtility) {
         super(playerMenuUtility);
-        expertiseStylePlugin = ExpertiseStylePlugin.getInstance();
     }
 
     @Override
