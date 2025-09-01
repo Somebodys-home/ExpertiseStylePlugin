@@ -17,17 +17,17 @@ public class SelectedManager {
         config = profileConfig.getConfig();
     }
 
-    public AbilityProfile createnewProfile(Player player) {
+    public void createnewProfile(Player player) {
         SelectedAbilities selectedAbilities = new SelectedAbilities(
                 player.getInventory().getItem(0).getItemMeta().getDisplayName(),
                 player.getInventory().getItem(1).getItemMeta().getDisplayName(),
                 player.getInventory().getItem(2).getItemMeta().getDisplayName(),
                 player.getInventory().getItem(3).getItemMeta().getDisplayName());
+
         AbilityProfile abilityProfile = new AbilityProfile(selectedAbilities);
 
         profileMap.put(player.getUniqueId(), abilityProfile);
 
-        return abilityProfile;
     }
 
     public AbilityProfile getPlayerProfile(UUID uuid) {

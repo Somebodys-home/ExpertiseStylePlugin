@@ -30,6 +30,8 @@ public class SoldierAbilityEffects {
     }
 
     public void slash(ItemStack weapon) {
+        user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
+
         Location location = user.getLocation();
         HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.multiplyAllDamageStats(weapon, 1.2));
 
@@ -43,21 +45,21 @@ public class SoldierAbilityEffects {
 
             for (Entity entity : user.getWorld().getNearbyEntities(particleLocation, 1.5, 1.5, 1.5)) {
                 if (!entity.equals(user)) {
-                    entity.setMetadata("ability hit", new FixedMetadataValue(expertiseStylePlugin, true));
                     hitEntityUUIDs.add(entity.getUniqueId());
                 }
             }
         }
 
         for (UUID uuid : hitEntityUUIDs) {
-            if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity && livingEntity.hasMetadata("ability hit")) {
+            if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
                 Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
-                livingEntity.removeMetadata("ability hit", expertiseStylePlugin);
             }
         }
 
         user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
         hitEntityUUIDs.clear();
         EnergyManager.useEnergy(user, 15);
+
+        user.removeMetadata("using ability", expertiseStylePlugin);
     }
 }

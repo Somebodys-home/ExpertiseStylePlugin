@@ -106,7 +106,7 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
 
         meta.setDisplayName(color + ChatColor.translateAlternateColorCodes('&', "&l" + name));
         lore.add("");
-        lore.add(ChatColor.GRAY + description);
+        for (String line : linebreak(description, 29)) lore.add(ChatColor.GRAY + line);
         lore.add("");
 
         // misc stats
@@ -131,7 +131,7 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         if (weapons != null) {
             lore.add("§b§l--------Weapons-------");
             for (ItemType weapon : weapons) {
-                lore.add("§e- " + ItemType.getItemTypeString(weapon));
+                lore.add("§e- " + ItemType.getItemTypeString(weapon) + "s");
                 pdc.set(new NamespacedKey(expertiseStylePlugin, ItemType.getItemTypeString(weapon)), PersistentDataType.BOOLEAN, true);
             }
         }
@@ -156,5 +156,25 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
 
         weapons.removeAll(weaponsToRemove);
         return weapons;
+    }
+
+    private static List<String> linebreak(String string, int size) {
+        List<String> breaks = new ArrayList<>();
+        int i = 0;
+
+        while (i < string.length()) {
+            int end = Math.min(string.length(), i + size);
+
+            // If the next chunk would start with a space, skip that space
+            if (i > 0 && string.charAt(i) == ' ') {
+                i++;
+                continue;
+            }
+
+            breaks.add(string.substring(i, end));
+            i = end;
+        }
+
+        return breaks;
     }
 }

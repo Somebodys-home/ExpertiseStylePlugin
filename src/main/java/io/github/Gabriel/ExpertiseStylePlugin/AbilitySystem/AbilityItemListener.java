@@ -123,7 +123,7 @@ public class AbilityItemListener implements Listener {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
 
-        if (triggeringPlayer.contains(uuid)) { // recursion guard
+        if (triggeringPlayer.contains(uuid)) { // double trigger guard
             triggeringPlayer.remove(uuid);
             return;
         }
@@ -134,7 +134,6 @@ public class AbilityItemListener implements Listener {
 
         if (AbilityItemTemplate.isImmovable(abilityItem)) {
             event.setCancelled(true);
-            player.setMetadata("usingAbility", new FixedMetadataValue(expertiseStylePlugin, true));
 
             triggeringPlayer.add(uuid);
             Bukkit.getPluginManager().callEvent(new UseAbilityEvent(player, weapon, abilityItem));
@@ -146,8 +145,6 @@ public class AbilityItemListener implements Listener {
                     player.getInventory().setItem(newSlot, abilityItem);
                 }, 20L * AbilityItemTemplate.getCooldown(abilityItem)); // 20L = 1s
             }
-
-            player.removeMetadata("usingAbility", expertiseStylePlugin);
         }
     }
 

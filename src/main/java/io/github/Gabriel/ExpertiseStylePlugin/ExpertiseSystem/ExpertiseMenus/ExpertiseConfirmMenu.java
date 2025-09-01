@@ -1,5 +1,7 @@
 package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus;
 
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedAbilities;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.menuSystem.Menu;
 import io.github.NoOne.menuSystem.PlayerMenuUtility;
 import org.bukkit.ChatColor;
@@ -14,13 +16,15 @@ public class ExpertiseConfirmMenu extends Menu {
     private final ItemStack i4;
     private final ItemStack selected;
     private final Menu previous;
+    private SelectedAbilities selectedAbilities;
 
-    public ExpertiseConfirmMenu(PlayerMenuUtility playerMenuUtility, ItemStack selected, Menu previous) {
+    public ExpertiseConfirmMenu(ExpertiseStylePlugin expertiseStylePlugin, PlayerMenuUtility playerMenuUtility, ItemStack selected, Menu previous) {
         super(playerMenuUtility);
         this.i3 = playerMenuUtility.getOwner().getInventory().getItem(2);
         this.i4 = playerMenuUtility.getOwner().getInventory().getItem(3);
         this.selected = selected;
         this.previous = previous;
+        selectedAbilities = expertiseStylePlugin.getSelectedManager().getPlayerProfile(playerMenuUtility.getOwner().getUniqueId()).getSelectedAbilities();
     }
 
     @Override
@@ -39,8 +43,14 @@ public class ExpertiseConfirmMenu extends Menu {
         int slot = event.getSlot();
 
         switch (slot) {
-            case 11 -> player.getInventory().setItem(2, selected);
-            case 15 -> player.getInventory().setItem(3, selected);
+            case 11 -> {
+                player.getInventory().setItem(2, selected);
+                selectedAbilities.setExpertise1(selected.getItemMeta().getDisplayName());
+            }
+            case 15 -> {
+                player.getInventory().setItem(3, selected);
+                selectedAbilities.setExpertise2(selected.getItemMeta().getDisplayName());
+            }
             case 22 -> previous.open();
         }
 

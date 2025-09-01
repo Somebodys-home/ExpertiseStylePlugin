@@ -1,4 +1,4 @@
-package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier;
+package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Assassin;
 
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus.ExpertiseConfirmMenu;
@@ -11,17 +11,17 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class SoldierMenu extends Menu {
+public class AssassinMenu extends Menu {
     private ExpertiseStylePlugin expertiseStylePlugin;
 
-    public SoldierMenu(ExpertiseStylePlugin expertiseStylePlugin, PlayerMenuUtility playerMenuUtility) {
+    public AssassinMenu(ExpertiseStylePlugin expertiseStylePlugin, PlayerMenuUtility playerMenuUtility) {
         super(playerMenuUtility);
         this.expertiseStylePlugin = expertiseStylePlugin;
     }
 
     @Override
     public String getMenuName() {
-        return ChatColor.translateAlternateColorCodes('&', "&c&lSoldier Abilities");
+        return "§0§lAssassin Abilities";
     }
 
     @Override
@@ -48,7 +48,7 @@ public class SoldierMenu extends Menu {
 
     @Override
     public void setMenuItems() {
-        inventory.setItem(10, SoldierAbilityItems.slash());
+        inventory.setItem(10, AssassinAbilityItems.slashandDash());
 
         // Backout button
         ItemStack nvm = new ItemStack(Material.BARRIER);
