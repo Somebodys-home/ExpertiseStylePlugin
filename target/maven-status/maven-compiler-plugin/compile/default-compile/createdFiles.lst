@@ -1,3 +1,4 @@
+io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Marauder\MarauderAbilityItems.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Assassin\AssassinAbilityEffects.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Assassin\AssassinListener.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Soldier\SoldierListener.class
@@ -6,12 +7,15 @@ io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseMenus\ExpertiseM
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\AbilityItemTemplate.class
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\SaveAbilitiesSystem\SelectedConfig.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseStylePlugin.class
+io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Marauder\MarauderAbilityEffects$1.class
+io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Marauder\MarauderListener.class
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\UseAbilityEvent.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Assassin\AssassinMenu.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseItemTemplate.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Assassin\AssassinAbilityItems.class
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\SaveAbilitiesSystem\SelectedManager.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseMenus\ExpertiseMenu.class
+io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Marauder\MarauderMenu.class
 io\github\Gabriel\expertiseStylePlugin\StyleSystem\ChooseStyleCommand.class
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\AbilityItemListener.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Assassin\AssassinAbilityEffects$1.class
@@ -19,8 +23,10 @@ io\github\Gabriel\expertiseStylePlugin\AbilitySystem\SaveAbilitiesSystem\Ability
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Soldier\SoldierAbilityItems.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseMenus\ExpertiseConfirmMenu.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Soldier\SoldierMenu.class
+io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Marauder\MarauderAbilityEffects.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ChooseExpertiseCommand.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Soldier\SoldierAbilityEffects.class
 io\github\Gabriel\expertiseStylePlugin\StyleSystem\StyleMenus\StyleMenu.class
+io\github\Gabriel\expertiseStylePlugin\AbilitySystem\AbilityItemListener$1.class
 io\github\Gabriel\expertiseStylePlugin\StyleSystem\StyleAbilityItemTemplate.class
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\SaveAbilitiesSystem\SelectedAbilities.class

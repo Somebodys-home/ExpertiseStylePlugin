@@ -27,7 +27,7 @@ public class StyleAbilityItemTemplate extends AbilityItemTemplate {
         List<String> lore = new ArrayList<>();
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
 
-        pdc.set(immovableKey, PersistentDataType.INTEGER, 1);
+        pdc.set(AbilityItemTemplate.getImmovableKey(), PersistentDataType.INTEGER, 1);
         meta.setDisplayName(ChatColor.AQUA + "Empty Style Ability");
         lore.add(ChatColor.GRAY + "An empty ability slot. Dunno why you'd put nothing here.");
         meta.setLore(lore);

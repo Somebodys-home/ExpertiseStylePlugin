@@ -32,7 +32,7 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         List<String> lore = new ArrayList<>();
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
 
-        pdc.set(immovableKey, PersistentDataType.INTEGER, 1);
+        pdc.set(AbilityItemTemplate.getImmovableKey(), PersistentDataType.INTEGER, 1);
         meta.setDisplayName(ChatColor.LIGHT_PURPLE + "Empty Expertise Ability");
         lore.add(ChatColor.GRAY + "An empty ability slot. Dunno why you'd put nothing here.");
         meta.setLore(lore);
@@ -49,9 +49,9 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         ItemMeta meta = expertiseItem.getItemMeta();
         List<String> lore = new ArrayList<>();
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
-        pdc.set(immovableKey, PersistentDataType.INTEGER, 1);
+        pdc.set(AbilityItemTemplate.getImmovableKey(), PersistentDataType.INTEGER, 1);
         pdc.set(expertiseKey, PersistentDataType.INTEGER, 1);
-        pdc.set(cooldownKey, PersistentDataType.INTEGER, cooldown);
+        pdc.set(AbilityItemTemplate.getCooldownKey(), PersistentDataType.INTEGER, cooldown);
 
         // color and itemstack of ability
         switch (expertise) {
@@ -106,7 +106,7 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
 
         meta.setDisplayName(color + ChatColor.translateAlternateColorCodes('&', "&l" + name));
         lore.add("");
-        for (String line : linebreak(description, 29)) lore.add(ChatColor.GRAY + line);
+        for (String line : linebreak(description, 33)) lore.add(ChatColor.GRAY + line);
         lore.add("");
 
         // misc stats
@@ -118,18 +118,18 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
 
         // damage stats
         if (damage != null) {
-            lore.add("§b§l--------Damage--------");
+            lore.add("§b§l----------Damage----------");
             for (String damageString : damage) { lore.add(damageString); }
         }
 
         // todo: add stats effects (when i eventually get to that)
         if (statuses != null) {
-            lore.add("§b§l--------Statuses--------");
+            lore.add("§b§l----------Statuses----------");
             for (String statusString : statuses) { lore.add(statusString); }
         }
 
         if (weapons != null) {
-            lore.add("§b§l--------Weapons-------");
+            lore.add("§b§l----------Weapons---------");
             for (ItemType weapon : weapons) {
                 lore.add("§e- " + ItemType.getItemTypeString(weapon) + "s");
                 pdc.set(new NamespacedKey(expertiseStylePlugin, ItemType.getItemTypeString(weapon)), PersistentDataType.BOOLEAN, true);
@@ -165,14 +165,22 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         while (i < string.length()) {
             int end = Math.min(string.length(), i + size);
 
-            // If the next chunk would start with a space, skip that space
-            if (i > 0 && string.charAt(i) == ' ') {
-                i++;
-                continue;
+            if (end < string.length() && string.charAt(end) != ' ') {
+                int lastSpace = string.lastIndexOf(' ', end);
+                if (lastSpace > i) {
+                    end = lastSpace; // move break point to last space
+                }
             }
 
-            breaks.add(string.substring(i, end));
+            String chunk = string.substring(i, end).trim();
+            if (!chunk.isEmpty()) {
+                breaks.add(chunk);
+            }
+
             i = end;
+            while (i < string.length() && string.charAt(i) == ' ') {
+                i++;
+            }
         }
 
         return breaks;

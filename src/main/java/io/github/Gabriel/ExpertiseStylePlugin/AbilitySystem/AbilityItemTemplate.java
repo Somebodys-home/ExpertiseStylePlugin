@@ -3,19 +3,18 @@ package io.github.Gabriel.expertiseStylePlugin.AbilitySystem;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class AbilityItemTemplate {
-    protected ExpertiseStylePlugin expertiseStylePlugin;
-    protected static NamespacedKey immovableKey;
-    protected static NamespacedKey cooldownKey;
+    private static ExpertiseStylePlugin expertiseStylePlugin;
+    private static NamespacedKey immovableKey;
+    private static NamespacedKey cooldownKey;
 
     public AbilityItemTemplate(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
@@ -54,4 +53,20 @@ public class AbilityItemTemplate {
         }
         return -1;
     }
+
+    public static void putAllAbilitesOnCooldown(Player player, int cooldown) {
+        player.setCooldown(player.getInventory().getItem(0).getType(), 20 * cooldown);
+        player.setCooldown(player.getInventory().getItem(1).getType(), 20 * cooldown);
+        player.setCooldown(player.getInventory().getItem(2).getType(), 20 * cooldown);
+        player.setCooldown(player.getInventory().getItem(3).getType(), 20 * cooldown);
+    }
+
+    public static NamespacedKey getImmovableKey() {
+        return immovableKey;
+    }
+
+    public static NamespacedKey getCooldownKey() {
+        return cooldownKey;
+    }
+
 }

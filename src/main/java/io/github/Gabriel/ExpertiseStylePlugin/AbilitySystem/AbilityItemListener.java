@@ -12,7 +12,7 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -135,15 +135,20 @@ public class AbilityItemListener implements Listener {
         if (AbilityItemTemplate.isImmovable(abilityItem)) {
             event.setCancelled(true);
 
+            if (player.hasCooldown(abilityItem.getType())) return;
+
             triggeringPlayer.add(uuid);
             Bukkit.getPluginManager().callEvent(new UseAbilityEvent(player, weapon, abilityItem));
 
             if (AbilityItemTemplate.getCooldown(abilityItem) != -1) { // if the item has a cooldown timer
                 player.getInventory().setItem(newSlot, cooldownItem);
 
-                Bukkit.getScheduler().runTaskLater(expertiseStylePlugin, () -> {
-                    player.getInventory().setItem(newSlot, abilityItem);
-                }, 20L * AbilityItemTemplate.getCooldown(abilityItem)); // 20L = 1s
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        player.getInventory().setItem(newSlot, abilityItem);
+                    }
+                }.runTaskLater(expertiseStylePlugin, 20L * AbilityItemTemplate.getCooldown(abilityItem));
             }
         }
     }

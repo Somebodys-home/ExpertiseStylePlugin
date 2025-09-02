@@ -64,9 +64,11 @@ public class AssassinAbilityEffects {
                 }
 
                 dashTicks--;
-                if (dashTicks == 0) this.cancel();
+                if (dashTicks == 0) {
+                    this.cancel();
+                    user.removeMetadata("using ability", expertiseStylePlugin);
+                }
 
-                user.removeMetadata("using ability", expertiseStylePlugin);
             }
         }.runTaskTimer(expertiseStylePlugin, 0L, 1L);
 

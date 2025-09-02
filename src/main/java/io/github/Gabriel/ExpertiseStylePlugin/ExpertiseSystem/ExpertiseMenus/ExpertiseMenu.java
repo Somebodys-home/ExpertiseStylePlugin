@@ -3,6 +3,7 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedAbilities;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Assassin.AssassinMenu;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marauder.MarauderMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierMenu;
 import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleAbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
@@ -42,6 +43,7 @@ public class ExpertiseMenu extends Menu {
         switch (slot) {
             case 10 -> new SoldierMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 11 -> new AssassinMenu(expertiseStylePlugin, playerMenuUtility).open();
+            case 12 -> new MarauderMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 44 -> {
                 player.getInventory().setItem(0, StyleAbilityItemTemplate.emptyStyleAbilityItem());
                 player.getInventory().setItem(1, StyleAbilityItemTemplate.emptyStyleAbilityItem());
