@@ -10,6 +10,7 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Cavalier.CavalierL
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseCommand;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marauder.MarauderListener;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.MartialArtist.MartialArtistListener;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierListener;
 import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleAbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleCommand;
@@ -44,6 +45,7 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new AssassinListener(this), this);
         getServer().getPluginManager().registerEvents(new MarauderListener(this), this);
         getServer().getPluginManager().registerEvents(new CavalierListener(this), this);
+        getServer().getPluginManager().registerEvents(new MartialArtistListener(this), this);
     }
 
     @Override

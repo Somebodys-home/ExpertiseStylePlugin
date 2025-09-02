@@ -81,7 +81,8 @@ public class ExpertiseMenuItems {
 
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&1&lCavalier"));
-        lore.add(ChatColor.translateAlternateColorCodes('&', "&7[TBD]"));
+        lore.add("§7I'M REFERENCING D&D, NOT 17TH CENTURY CLASSISM");
+        lore.add("§7DURING THE AMERICAN CIVIL WAR SHUT UP");
         lore.add("");
         lore.add(ChatColor.translateAlternateColorCodes('&', "&bCLICK TO SELECT!"));
         meta.setLore(lore);

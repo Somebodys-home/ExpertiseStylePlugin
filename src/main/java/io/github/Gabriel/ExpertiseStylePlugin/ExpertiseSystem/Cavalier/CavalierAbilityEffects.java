@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.*;
@@ -32,7 +33,8 @@ public class CavalierAbilityEffects {
 
     public void seismicSlam(ItemStack weapon) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
-        user.setMetadata("seismic slam", new FixedMetadataValue(expertiseStylePlugin, true));
+        user.setMetadata("falling", new FixedMetadataValue(expertiseStylePlugin, true));
+
         HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.multiplyAllDamageStats(weapon, 2));
         EnergyManager.useEnergy(user, 30);
         AbilityItemTemplate.putAllAbilitesOnCooldown(user, 1.5);
@@ -43,24 +45,30 @@ public class CavalierAbilityEffects {
         user.setVelocity(jump);
         user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 2f);
 
+        // trail particles
+        BukkitTask flyingParticles = new BukkitRunnable() {
+            @Override
+            public void run() {
+                user.getWorld().spawnParticle(Particle.SNOWFLAKE, user.getLocation(), 50, .25, 1, .25, 0);
+            }
+        }.runTaskTimer(expertiseStylePlugin, 0L, 1L);
+
         // slam
         Bukkit.getScheduler().runTaskLater(expertiseStylePlugin, () -> {
             Vector slam = user.getLocation().getDirection().multiply(1.5);
             slam.setY(-2.2);
             user.setVelocity(slam);
-            user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 2f);
+            user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, .3f);
+            user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, .3f);
 
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    if (!user.isOnline() || user.isDead()) {
-                        cancel();
-                        return;
-                    }
-
                     if (user.isOnGround()) {
+                        flyingParticles.cancel();
+                        user.stopSound(Sound.ENTITY_PLAYER_ATTACK_SWEEP);
                         user.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, user.getLocation().add(0, .5, 0), 3, .25, 0, .25, 0);
-                        user.playSound(user.getLocation(), Sound.ITEM_MACE_SMASH_GROUND_HEAVY, 1f, 1f);
+                        user.playSound(user.getLocation(), Sound.ITEM_MACE_SMASH_GROUND_HEAVY, 3f, 1f);
                         user.playSound(user.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, .8f, 1f);
 
                         for (Entity entity : user.getWorld().getNearbyEntities(user.getLocation(), 4, 2, 4)) {
@@ -81,7 +89,7 @@ public class CavalierAbilityEffects {
                         }
 
                         user.removeMetadata("using ability", expertiseStylePlugin);
-                        user.removeMetadata("seismic slam", expertiseStylePlugin);
+                        user.removeMetadata("falling", expertiseStylePlugin);
                         cancel();
                     }
                 }

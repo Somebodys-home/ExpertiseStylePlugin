@@ -1,4 +1,4 @@
-package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Cavalier;
+package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.MartialArtist;
 
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.UseAbilityEvent;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedManager;
@@ -12,12 +12,12 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.Arrays;
 
-public class CavalierListener implements Listener {
+public class MartialArtistListener implements Listener {
     private ExpertiseStylePlugin expertiseStylePlugin;
     private SelectedManager selectedManager;
-    private CavalierAbilityEffects cavalierAbilityEffects;
+    private MartialArtistAbilityEffects martialArtistAbilityEffects;
 
-    public CavalierListener(ExpertiseStylePlugin expertiseStylePlugin) {
+    public MartialArtistListener(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
         selectedManager = expertiseStylePlugin.getSelectedManager();
     }
@@ -27,12 +27,12 @@ public class CavalierListener implements Listener {
         if (event.getWeapon() != null) {
             String[] selectedAbilities = selectedManager.getPlayerProfile(event.getPlayer().getUniqueId()).getSelectedAbilities().getSelectedAbilitesArray();
             String abilityName = event.getAbility().getItemMeta().getDisplayName();
-            cavalierAbilityEffects = new CavalierAbilityEffects(expertiseStylePlugin, event.getPlayer());
+            martialArtistAbilityEffects = new MartialArtistAbilityEffects(expertiseStylePlugin, event.getPlayer());
 
             if (Arrays.asList(selectedAbilities).contains(abilityName)) {
-                if (abilityName.equals("§9§lSeismic Slam")) {
-                    if (ExpertiseItemTemplate.getWeaponsForAbility(CavalierAbilityItems.seismicSlam()).contains(ItemSystem.getItemType(event.getWeapon()))) {
-                        cavalierAbilityEffects.seismicSlam(event.getWeapon());
+                if (abilityName.equals("§4§l10-Hit Combo")) {
+                    if (ExpertiseItemTemplate.getWeaponsForAbility(MartialArtistAbilityItems.tenHitCombo()).contains(ItemSystem.getItemType(event.getWeapon()))) {
+                        martialArtistAbilityEffects.tenHitCombo(event.getWeapon());
                     } else {
                         event.getPlayer().sendMessage("§c⚠ §nWrong Weapon!§r§c ⚠");
                     }

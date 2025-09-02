@@ -16,7 +16,7 @@ public class CavalierAbilityItems extends AbilityItemTemplate {
         return ExpertiseItemTemplate.makeExpertiseAbilityItem(
                 "cavalier",
                 "Seismic Slam",
-                "Jump into the air, then crash into the ground, launching anyone nearby into the air",
+                "Jump into the air, then crash into the ground, launching anyone nearby away from you",
                 "Area",
                 16,
                 0,

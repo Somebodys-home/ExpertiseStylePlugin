@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
@@ -149,6 +150,17 @@ public class AbilityItemListener implements Listener {
                         player.getInventory().setItem(newSlot, abilityItem);
                     }
                 }.runTaskLater(expertiseStylePlugin, 20L * AbilityItemTemplate.getCooldown(abilityItem));
+            }
+        }
+    }
+
+    @EventHandler
+    public void fallingFromAbilityUse(EntityDamageEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
+                if (player.hasMetadata("falling")) {
+                    event.setCancelled(true);
+                }
             }
         }
     }
