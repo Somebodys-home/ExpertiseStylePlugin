@@ -8,9 +8,9 @@ depend:
   - DamagePlugin
   - NMLEnergySystem
 commands:
-  chooseExpertise:
+  expertise:
     description: Opens the menu to choose your expertise
     usage: /<command>
-  chooseStyle:
+  style:
     description: Opens the menu to choose your style
     usage: /<command>

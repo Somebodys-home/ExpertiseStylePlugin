@@ -11,7 +11,7 @@ C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\m
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Assassin\AssassinAbilityItems.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Assassin\AssassinListener.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Assassin\AssassinMenu.java
-C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ChooseExpertiseCommand.java
+C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseCommand.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseItemTemplate.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseMenus\ExpertiseConfirmMenu.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseMenus\ExpertiseMenu.java
@@ -24,6 +24,6 @@ C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\m
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Soldier\SoldierAbilityItems.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Soldier\SoldierListener.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Soldier\SoldierMenu.java
-C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\StyleSystem\ChooseStyleCommand.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\StyleSystem\StyleAbilityItemTemplate.java
+C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\StyleSystem\StyleCommand.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\StyleSystem\StyleMenus\StyleMenu.java

@@ -21,7 +21,7 @@ public class MarauderMenu extends Menu {
 
     @Override
     public String getMenuName() {
-        return "§4§lAssassin Abilities";
+        return "§4§lMarauder Abilities";
     }
 
     @Override

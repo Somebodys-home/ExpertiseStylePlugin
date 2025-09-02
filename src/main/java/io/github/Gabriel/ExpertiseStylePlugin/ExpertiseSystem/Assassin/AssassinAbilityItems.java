@@ -16,7 +16,7 @@ public class AssassinAbilityItems extends AbilityItemTemplate {
         return ExpertiseItemTemplate.makeExpertiseAbilityItem(
                 "assassin",
                 "Slash & Dash",
-                "Dash forwards, dealing damage to anything in your way",
+                "Dash forwards, dealing damage to anyone in your way",
                 "Area",
                 10,
                 0,
