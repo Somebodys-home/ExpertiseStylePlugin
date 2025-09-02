@@ -6,6 +6,7 @@ import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedListener;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Assassin.AssassinListener;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Cavalier.CavalierListener;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseCommand;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marauder.MarauderListener;
@@ -42,6 +43,7 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SoldierListener(this), this);
         getServer().getPluginManager().registerEvents(new AssassinListener(this), this);
         getServer().getPluginManager().registerEvents(new MarauderListener(this), this);
+        getServer().getPluginManager().registerEvents(new CavalierListener(this), this);
     }
 
     @Override

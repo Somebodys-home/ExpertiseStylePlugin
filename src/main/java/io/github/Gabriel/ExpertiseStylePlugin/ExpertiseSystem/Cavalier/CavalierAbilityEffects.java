@@ -1,0 +1,91 @@
+package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Cavalier;
+
+import io.github.Gabriel.damagePlugin.customDamage.CustomDamageEvent;
+import io.github.Gabriel.damagePlugin.customDamage.DamageConverter;
+import io.github.Gabriel.damagePlugin.customDamage.DamageType;
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
+import io.github.NoOne.nMLEnergySystem.EnergyManager;
+import io.github.NoOne.nMLItems.ItemSystem;
+import org.bukkit.Bukkit;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
+
+import java.util.*;
+
+public class CavalierAbilityEffects {
+    private ExpertiseStylePlugin expertiseStylePlugin;
+    private Player user;
+    private Set<UUID> hitEntityUUIDs = new HashSet<>();
+
+    public CavalierAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin, Player user) {
+        this.expertiseStylePlugin = expertiseStylePlugin;
+        this.user = user;
+    }
+
+    public void seismicSlam(ItemStack weapon) {
+        user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
+        user.setMetadata("seismic slam", new FixedMetadataValue(expertiseStylePlugin, true));
+        HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.multiplyAllDamageStats(weapon, 2));
+        EnergyManager.useEnergy(user, 30);
+        AbilityItemTemplate.putAllAbilitesOnCooldown(user, 1.5);
+
+        // jump
+        Vector jump = user.getLocation().getDirection().multiply(.5);
+        jump.setY(1.5);
+        user.setVelocity(jump);
+        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 2f);
+
+        // slam
+        Bukkit.getScheduler().runTaskLater(expertiseStylePlugin, () -> {
+            Vector slam = user.getLocation().getDirection().multiply(1.5);
+            slam.setY(-2.2);
+            user.setVelocity(slam);
+            user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 2f);
+
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (!user.isOnline() || user.isDead()) {
+                        cancel();
+                        return;
+                    }
+
+                    if (user.isOnGround()) {
+                        user.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, user.getLocation().add(0, .5, 0), 3, .25, 0, .25, 0);
+                        user.playSound(user.getLocation(), Sound.ITEM_MACE_SMASH_GROUND_HEAVY, 1f, 1f);
+                        user.playSound(user.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, .8f, 1f);
+
+                        for (Entity entity : user.getWorld().getNearbyEntities(user.getLocation(), 4, 2, 4)) {
+                            if (!entity.equals(user)) {
+                                hitEntityUUIDs.add(entity.getUniqueId());
+                            }
+                        }
+
+                        for (UUID uuid : hitEntityUUIDs) {
+                            if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+
+                                // knockback
+                                Vector knockback = livingEntity.getLocation().toVector().subtract(user.getLocation().toVector()).normalize().multiply(1.2);
+                                knockback.setY(.75);
+                                livingEntity.setVelocity(knockback);
+                            }
+                        }
+
+                        user.removeMetadata("using ability", expertiseStylePlugin);
+                        user.removeMetadata("seismic slam", expertiseStylePlugin);
+                        cancel();
+                    }
+                }
+            }.runTaskTimer(expertiseStylePlugin, 0L, 1L);
+        }, 20L);
+    }
+}

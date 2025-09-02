@@ -3,13 +3,13 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedAbilities;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Assassin.AssassinMenu;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Cavalier.CavalierMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marauder.MarauderMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierMenu;
 import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleAbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
 import io.github.NoOne.menuSystem.Menu;
 import io.github.NoOne.menuSystem.PlayerMenuUtility;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
@@ -44,6 +44,7 @@ public class ExpertiseMenu extends Menu {
             case 10 -> new SoldierMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 11 -> new AssassinMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 12 -> new MarauderMenu(expertiseStylePlugin, playerMenuUtility).open();
+            case 14 -> new CavalierMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 44 -> {
                 player.getInventory().setItem(0, StyleAbilityItemTemplate.emptyStyleAbilityItem());
                 player.getInventory().setItem(1, StyleAbilityItemTemplate.emptyStyleAbilityItem());
@@ -67,9 +68,9 @@ public class ExpertiseMenu extends Menu {
         inventory.setItem(10, ExpertiseMenuItems.soldier());
         inventory.setItem(11, ExpertiseMenuItems.assassin());
         inventory.setItem(12, ExpertiseMenuItems.marauder());
-        inventory.setItem(16, ExpertiseMenuItems.shieldHero());
         inventory.setItem(14, ExpertiseMenuItems.cavalier());
         inventory.setItem(15, ExpertiseMenuItems.martialArtist());
+        inventory.setItem(16, ExpertiseMenuItems.shieldHero());
         inventory.setItem(22, ExpertiseMenuItems.marksman());
         inventory.setItem(29, ExpertiseMenuItems.sorcerer());
         inventory.setItem(30, ExpertiseMenuItems.primordial());
