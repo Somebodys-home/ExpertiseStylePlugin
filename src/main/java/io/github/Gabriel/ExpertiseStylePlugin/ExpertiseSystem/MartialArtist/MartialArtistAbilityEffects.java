@@ -4,6 +4,7 @@ import io.github.Gabriel.damagePlugin.customDamage.CustomDamageEvent;
 import io.github.Gabriel.damagePlugin.customDamage.DamageConverter;
 import io.github.Gabriel.damagePlugin.customDamage.DamageType;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.CooldownManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLItems.ItemSystem;
@@ -30,13 +31,13 @@ public class MartialArtistAbilityEffects {
         this.user = user;
     }
 
-    public void tenHitCombo(ItemStack weapon) {
+    public void tenHitCombo(ItemStack weapon, int hotbarSlot) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
         user.setMetadata("falling", new FixedMetadataValue(expertiseStylePlugin, true));
 
         HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.multiplyAllDamageStats(weapon, .25));
         EnergyManager.useEnergy(user, 40);
-        AbilityItemTemplate.putAllAbilitesOnCooldown(user, 2);
+        CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
 
         // punch 1
         dashUntilCollision(2, 5, new BukkitRunnable() {
@@ -48,7 +49,6 @@ public class MartialArtistAbilityEffects {
 
                 user.getWorld().spawnParticle(Particle.CRIT, punch, 100, 0.25, 0.25, 0.25);
                 user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
-                user.swingMainHand();
 
                 for (Entity entity : user.getWorld().getNearbyEntities(punch, 1.5, 2, 1.5)) {
                     if (entity != user) {
@@ -62,6 +62,12 @@ public class MartialArtistAbilityEffects {
                         livingEntity.setNoDamageTicks(0);
                     }
                 }
+
+                if (hitEntityUUIDs.isEmpty()) {
+                    user.removeMetadata("using ability", expertiseStylePlugin);
+                } else {
+                    user.swingMainHand();
+                }
             }
         });
 
@@ -69,9 +75,9 @@ public class MartialArtistAbilityEffects {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (!hitEntityUUIDs.isEmpty()) {
+                if (user.hasMetadata("using ability")) {
                     hitEntityUUIDs.clear();
-                    AbilityItemTemplate.putAllAbilitesOnCooldown(user, 2);
+                    CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
 
                     dashUntilCollision(2, 5, new BukkitRunnable() {
                         @Override
@@ -96,6 +102,13 @@ public class MartialArtistAbilityEffects {
                                     livingEntity.setNoDamageTicks(0);
                                 }
                             }
+
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    if (hitEntityUUIDs.isEmpty()) user.removeMetadata("using ability", expertiseStylePlugin);
+                                }
+                            }.runTaskLater(expertiseStylePlugin, 1L);
                         }
                     });
                 }
@@ -107,9 +120,9 @@ public class MartialArtistAbilityEffects {
 
             @Override
             public void run() {
-                if (!hitEntityUUIDs.isEmpty()) {
+                if (user.hasMetadata("using ability")) {
                     hitEntityUUIDs.clear();
-                    AbilityItemTemplate.putAllAbilitesOnCooldown(user, 2);
+                    CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
 
                     dashUntilCollision(2, 5, new BukkitRunnable() {
                         @Override
@@ -134,6 +147,13 @@ public class MartialArtistAbilityEffects {
                                     livingEntity.setNoDamageTicks(0);
                                 }
                             }
+
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    if (hitEntityUUIDs.isEmpty()) user.removeMetadata("using ability", expertiseStylePlugin);
+                                }
+                            }.runTaskLater(expertiseStylePlugin, 1L);
                         }
                     });
                 }
@@ -142,12 +162,11 @@ public class MartialArtistAbilityEffects {
 
         // kick 4
         new BukkitRunnable() {
-
             @Override
             public void run() {
-                if (!hitEntityUUIDs.isEmpty()) {
+                if (user.hasMetadata("using ability")) {
                     hitEntityUUIDs.clear();
-                    AbilityItemTemplate.putAllAbilitesOnCooldown(user, 2);
+                    CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
 
                     dashUntilCollision(2, 5, new BukkitRunnable() {
                         @Override
@@ -176,6 +195,13 @@ public class MartialArtistAbilityEffects {
                                     livingEntity.setVelocity(jump); // knockback
                                 }
                             }
+
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    if (hitEntityUUIDs.isEmpty()) user.removeMetadata("using ability", expertiseStylePlugin);
+                                }
+                            }.runTaskLater(expertiseStylePlugin, 1L);
                         }
                     });
                 }
@@ -184,15 +210,13 @@ public class MartialArtistAbilityEffects {
 
         // kick 5
         new BukkitRunnable() {
-
             @Override
             public void run() {
-                if (!hitEntityUUIDs.isEmpty()) {
+                if (user.hasMetadata("using ability")) {
                     hitEntityUUIDs.clear();
-                    AbilityItemTemplate.putAllAbilitesOnCooldown(user, 2);
+                    CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
 
                     dashUntilCollision(2, 5, new BukkitRunnable() {
-
                         @Override
                         public void run() {
                             Vector slam = new Vector(0, -1, 0);
@@ -219,6 +243,13 @@ public class MartialArtistAbilityEffects {
                                     livingEntity.setVelocity(slam); // knockback
                                 }
                             }
+
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    if (hitEntityUUIDs.isEmpty()) user.removeMetadata("using ability", expertiseStylePlugin);
+                                }
+                            }.runTaskLater(expertiseStylePlugin, 1L);
                         }
                     });
                 }
@@ -227,12 +258,11 @@ public class MartialArtistAbilityEffects {
 
         // kick 6
         new BukkitRunnable() {
-
             @Override
             public void run() {
-                if (!hitEntityUUIDs.isEmpty()) {
+                if (user.hasMetadata("using ability")) {
                     hitEntityUUIDs.clear();
-                    AbilityItemTemplate.putAllAbilitesOnCooldown(user, 2);
+                    CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
 
                     dashUntilCollision(2, 5, new BukkitRunnable() {
                         @Override
@@ -259,6 +289,13 @@ public class MartialArtistAbilityEffects {
                                     livingEntity.setVelocity(knockback);
                                 }
                             }
+
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    if (hitEntityUUIDs.isEmpty()) user.removeMetadata("using ability", expertiseStylePlugin);
+                                }
+                            }.runTaskLater(expertiseStylePlugin, 1L);
                         }
                     });
                 }
@@ -267,12 +304,11 @@ public class MartialArtistAbilityEffects {
 
         // punch 7
         new BukkitRunnable() {
-
             @Override
             public void run() {
-                if (!hitEntityUUIDs.isEmpty()) {
+                if (user.hasMetadata("using ability")) {
                     hitEntityUUIDs.clear();
-                    AbilityItemTemplate.putAllAbilitesOnCooldown(user, 2);
+                    CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
 
                     dashUntilCollision(2, 5, new BukkitRunnable() {
                         @Override
@@ -310,6 +346,13 @@ public class MartialArtistAbilityEffects {
                                     livingEntity.setVelocity(knockback);
                                 }
                             }
+
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    if (hitEntityUUIDs.isEmpty()) user.removeMetadata("using ability", expertiseStylePlugin);
+                                }
+                            }.runTaskLater(expertiseStylePlugin, 1L);
                         }
                     });
                 }
@@ -318,12 +361,11 @@ public class MartialArtistAbilityEffects {
 
         // punch 8
         new BukkitRunnable() {
-
             @Override
             public void run() {
-                if (!hitEntityUUIDs.isEmpty()) {
+                if (user.hasMetadata("using ability")) {
                     hitEntityUUIDs.clear();
-                    AbilityItemTemplate.putAllAbilitesOnCooldown(user, 2);
+                    CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
 
                     dashUntilCollision(2, 5, new BukkitRunnable() {
                         @Override
@@ -361,6 +403,13 @@ public class MartialArtistAbilityEffects {
                                     livingEntity.setVelocity(knockback);
                                 }
                             }
+
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    if (hitEntityUUIDs.isEmpty()) user.removeMetadata("using ability", expertiseStylePlugin);
+                                }
+                            }.runTaskLater(expertiseStylePlugin, 1L);
                         }
                     });
                 }
@@ -372,9 +421,9 @@ public class MartialArtistAbilityEffects {
 
             @Override
             public void run() {
-                if (!hitEntityUUIDs.isEmpty()) {
+                if (user.hasMetadata("using ability")) {
                     hitEntityUUIDs.clear();
-                    AbilityItemTemplate.putAllAbilitesOnCooldown(user, 2);
+                    CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
 
                     dashUntilCollision(2, 5, new BukkitRunnable() {
                         @Override
@@ -412,6 +461,13 @@ public class MartialArtistAbilityEffects {
                                     livingEntity.setVelocity(knockback);
                                 }
                             }
+
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    if (hitEntityUUIDs.isEmpty()) user.removeMetadata("using ability", expertiseStylePlugin);
+                                }
+                            }.runTaskLater(expertiseStylePlugin, 1L);
                         }
                     });
                 }
@@ -424,9 +480,10 @@ public class MartialArtistAbilityEffects {
 
             @Override
             public void run() {
-                if (!hitEntityUUIDs.isEmpty()) {
+                if (user.hasMetadata("using ability")) {
+                    user.setMetadata("falling", new FixedMetadataValue(expertiseStylePlugin, true));
                     hitEntityUUIDs.clear();
-                    AbilityItemTemplate.putAllAbilitesOnCooldown(user, 2);
+                    CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
 
                     dashUntilCollision(2, 5, new BukkitRunnable() {
                         @Override
@@ -474,8 +531,13 @@ public class MartialArtistAbilityEffects {
                                 }
                             }
 
-                            hitEntityUUIDs.clear();
-                            user.removeMetadata("using ability", expertiseStylePlugin);
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    hitEntityUUIDs.clear();
+                                    user.removeMetadata("using ability", expertiseStylePlugin);
+                                }
+                            }.runTaskLater(expertiseStylePlugin, 1L);
                         }
                     });
                 }

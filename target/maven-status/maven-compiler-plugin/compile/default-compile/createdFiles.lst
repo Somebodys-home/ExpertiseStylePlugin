@@ -14,6 +14,7 @@ io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Marauder\MarauderAbilityE
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Marauder\MarauderListener.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Assassin\AssassinMenu.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArtistAbilityEffects$10$1$2.class
+io\github\Gabriel\expertiseStylePlugin\AbilitySystem\CooldownSystem\CooldownManager$1.class
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\SaveAbilitiesSystem\SelectedManager.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseMenus\ExpertiseMenu.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArtistAbilityEffects$3.class
@@ -68,5 +69,6 @@ io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArti
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Marauder\MarauderAbilityEffects.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArtistAbilityEffects$2$1$1.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArtistAbilityEffects$2.class
-io\github\Gabriel\expertiseStylePlugin\AbilitySystem\AbilityItemListener$1.class
+io\github\Gabriel\expertiseStylePlugin\AbilitySystem\CooldownSystem\CooldownManager.class
+io\github\Gabriel\expertiseStylePlugin\AbilitySystem\CooldownSystem\CooldownInstance.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArtistMenu.class
