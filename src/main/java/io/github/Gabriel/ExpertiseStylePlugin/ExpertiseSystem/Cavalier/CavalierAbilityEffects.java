@@ -4,6 +4,7 @@ import io.github.Gabriel.damagePlugin.customDamage.CustomDamageEvent;
 import io.github.Gabriel.damagePlugin.customDamage.DamageConverter;
 import io.github.Gabriel.damagePlugin.customDamage.DamageType;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.CooldownManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLItems.ItemSystem;
@@ -31,13 +32,13 @@ public class CavalierAbilityEffects {
         this.user = user;
     }
 
-    public void seismicSlam(ItemStack weapon) {
+    public void seismicSlam(ItemStack weapon, int hotbarSlot) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
         user.setMetadata("falling", new FixedMetadataValue(expertiseStylePlugin, true));
 
         HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.multiplyAllDamageStats(weapon, 2));
         EnergyManager.useEnergy(user, 30);
-        AbilityItemTemplate.putAllAbilitesOnCooldown(user, 1.5);
+        CooldownManager.putAllOtherAbilitesOnCooldown(user, 1.5, hotbarSlot);
 
         // jump
         Vector jump = user.getLocation().getDirection().multiply(.5);

@@ -54,13 +54,6 @@ public class AbilityItemTemplate {
         return -1;
     }
 
-    public static void putAllAbilitesOnCooldown(Player player, double cooldown) {
-        player.setCooldown(player.getInventory().getItem(0).getType(), (int) (20 * cooldown));
-        player.setCooldown(player.getInventory().getItem(1).getType(), (int) (20 * cooldown));
-        player.setCooldown(player.getInventory().getItem(2).getType(), (int) (20 * cooldown));
-        player.setCooldown(player.getInventory().getItem(3).getType(), (int) (20 * cooldown));
-    }
-
     public static NamespacedKey getImmovableKey() {
         return immovableKey;
     }

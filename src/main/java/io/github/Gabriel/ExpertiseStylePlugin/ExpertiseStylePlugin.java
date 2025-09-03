@@ -2,6 +2,7 @@ package io.github.Gabriel.expertiseStylePlugin;
 
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemListener;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.CooldownManager;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedConfig;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedListener;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedManager;
@@ -21,6 +22,7 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
     private static ExpertiseStylePlugin instance;
     private SelectedManager selectedManager;
     private SelectedConfig selectedConfig;
+    private CooldownManager cooldownManager;
 
     @Override
     public void onEnable() {
@@ -36,6 +38,9 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         selectedManager = new SelectedManager(this);
         selectedManager.loadProfilesFromConfig();
 
+        cooldownManager = new CooldownManager(this);
+        cooldownManager.start();
+
         getCommand("expertise").setExecutor(new ExpertiseCommand(this));
         getCommand("style").setExecutor(new StyleCommand());
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
@@ -50,6 +55,7 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        cooldownManager.stop();
         selectedManager.saveProfilesToConfig();
         selectedConfig.saveConfig();
     }

@@ -32,7 +32,7 @@ public class MartialArtistListener implements Listener {
             if (Arrays.asList(selectedAbilities).contains(abilityName)) {
                 if (abilityName.equals("§4§l10-Hit Combo")) {
                     if (ExpertiseItemTemplate.getWeaponsForAbility(MartialArtistAbilityItems.tenHitCombo()).contains(ItemSystem.getItemType(event.getWeapon()))) {
-                        martialArtistAbilityEffects.tenHitCombo(event.getWeapon());
+                        martialArtistAbilityEffects.tenHitCombo(event.getWeapon(), event.getHotbarSlot());
                     } else {
                         event.getPlayer().sendMessage("§c⚠ §nWrong Weapon!§r§c ⚠");
                     }

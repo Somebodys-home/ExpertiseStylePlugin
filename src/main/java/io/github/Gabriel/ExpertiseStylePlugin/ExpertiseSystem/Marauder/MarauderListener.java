@@ -30,7 +30,7 @@ public class MarauderListener implements Listener {
             if (Arrays.asList(selectedAbilities).contains(abilityName)) {
                 if (abilityName.equals("§4§lBlade Tornado")) {
                     if (ExpertiseItemTemplate.getWeaponsForAbility(MarauderAbilityItems.bladeTornado()).contains(ItemSystem.getItemType(event.getWeapon()))) {
-                        marauderAbilityEffects.bladeTornado(event.getWeapon());
+                        marauderAbilityEffects.bladeTornado(event.getWeapon(), event.getHotbarSlot());
                     } else {
                         event.getPlayer().sendMessage("§c⚠ §nWrong Weapon!§r§c ⚠");
                     }

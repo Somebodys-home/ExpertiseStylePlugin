@@ -12,11 +12,13 @@ public class UseAbilityEvent extends Event {
     private final Player player;
     private final ItemStack weapon;
     private final ItemStack ability;
+    private final int hotbarSlot;
 
-    public UseAbilityEvent(@NotNull Player player, ItemStack weapon, ItemStack ability) {
+    public UseAbilityEvent(@NotNull Player player, ItemStack weapon, ItemStack ability, int hotbarSlot) {
         this.player = player;
         this.weapon = weapon;
         this.ability = ability;
+        this.hotbarSlot = hotbarSlot;
     }
 
     @Override
@@ -29,4 +31,8 @@ public class UseAbilityEvent extends Event {
     public ItemStack getWeapon() { return weapon; }
 
     public ItemStack getAbility() { return ability; }
+
+    public int getHotbarSlot() {
+        return hotbarSlot;
+    }
 }

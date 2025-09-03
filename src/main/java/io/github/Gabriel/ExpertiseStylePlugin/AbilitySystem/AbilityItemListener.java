@@ -1,5 +1,6 @@
 package io.github.Gabriel.expertiseStylePlugin.AbilitySystem;
 
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.CooldownManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleAbilityItemTemplate;
@@ -139,17 +140,10 @@ public class AbilityItemListener implements Listener {
             if (player.hasCooldown(abilityItem.getType())) return;
 
             triggeringPlayer.add(uuid);
-            Bukkit.getPluginManager().callEvent(new UseAbilityEvent(player, weapon, abilityItem));
+            Bukkit.getPluginManager().callEvent(new UseAbilityEvent(player, weapon, abilityItem, newSlot));
 
             if (AbilityItemTemplate.getCooldown(abilityItem) != -1) { // if the item has a cooldown timer
-                player.getInventory().setItem(newSlot, cooldownItem);
-
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        player.getInventory().setItem(newSlot, abilityItem);
-                    }
-                }.runTaskLater(expertiseStylePlugin, 20L * AbilityItemTemplate.getCooldown(abilityItem));
+                CooldownManager.putOnCooldown(player, newSlot, AbilityItemTemplate.getCooldown(abilityItem));
             }
         }
     }

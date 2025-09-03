@@ -4,6 +4,7 @@ import io.github.Gabriel.damagePlugin.customDamage.CustomDamageEvent;
 import io.github.Gabriel.damagePlugin.customDamage.DamageConverter;
 import io.github.Gabriel.damagePlugin.customDamage.DamageType;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.CooldownManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLItems.ItemSystem;
@@ -32,11 +33,11 @@ public class MarauderAbilityEffects {
         this.user = user;
     }
 
-    public void bladeTornado(ItemStack weapon) {
+    public void bladeTornado(ItemStack weapon, int hotbarSlot) {
         HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.multiplyAllDamageStats(weapon, .5));
 
         EnergyManager.useEnergy(user, 30);
-        AbilityItemTemplate.putAllAbilitesOnCooldown(user, 5);
+        CooldownManager.putAllOtherAbilitesOnCooldown(user, 5, hotbarSlot);
         user.getAttribute(Attribute.GENERIC_STEP_HEIGHT).setBaseValue(1);
 
         new BukkitRunnable() {
