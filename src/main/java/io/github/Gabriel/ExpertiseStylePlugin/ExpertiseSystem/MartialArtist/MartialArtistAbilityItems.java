@@ -20,8 +20,8 @@ public class MartialArtistAbilityItems extends AbilityItemTemplate {
                 "Single",
                 5,
                 0,
-                5,
-                40,
+                10,
+                115,
                 List.of("§f§n300%" + "§r§f" + " Weapon Damage \uD83D\uDDE1"),
                 null,
                 List.of(GLOVE));

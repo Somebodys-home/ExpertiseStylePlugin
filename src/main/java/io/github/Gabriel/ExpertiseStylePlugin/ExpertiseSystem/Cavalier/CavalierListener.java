@@ -27,12 +27,12 @@ public class CavalierListener implements Listener {
         if (event.getWeapon() != null) {
             String[] selectedAbilities = selectedManager.getPlayerProfile(event.getPlayer().getUniqueId()).getSelectedAbilities().getSelectedAbilitesArray();
             String abilityName = event.getAbility().getItemMeta().getDisplayName();
-            cavalierAbilityEffects = new CavalierAbilityEffects(expertiseStylePlugin, event.getPlayer());
+            cavalierAbilityEffects = new CavalierAbilityEffects(expertiseStylePlugin, event.getPlayer(), event.getHotbarSlot());
 
             if (Arrays.asList(selectedAbilities).contains(abilityName)) {
                 if (abilityName.equals("§9§lSeismic Slam")) {
                     if (ExpertiseItemTemplate.getWeaponsForAbility(CavalierAbilityItems.seismicSlam()).contains(ItemSystem.getItemType(event.getWeapon()))) {
-                        cavalierAbilityEffects.seismicSlam(event.getWeapon(), event.getHotbarSlot());
+                        cavalierAbilityEffects.seismicSlam(event.getWeapon());
                     } else {
                         event.getPlayer().sendMessage("§c⚠ §nWrong Weapon!§r§c ⚠");
                     }

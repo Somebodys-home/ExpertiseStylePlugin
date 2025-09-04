@@ -24,21 +24,23 @@ import java.util.*;
 
 public class CavalierAbilityEffects {
     private ExpertiseStylePlugin expertiseStylePlugin;
-    private Player user;
     private Set<UUID> hitEntityUUIDs = new HashSet<>();
+    private Player user;
+    private int hotbarSlot;
 
-    public CavalierAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin, Player user) {
+    public CavalierAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin, Player user, int hotbarSlot) {
         this.expertiseStylePlugin = expertiseStylePlugin;
         this.user = user;
+        this.hotbarSlot = hotbarSlot;
     }
 
-    public void seismicSlam(ItemStack weapon, int hotbarSlot) {
+    public void seismicSlam(ItemStack weapon) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
         user.setMetadata("falling", new FixedMetadataValue(expertiseStylePlugin, true));
 
         HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.multiplyAllDamageStats(weapon, 2));
         EnergyManager.useEnergy(user, 30);
-        CooldownManager.putAllOtherAbilitesOnCooldown(user, 1.5, hotbarSlot);
+        CooldownManager.putAllOtherAbilitesOnCooldown(user, 4, hotbarSlot);
 
         // jump
         Vector jump = user.getLocation().getDirection().multiply(.5);

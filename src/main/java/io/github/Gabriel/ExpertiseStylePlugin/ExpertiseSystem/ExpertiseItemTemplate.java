@@ -56,7 +56,7 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         // color and itemstack of ability
         switch (expertise) {
             case "swordsman" -> {
-                expertiseItem = new ItemStack(Material.IRON_SWORD);
+                expertiseItem = new ItemStack(Material.DIAMOND_SWORD);
                 color = ChatColor.RED;
                 meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             }

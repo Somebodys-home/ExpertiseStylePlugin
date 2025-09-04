@@ -25,7 +25,7 @@ public class SoldierListener implements Listener {
         if (event.getWeapon() != null) {
             String[] selectedAbilities = selectedManager.getPlayerProfile(event.getPlayer().getUniqueId()).getSelectedAbilities().getSelectedAbilitesArray();
             String abilityName = event.getAbility().getItemMeta().getDisplayName();
-            soldierAbilityEffects = new SoldierAbilityEffects(expertiseStylePlugin, event.getPlayer());
+            soldierAbilityEffects = new SoldierAbilityEffects(expertiseStylePlugin, event.getPlayer(), event.getHotbarSlot());
 
             if (Arrays.asList(selectedAbilities).contains(abilityName)) {
                 if (abilityName.equals("§c§lSlash")) {

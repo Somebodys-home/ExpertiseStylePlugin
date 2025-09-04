@@ -3,7 +3,6 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.MartialArtist;
 import io.github.Gabriel.damagePlugin.customDamage.CustomDamageEvent;
 import io.github.Gabriel.damagePlugin.customDamage.DamageConverter;
 import io.github.Gabriel.damagePlugin.customDamage.DamageType;
-import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.CooldownManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
@@ -16,33 +15,35 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.*;
 
 public class MartialArtistAbilityEffects {
     private ExpertiseStylePlugin expertiseStylePlugin;
-    private Player user;
     private Set<UUID> hitEntityUUIDs = new HashSet<>();
+    private Player user;
+    private int hotbarSlot;
 
-    public MartialArtistAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin, Player user) {
+    public MartialArtistAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin, Player user, int hotbarSlot) {
         this.expertiseStylePlugin = expertiseStylePlugin;
         this.user = user;
+        this.hotbarSlot = hotbarSlot;
     }
 
-    public void tenHitCombo(ItemStack weapon, int hotbarSlot) {
+    public void tenHitCombo(ItemStack weapon) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
         user.setMetadata("falling", new FixedMetadataValue(expertiseStylePlugin, true));
 
         HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.multiplyAllDamageStats(weapon, .25));
-        EnergyManager.useEnergy(user, 40);
         CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
 
         // punch 1
         dashUntilCollision(2, 5, new BukkitRunnable() {
             @Override
             public void run() {
+                EnergyManager.useEnergy(user, 5);
+
                 Location baseLocation = user.getLocation().add(0, 1.5, 0);
                 Vector forward = user.getLocation().getDirection().normalize().multiply(2);
                 Location punch = baseLocation.clone().add(forward);
@@ -77,11 +78,13 @@ public class MartialArtistAbilityEffects {
             public void run() {
                 if (user.hasMetadata("using ability")) {
                     hitEntityUUIDs.clear();
-                    CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
+                    CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
 
                     dashUntilCollision(2, 5, new BukkitRunnable() {
                         @Override
                         public void run() {
+                            EnergyManager.useEnergy(user, 5);
+
                             Location baseLocation = user.getLocation().add(0, 1.5, 0);
                             Vector forward = user.getLocation().getDirection().normalize().multiply(2);
                             Location punch = baseLocation.clone().add(forward);
@@ -117,16 +120,17 @@ public class MartialArtistAbilityEffects {
 
         // punch 3
         new BukkitRunnable() {
-
             @Override
             public void run() {
                 if (user.hasMetadata("using ability")) {
                     hitEntityUUIDs.clear();
-                    CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
+                    CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
 
                     dashUntilCollision(2, 5, new BukkitRunnable() {
                         @Override
                         public void run() {
+                            EnergyManager.useEnergy(user, 5);
+
                             Location baseLocation = user.getLocation().add(0, 1.5, 0);
                             Vector forward = user.getLocation().getDirection().normalize().multiply(2);
                             Location punch = baseLocation.clone().add(forward);
@@ -166,11 +170,13 @@ public class MartialArtistAbilityEffects {
             public void run() {
                 if (user.hasMetadata("using ability")) {
                     hitEntityUUIDs.clear();
-                    CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
+                    CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
 
                     dashUntilCollision(2, 5, new BukkitRunnable() {
                         @Override
                         public void run() {
+                            EnergyManager.useEnergy(user, 10);
+
                             Vector jump = new Vector(0, 1, 0);
                             user.setVelocity(jump);
                             user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
@@ -214,11 +220,13 @@ public class MartialArtistAbilityEffects {
             public void run() {
                 if (user.hasMetadata("using ability")) {
                     hitEntityUUIDs.clear();
-                    CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
+                    CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
 
                     dashUntilCollision(2, 5, new BukkitRunnable() {
                         @Override
                         public void run() {
+                            EnergyManager.useEnergy(user, 10);
+
                             Vector slam = new Vector(0, -1, 0);
                             user.setVelocity(slam);
                             user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
@@ -262,11 +270,13 @@ public class MartialArtistAbilityEffects {
             public void run() {
                 if (user.hasMetadata("using ability")) {
                     hitEntityUUIDs.clear();
-                    CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
+                    CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
 
                     dashUntilCollision(2, 5, new BukkitRunnable() {
                         @Override
                         public void run() {
+                            EnergyManager.useEnergy(user, 10);
+
                             Location baseLocation = user.getLocation().add(0, 1.5, 0);
                             Vector forward = user.getLocation().getDirection().normalize().multiply(2);
                             Location punch = baseLocation.clone().add(forward);
@@ -308,11 +318,13 @@ public class MartialArtistAbilityEffects {
             public void run() {
                 if (user.hasMetadata("using ability")) {
                     hitEntityUUIDs.clear();
-                    CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
+                    CooldownManager.putAllOtherAbilitesOnCooldown(user, .8, hotbarSlot);
 
                     dashUntilCollision(2, 5, new BukkitRunnable() {
                         @Override
                         public void run() {
+                            EnergyManager.useEnergy(user, 10);
+
                             Location baseLocation = user.getLocation().add(0, 1.5, 0);
                             Vector forward = user.getLocation().getDirection().normalize().multiply(2);
                             Location punch = baseLocation.clone().add(forward);
@@ -365,11 +377,13 @@ public class MartialArtistAbilityEffects {
             public void run() {
                 if (user.hasMetadata("using ability")) {
                     hitEntityUUIDs.clear();
-                    CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
+                    CooldownManager.putAllOtherAbilitesOnCooldown(user, .8, hotbarSlot);
 
                     dashUntilCollision(2, 5, new BukkitRunnable() {
                         @Override
                         public void run() {
+                            EnergyManager.useEnergy(user, 10);
+
                             Location baseLocation = user.getLocation().add(0, 1.5, 0);
                             Vector forward = user.getLocation().getDirection().normalize().multiply(2);
                             Location punch = baseLocation.clone().add(forward);
@@ -418,16 +432,17 @@ public class MartialArtistAbilityEffects {
 
         // punch 9
         new BukkitRunnable() {
-
             @Override
             public void run() {
                 if (user.hasMetadata("using ability")) {
                     hitEntityUUIDs.clear();
-                    CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
+                    CooldownManager.putAllOtherAbilitesOnCooldown(user, .8, hotbarSlot);
 
                     dashUntilCollision(2, 5, new BukkitRunnable() {
                         @Override
                         public void run() {
+                            EnergyManager.useEnergy(user, 10);
+
                             Location baseLocation = user.getLocation().add(0, 1.5, 0);
                             Vector forward = user.getLocation().getDirection().normalize().multiply(2);
                             Location punch = baseLocation.clone().add(forward);
@@ -483,12 +498,14 @@ public class MartialArtistAbilityEffects {
                 if (user.hasMetadata("using ability")) {
                     user.setMetadata("falling", new FixedMetadataValue(expertiseStylePlugin, true));
                     hitEntityUUIDs.clear();
-                    CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
+                    CooldownManager.putAllOtherAbilitesOnCooldown(user, .8, hotbarSlot);
 
                     dashUntilCollision(2, 5, new BukkitRunnable() {
                         @Override
                         public void run() {
-                            Vector jump = user.getLocation().getDirection().multiply(1.5).setY(1.2);
+                            EnergyManager.useEnergy(user, 25);
+
+                            Vector jump = user.getLocation().getDirection().multiply(1.5).setY(1.5);
                             Location baseLocation = user.getLocation().add(0, 4, 0);
                             Vector forward = user.getLocation().getDirection().normalize().multiply(2);
                             Location punch = baseLocation.clone().add(forward);
@@ -498,21 +515,35 @@ public class MartialArtistAbilityEffects {
                             user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
                             user.playSound(user.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.PLAYERS, 3f, 1f);
 
-                            // lingering uppercut particles
+                            // uppercut particles
                             new BukkitRunnable() {
-                                int particleticks = 12;
+                                int particleticks = 20;
+                                int i = 0;
+                                double angleStep = Math.PI / 20;
 
                                 @Override
                                 public void run() {
-                                    Location baseLocation = user.getLocation().add(0, 1.5, 0);
-                                    Vector forward = baseLocation.getDirection().normalize().multiply(1);
-                                    Location uppercut = baseLocation.clone().add(forward);
+                                    Location baseLocation = user.getLocation().clone().add(0, 1, 0);
+                                    Location trail = baseLocation.clone().add(user.getLocation().getDirection().normalize().multiply(-1));
 
-                                    user.getWorld().spawnParticle(Particle.SNOWFLAKE, uppercut, 50, .25, .5, .25, 0);
-                                    user.getWorld().spawnParticle(Particle.FLAME, uppercut, 10, .05, .1, .05, 0);
-                                    user.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, uppercut, 10, .05, .1, .05, 0);
+                                    for (double j = 0; j < 20; j++) {
+                                        double radius = 1.5;
+                                        double angle = (2 * (i * angleStep) + (j * 0.05)) - 180;
+                                        double reverseAngle = angle - 180;
+                                        double x = Math.cos(angle) * radius;
+                                        double z = Math.sin(angle) * radius;
+                                        double reverseX = Math.cos(reverseAngle) * radius;
+                                        double reverseZ = Math.sin(reverseAngle) * radius;
+                                        Location soulFireLocation = user.getLocation().clone().add(x, 2, z);
+                                        Location fireLocation = user.getLocation().clone().add(reverseX,  2, reverseZ);
+
+                                        user.getWorld().spawnParticle(Particle.SNOWFLAKE, trail, 10, .05, .05, .05, 0);
+                                        user.getWorld().spawnParticle(Particle.FLAME, fireLocation, 30, 0, 0, 0, 0);
+                                        user.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, soulFireLocation, 30, 0, 0, 0, 0);
+                                    }
+
                                     particleticks--;
-
+                                    i++;
                                     if (particleticks == 0) cancel();
                                 }
                             }.runTaskTimer(expertiseStylePlugin, 0L, 1L);

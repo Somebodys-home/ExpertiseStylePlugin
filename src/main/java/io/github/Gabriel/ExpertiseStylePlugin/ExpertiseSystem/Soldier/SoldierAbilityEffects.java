@@ -3,6 +3,7 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier;
 import io.github.Gabriel.damagePlugin.customDamage.CustomDamageEvent;
 import io.github.Gabriel.damagePlugin.customDamage.DamageConverter;
 import io.github.Gabriel.damagePlugin.customDamage.DamageType;
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.CooldownManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLItems.ItemSystem;
@@ -21,12 +22,14 @@ import java.util.*;
 
 public class SoldierAbilityEffects {
     private ExpertiseStylePlugin expertiseStylePlugin;
-    private Player user;
     private Set<UUID> hitEntityUUIDs = new HashSet<>();
+    private Player user;
+    private int hotbarSlot;
 
-    public SoldierAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin, Player user) {
+    public SoldierAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin, Player user, int hotbarSlot) {
         this.expertiseStylePlugin = expertiseStylePlugin;
         this.user = user;
+        this.hotbarSlot = hotbarSlot;
     }
 
     public void slash(ItemStack weapon) {
@@ -34,6 +37,10 @@ public class SoldierAbilityEffects {
 
         Location location = user.getLocation();
         HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.multiplyAllDamageStats(weapon, 1.2));
+
+        CooldownManager.putAllOtherAbilitesOnCooldown(user, 1, hotbarSlot);
+        EnergyManager.useEnergy(user, 15);
+        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
 
         for (double i = -Math.PI / 2; i <= Math.PI / 2; i += Math.PI / 10) {
             double x = Math.sin(i) * 2;
@@ -53,12 +60,9 @@ public class SoldierAbilityEffects {
         for (UUID uuid : hitEntityUUIDs) {
             if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
                 Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                hitEntityUUIDs.remove(uuid);
             }
         }
-
-        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
-        hitEntityUUIDs.clear();
-        EnergyManager.useEnergy(user, 15);
 
         user.removeMetadata("using ability", expertiseStylePlugin);
     }

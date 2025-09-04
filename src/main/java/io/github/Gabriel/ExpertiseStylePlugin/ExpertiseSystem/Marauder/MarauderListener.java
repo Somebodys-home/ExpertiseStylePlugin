@@ -25,12 +25,12 @@ public class MarauderListener implements Listener {
         if (event.getWeapon() != null) {
             String[] selectedAbilities = selectedManager.getPlayerProfile(event.getPlayer().getUniqueId()).getSelectedAbilities().getSelectedAbilitesArray();
             String abilityName = event.getAbility().getItemMeta().getDisplayName();
-            marauderAbilityEffects = new MarauderAbilityEffects(expertiseStylePlugin, event.getPlayer());
+            marauderAbilityEffects = new MarauderAbilityEffects(expertiseStylePlugin, event.getPlayer(), event.getHotbarSlot());
 
             if (Arrays.asList(selectedAbilities).contains(abilityName)) {
                 if (abilityName.equals("§4§lBlade Tornado")) {
                     if (ExpertiseItemTemplate.getWeaponsForAbility(MarauderAbilityItems.bladeTornado()).contains(ItemSystem.getItemType(event.getWeapon()))) {
-                        marauderAbilityEffects.bladeTornado(event.getWeapon(), event.getHotbarSlot());
+                        marauderAbilityEffects.bladeTornado(event.getWeapon());
                     } else {
                         event.getPlayer().sendMessage("§c⚠ §nWrong Weapon!§r§c ⚠");
                     }

@@ -25,7 +25,7 @@ public class AssassinListener implements Listener {
         if (event.getWeapon() != null) {
             String[] selectedAbilities = selectedManager.getPlayerProfile(event.getPlayer().getUniqueId()).getSelectedAbilities().getSelectedAbilitesArray();
             String abilityName = event.getAbility().getItemMeta().getDisplayName();
-            assassinAbilityEffects = new AssassinAbilityEffects(expertiseStylePlugin, event.getPlayer());
+            assassinAbilityEffects = new AssassinAbilityEffects(expertiseStylePlugin, event.getPlayer(), event.getHotbarSlot());
 
             if (Arrays.asList(selectedAbilities).contains(abilityName)) {
                 if (abilityName.equals("§8§lSlash & Dash")) {

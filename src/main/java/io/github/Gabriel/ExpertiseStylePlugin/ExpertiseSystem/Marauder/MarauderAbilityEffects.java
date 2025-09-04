@@ -25,19 +25,21 @@ import java.util.*;
 
 public class MarauderAbilityEffects {
     private ExpertiseStylePlugin expertiseStylePlugin;
-    private Player user;
     private Set<UUID> hitEntityUUIDs = new HashSet<>();
+    private Player user;
+    private int hotbarSlot;
 
-    public MarauderAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin, Player user) {
+    public MarauderAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin, Player user, int hotbarSlot) {
         this.expertiseStylePlugin = expertiseStylePlugin;
         this.user = user;
+        this.hotbarSlot = hotbarSlot;
     }
 
-    public void bladeTornado(ItemStack weapon, int hotbarSlot) {
+    public void bladeTornado(ItemStack weapon) {
         HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.multiplyAllDamageStats(weapon, .5));
 
         EnergyManager.useEnergy(user, 30);
-        CooldownManager.putAllOtherAbilitesOnCooldown(user, 5, hotbarSlot);
+        CooldownManager.putAllOtherAbilitesOnCooldown(user, 6, hotbarSlot);
         user.getAttribute(Attribute.GENERIC_STEP_HEIGHT).setBaseValue(1);
 
         new BukkitRunnable() {

@@ -3,6 +3,7 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Assassin;
 import io.github.Gabriel.damagePlugin.customDamage.CustomDamageEvent;
 import io.github.Gabriel.damagePlugin.customDamage.DamageConverter;
 import io.github.Gabriel.damagePlugin.customDamage.DamageType;
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.CooldownManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLItems.ItemSystem;
@@ -22,24 +23,28 @@ import java.util.*;
 
 public class AssassinAbilityEffects {
     private ExpertiseStylePlugin expertiseStylePlugin;
-    private Player user;
     private Set<UUID> hitEntityUUIDs = new HashSet<>();
+    private Player user;
+    private int hotbarSlot;
 
-    public AssassinAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin, Player user) {
+    public AssassinAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin, Player user, int hotbarSlot) {
         this.expertiseStylePlugin = expertiseStylePlugin;
         this.user = user;
+        this.hotbarSlot = hotbarSlot;
     }
 
     public void slashAndDash(ItemStack weapon) {
         HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.multiplyAllDamageStats(weapon, 1.5));
+
+        EnergyManager.useEnergy(user, 20);
+        CooldownManager.putAllOtherAbilitesOnCooldown(user, 1, hotbarSlot);
+        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
 
         // dash
         Vector knockback = user.getLocation().getDirection().multiply(4);
         knockback.setY(-2);
         user.setVelocity(knockback);
         user.setInvulnerable(true);
-        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
-        EnergyManager.useEnergy(user, 20);
 
         // slash
         new BukkitRunnable() {
@@ -48,6 +53,7 @@ public class AssassinAbilityEffects {
             @Override
             public void run() {
                 user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
+
                 Location particleLocation = user.getLocation().add(0, 1, 0);
                 Vector direction = particleLocation.getDirection().multiply(1.2); // distance in blocks of particle from player
 
