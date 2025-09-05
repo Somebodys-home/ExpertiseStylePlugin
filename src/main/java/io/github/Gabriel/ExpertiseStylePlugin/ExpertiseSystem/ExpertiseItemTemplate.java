@@ -42,7 +42,7 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
     }
 
     public static ItemStack makeExpertiseAbilityItem(String expertise, String name, String description, String targeting, int range, int duration, int cooldown, int cost,
-                                                     List<String> damage, List<String> statuses, List<ItemType> weapons) {
+                                                     List<String> damage, List<String> effects, List<ItemType> weapons) {
 
         ItemStack expertiseItem = new ItemStack(Material.BARRIER);
         ChatColor color = null;
@@ -111,7 +111,7 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
 
         // misc stats
         lore.add(ChatColor.WHITE + "Target: " + ChatColor.BLUE + targeting);
-        lore.add(ChatColor.WHITE + "Range: " + ChatColor.GREEN + range + "m");
+        if (range != 0) lore.add(ChatColor.WHITE + "Range: " + ChatColor.GREEN + range + "m");
         if (duration != 0) lore.add(ChatColor.WHITE + "Duration: " + ChatColor.DARK_AQUA + duration + "s");
         lore.add(ChatColor.WHITE + "Cooldown: " + ChatColor.AQUA + cooldown + "s");
         lore.add(ChatColor.WHITE + "Cost: " + ChatColor.GOLD + cost + "⚡");
@@ -123,15 +123,20 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         }
 
         // todo: add stats effects (when i eventually get to that)
-        if (statuses != null) {
-            lore.add("§b§l----------Statuses----------");
-            for (String statusString : statuses) { lore.add(statusString); }
+        if (effects != null) {
+            lore.add("§b§l----------Effects----------");
+            for (String statusString : effects) { lore.add(statusString); }
         }
 
         if (weapons != null) {
             lore.add("§b§l----------Weapons---------");
             for (ItemType weapon : weapons) {
-                lore.add("§e- " + ItemType.getItemTypeString(weapon) + "s");
+                if (weapon == SHIELD) {
+                    lore.add("§e- " + ItemType.getItemTypeString(weapon) + "s (in offhand)");
+                } else {
+                    lore.add("§e- " + ItemType.getItemTypeString(weapon) + "s");
+                }
+
                 pdc.set(new NamespacedKey(expertiseStylePlugin, ItemType.getItemTypeString(weapon)), PersistentDataType.BOOLEAN, true);
             }
         }
@@ -140,22 +145,6 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         expertiseItem.setItemMeta(meta);
 
         return expertiseItem;
-    }
-
-    public static List<ItemType> getWeaponsForAbility(ItemStack item) {
-        PersistentDataContainer pdc = item.getItemMeta().getPersistentDataContainer();
-        List<ItemType> weapons = new ArrayList<>(List.of(SWORD, DAGGER, AXE, HAMMER, SPEAR, GLOVE, BOW, WAND, STAFF, CATALYST));
-        List<ItemType> weaponsToRemove = new ArrayList<>();
-
-        for (ItemType weapon : weapons) {
-            NamespacedKey weaponKey = new NamespacedKey(expertiseStylePlugin, ItemType.getItemTypeString(weapon));
-            if (!pdc.has(weaponKey)) {
-                weaponsToRemove.add(weapon);
-            }
-        }
-
-        weapons.removeAll(weaponsToRemove);
-        return weapons;
     }
 
     private static List<String> linebreak(String string, int size) {

@@ -12,14 +12,17 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseCommand;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marauder.MarauderListener;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.MartialArtist.MartialArtistListener;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ShieldHero.ShieldHeroListener;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierListener;
 import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleAbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleCommand;
 import io.github.NoOne.menuSystem.MenuListener;
+import io.github.NoOne.nMLShields.NMLShields;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ExpertiseStylePlugin extends JavaPlugin {
     private static ExpertiseStylePlugin instance;
+    private NMLShields nmlShields;
     private SelectedManager selectedManager;
     private SelectedConfig selectedConfig;
     private CooldownManager cooldownManager;
@@ -28,8 +31,11 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
+        nmlShields = JavaPlugin.getPlugin(NMLShields.class);
+
         new AbilityItemTemplate(this);
         new ExpertiseItemTemplate(this);
+        new ExpertiseManager(this);
         new StyleAbilityItemTemplate(this);
 
         selectedConfig = new SelectedConfig(this, "abilities");
@@ -51,6 +57,7 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new MarauderListener(this), this);
         getServer().getPluginManager().registerEvents(new CavalierListener(this), this);
         getServer().getPluginManager().registerEvents(new MartialArtistListener(this), this);
+        getServer().getPluginManager().registerEvents(new ShieldHeroListener(this), this);
     }
 
     @Override
@@ -70,5 +77,9 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
 
     public SelectedConfig getSelectedConfig() {
         return selectedConfig;
+    }
+
+    public NMLShields getNmlShields() {
+        return nmlShields;
     }
 }

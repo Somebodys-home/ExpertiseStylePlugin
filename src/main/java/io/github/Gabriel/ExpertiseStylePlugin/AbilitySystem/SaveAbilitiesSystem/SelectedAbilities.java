@@ -1,5 +1,6 @@
 package io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class SelectedAbilities {
@@ -15,15 +16,15 @@ public class SelectedAbilities {
         this.expertise2 = expertise2;
     }
 
-    public String[] getSelectedAbilitesArray() {
+    public String[] getSelectedAbilitiesArray() {
         return new String[]{style1, style2, expertise1, expertise2};
     }
 
-    public String[] getSelectedAbilitesFromPlayerInventory(Player player) {
-        return new String[]{player.getInventory().getItem(0).getItemMeta().getDisplayName(),
-                            player.getInventory().getItem(1).getItemMeta().getDisplayName(),
-                            player.getInventory().getItem(2).getItemMeta().getDisplayName(),
-                            player.getInventory().getItem(3).getItemMeta().getDisplayName()};
+    public void resetSelectedAbilities() {
+        style1 = ChatColor.AQUA + "Empty Style Ability";
+        style2 = ChatColor.AQUA + "Empty Style Ability";
+        expertise1 = ChatColor.LIGHT_PURPLE + "Empty Expertise Ability";
+        expertise2 = ChatColor.LIGHT_PURPLE + "Empty Expertise Ability";
     }
 
     public String getStyle1() {

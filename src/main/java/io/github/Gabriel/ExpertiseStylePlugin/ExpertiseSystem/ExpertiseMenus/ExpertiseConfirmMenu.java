@@ -44,7 +44,7 @@ public class ExpertiseConfirmMenu extends Menu {
     @Override
     public void handleMenu(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-        String[] playersAbilities = selectedAbilities.getSelectedAbilitesArray();
+        String[] playersAbilities = selectedAbilities.getSelectedAbilitiesArray();
         int slot = event.getSlot();
 
         switch (slot) {
@@ -54,7 +54,7 @@ public class ExpertiseConfirmMenu extends Menu {
                     event.setCancelled(true);
                     return;
                 }
-                if (Arrays.stream(playersAbilities).anyMatch(element -> element.equals(Objects.requireNonNull(i3.getItemMeta()).getDisplayName()))) {
+                if (Arrays.stream(playersAbilities).anyMatch(element -> element.equals(Objects.requireNonNull(selected.getItemMeta()).getDisplayName()))) {
                     player.sendMessage("§c⚠ §nYou already have this ability selected.§r§c ⚠");
                     event.setCancelled(true);
                     return;
@@ -69,7 +69,7 @@ public class ExpertiseConfirmMenu extends Menu {
                     event.setCancelled(true);
                     return;
                 }
-                if (Arrays.stream(playersAbilities).anyMatch(element -> element.equals(Objects.requireNonNull(i4.getItemMeta()).getDisplayName()))) {
+                if (Arrays.stream(playersAbilities).anyMatch(element -> element.equals(Objects.requireNonNull(selected.getItemMeta()).getDisplayName()))) {
                     player.sendMessage("§c⚠ §nYou already have this ability selected.§r§c ⚠");
                     event.setCancelled(true);
                     return;

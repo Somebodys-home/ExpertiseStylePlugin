@@ -121,5 +121,11 @@
             <version>a32090f992</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.Somebodys-home</groupId>
+            <artifactId>NMLShields</artifactId>
+            <version>50869deba2</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

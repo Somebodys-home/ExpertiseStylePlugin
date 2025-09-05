@@ -97,10 +97,12 @@ public class CooldownManager {
     public static void resetAllCooldowns(Player player) {
         HashSet<CooldownInstance> cooldowns = ongoingCooldowns.get(player.getUniqueId());
 
-        for (CooldownInstance cooldownInstance : cooldowns) {
-            player.getInventory().setItem(cooldownInstance.getHotbarSlot(), cooldownInstance.getOriginalItem());
-        }
+        if (cooldowns != null) {
+            for (CooldownInstance cooldownInstance : cooldowns) {
+                player.getInventory().setItem(cooldownInstance.getHotbarSlot(), cooldownInstance.getOriginalItem());
+            }
 
-        ongoingCooldowns.remove(player.getUniqueId());
+            ongoingCooldowns.remove(player.getUniqueId());
+        }
     }
 }

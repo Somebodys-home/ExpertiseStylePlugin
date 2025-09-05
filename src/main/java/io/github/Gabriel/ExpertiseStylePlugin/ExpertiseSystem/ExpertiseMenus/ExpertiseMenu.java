@@ -1,12 +1,14 @@
 package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus;
 
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.CooldownManager;
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.AbilityProfile;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedAbilities;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Assassin.AssassinMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Cavalier.CavalierMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marauder.MarauderMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.MartialArtist.MartialArtistMenu;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ShieldHero.ShieldHeroMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierMenu;
 import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleAbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
@@ -48,16 +50,14 @@ public class ExpertiseMenu extends Menu {
             case 12 -> new MarauderMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 14 -> new CavalierMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 15 -> new MartialArtistMenu(expertiseStylePlugin, playerMenuUtility).open();
+            case 16 -> new ShieldHeroMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 44 -> {
                 CooldownManager.resetAllCooldowns(player);
                 player.getInventory().setItem(0, StyleAbilityItemTemplate.emptyStyleAbilityItem());
                 player.getInventory().setItem(1, StyleAbilityItemTemplate.emptyStyleAbilityItem());
                 player.getInventory().setItem(2, ExpertiseItemTemplate.emptyExpertiseAbilityItem());
                 player.getInventory().setItem(3, ExpertiseItemTemplate.emptyExpertiseAbilityItem());
-                selectedAbilities.setStyle1(StyleAbilityItemTemplate.emptyStyleAbilityItem().getItemMeta().getDisplayName());
-                selectedAbilities.setExpertise1(StyleAbilityItemTemplate.emptyStyleAbilityItem().getItemMeta().getDisplayName());
-                selectedAbilities.setExpertise1(ExpertiseItemTemplate.emptyExpertiseAbilityItem().getItemMeta().getDisplayName());
-                selectedAbilities.setExpertise1(ExpertiseItemTemplate.emptyExpertiseAbilityItem().getItemMeta().getDisplayName());
+                selectedAbilities.resetSelectedAbilities();
             }
         }
     }
