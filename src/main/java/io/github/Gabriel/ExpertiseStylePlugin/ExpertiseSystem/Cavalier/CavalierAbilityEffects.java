@@ -68,7 +68,6 @@ public class CavalierAbilityEffects {
                 @Override
                 public void run() {
                     if (user.isOnGround()) {
-                        user.removeMetadata("using ability", expertiseStylePlugin);
                         user.removeMetadata("falling", expertiseStylePlugin);
 
                         flyingParticles.cancel();
@@ -94,6 +93,7 @@ public class CavalierAbilityEffects {
                             }
                         }
 
+                        user.removeMetadata("using ability", expertiseStylePlugin);
                         cancel();
                     }
                 }

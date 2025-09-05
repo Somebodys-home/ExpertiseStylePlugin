@@ -36,6 +36,7 @@ public class MartialArtistAbilityEffects {
         user.setMetadata("falling", new FixedMetadataValue(expertiseStylePlugin, true));
 
         HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.multiplyAllDamageStats(weapon, .25));
+        final boolean[] comboBroken = {false};
         CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
         EnergyManager.useEnergy(user, 5);
 
@@ -47,6 +48,7 @@ public class MartialArtistAbilityEffects {
                 Vector forward = user.getLocation().getDirection().normalize().multiply(2);
                 Location punch = baseLocation.clone().add(forward);
 
+                user.swingMainHand();
                 user.getWorld().spawnParticle(Particle.CRIT, punch, 100, 0.25, 0.25, 0.25);
                 user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
 
@@ -63,11 +65,15 @@ public class MartialArtistAbilityEffects {
                     }
                 }
 
-                if (hitEntityUUIDs.isEmpty()) {
-                    user.removeMetadata("using ability", expertiseStylePlugin);
-                } else {
-                    user.swingMainHand();
-                }
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        if (hitEntityUUIDs.isEmpty()) {
+                            user.removeMetadata("using ability", expertiseStylePlugin);
+                            comboBroken[0] = true;
+                        }
+                    }
+                }.runTaskLater(expertiseStylePlugin, 1L);
             }
         });
 
@@ -75,45 +81,51 @@ public class MartialArtistAbilityEffects {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (user.hasMetadata("using ability")) {
-                    hitEntityUUIDs.clear();
-                    CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
-
-                    dashUntilCollision(2, 5, new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            EnergyManager.useEnergy(user, 5);
-
-                            Location baseLocation = user.getLocation().add(0, 1.5, 0);
-                            Vector forward = user.getLocation().getDirection().normalize().multiply(2);
-                            Location punch = baseLocation.clone().add(forward);
-
-                            user.getWorld().spawnParticle(Particle.CRIT, punch, 100, 0.25, 0.25, 0.25);
-                            user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
-                            user.swingOffHand();
-
-                            for (Entity entity : user.getWorld().getNearbyEntities(punch, 1.5, 2, 1.5)) {
-                                if (entity != user) {
-                                    hitEntityUUIDs.add(entity.getUniqueId());
-                                }
-                            }
-
-                            for (UUID uuid : hitEntityUUIDs) {
-                                if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                                    Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
-                                    livingEntity.setNoDamageTicks(0);
-                                }
-                            }
-
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    if (hitEntityUUIDs.isEmpty()) user.removeMetadata("using ability", expertiseStylePlugin);
-                                }
-                            }.runTaskLater(expertiseStylePlugin, 1L);
-                        }
-                    });
+                if (comboBroken[0] || !user.hasMetadata("using ability")) {
+                    cancel();
+                    return;
                 }
+
+                hitEntityUUIDs.clear();
+                CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
+
+                dashUntilCollision(2, 5, new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        EnergyManager.useEnergy(user, 5);
+
+                        Location baseLocation = user.getLocation().add(0, 1.5, 0);
+                        Vector forward = user.getLocation().getDirection().normalize().multiply(2);
+                        Location punch = baseLocation.clone().add(forward);
+
+                        user.swingOffHand();
+                        user.getWorld().spawnParticle(Particle.CRIT, punch, 100, 0.25, 0.25, 0.25);
+                        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
+
+                        for (Entity entity : user.getWorld().getNearbyEntities(punch, 1.5, 2, 1.5)) {
+                            if (entity != user) {
+                                hitEntityUUIDs.add(entity.getUniqueId());
+                            }
+                        }
+
+                        for (UUID uuid : hitEntityUUIDs) {
+                            if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                                livingEntity.setNoDamageTicks(0);
+                            }
+                        }
+
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                if (hitEntityUUIDs.isEmpty()) {
+                                    user.removeMetadata("using ability", expertiseStylePlugin);
+                                    comboBroken[0] = true;
+                                }
+                            }
+                        }.runTaskLater(expertiseStylePlugin, 1L);
+                    }
+                });
             }
         }.runTaskLater(expertiseStylePlugin, 10L);
 
@@ -121,45 +133,51 @@ public class MartialArtistAbilityEffects {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (user.hasMetadata("using ability")) {
-                    hitEntityUUIDs.clear();
-                    CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
-
-                    dashUntilCollision(2, 5, new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            EnergyManager.useEnergy(user, 5);
-
-                            Location baseLocation = user.getLocation().add(0, 1.5, 0);
-                            Vector forward = user.getLocation().getDirection().normalize().multiply(2);
-                            Location punch = baseLocation.clone().add(forward);
-
-                            user.getWorld().spawnParticle(Particle.CRIT, punch, 100, 0.25, 0.25, 0.25);
-                            user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
-                            user.swingMainHand();
-
-                            for (Entity entity : user.getWorld().getNearbyEntities(punch, 1.5, 2, 1.5)) {
-                                if (entity != user) {
-                                    hitEntityUUIDs.add(entity.getUniqueId());
-                                }
-                            }
-
-                            for (UUID uuid : hitEntityUUIDs) {
-                                if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                                    Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
-                                    livingEntity.setNoDamageTicks(0);
-                                }
-                            }
-
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    if (hitEntityUUIDs.isEmpty()) user.removeMetadata("using ability", expertiseStylePlugin);
-                                }
-                            }.runTaskLater(expertiseStylePlugin, 1L);
-                        }
-                    });
+                if (comboBroken[0] || !user.hasMetadata("using ability")) {
+                    cancel();
+                    return;
                 }
+
+                hitEntityUUIDs.clear();
+                CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
+
+                dashUntilCollision(2, 5, new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        EnergyManager.useEnergy(user, 5);
+
+                        Location baseLocation = user.getLocation().add(0, 1.5, 0);
+                        Vector forward = user.getLocation().getDirection().normalize().multiply(2);
+                        Location punch = baseLocation.clone().add(forward);
+
+                        user.swingMainHand();
+                        user.getWorld().spawnParticle(Particle.CRIT, punch, 100, 0.25, 0.25, 0.25);
+                        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
+
+                        for (Entity entity : user.getWorld().getNearbyEntities(punch, 1.5, 2, 1.5)) {
+                            if (entity != user) {
+                                hitEntityUUIDs.add(entity.getUniqueId());
+                            }
+                        }
+
+                        for (UUID uuid : hitEntityUUIDs) {
+                            if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                                livingEntity.setNoDamageTicks(0);
+                            }
+                        }
+
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                if (hitEntityUUIDs.isEmpty()) {
+                                    user.removeMetadata("using ability", expertiseStylePlugin);
+                                    comboBroken[0] = true;
+                                }
+                            }
+                        }.runTaskLater(expertiseStylePlugin, 1L);
+                    }
+                });
             }
         }.runTaskLater(expertiseStylePlugin, 20L);
 
@@ -167,49 +185,55 @@ public class MartialArtistAbilityEffects {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (user.hasMetadata("using ability")) {
-                    hitEntityUUIDs.clear();
-                    CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
-
-                    dashUntilCollision(2, 5, new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            EnergyManager.useEnergy(user, 10);
-
-                            Vector jump = new Vector(0, 1, 0);
-                            user.setVelocity(jump);
-                            user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
-                            user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
-
-                            Location baseLocation = user.getLocation().add(0, 4, 0);
-                            Vector forward = user.getLocation().getDirection().normalize().multiply(2);
-                            Location punch = baseLocation.clone().add(forward);
-
-                            user.getWorld().spawnParticle(Particle.CRIT, punch, 150, 0.15, 1, 0.15);
-
-                            for (Entity entity : user.getWorld().getNearbyEntities(punch, 1.5, 2, 1.5)) {
-                                if (entity != user) {
-                                    hitEntityUUIDs.add(entity.getUniqueId());
-                                }
-                            }
-
-                            for (UUID uuid : hitEntityUUIDs) {
-                                if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                                    Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
-                                    livingEntity.setNoDamageTicks(0);
-                                    livingEntity.setVelocity(jump); // knockback
-                                }
-                            }
-
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    if (hitEntityUUIDs.isEmpty()) user.removeMetadata("using ability", expertiseStylePlugin);
-                                }
-                            }.runTaskLater(expertiseStylePlugin, 1L);
-                        }
-                    });
+                if (comboBroken[0] || !user.hasMetadata("using ability")) {
+                    cancel();
+                    return;
                 }
+
+                hitEntityUUIDs.clear();
+                CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
+
+                dashUntilCollision(2, 5, new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        EnergyManager.useEnergy(user, 10);
+
+                        Vector jump = new Vector(0, 1, 0);
+                        user.setVelocity(jump);
+                        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
+                        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
+
+                        Location baseLocation = user.getLocation().add(0, 4, 0);
+                        Vector forward = user.getLocation().getDirection().normalize().multiply(2);
+                        Location punch = baseLocation.clone().add(forward);
+
+                        user.getWorld().spawnParticle(Particle.CRIT, punch, 150, 0.15, 1, 0.15);
+
+                        for (Entity entity : user.getWorld().getNearbyEntities(punch, 1.5, 2, 1.5)) {
+                            if (entity != user) {
+                                hitEntityUUIDs.add(entity.getUniqueId());
+                            }
+                        }
+
+                        for (UUID uuid : hitEntityUUIDs) {
+                            if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                                livingEntity.setNoDamageTicks(0);
+                                livingEntity.setVelocity(jump); // knockback
+                            }
+                        }
+
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                if (hitEntityUUIDs.isEmpty()) {
+                                    user.removeMetadata("using ability", expertiseStylePlugin);
+                                    comboBroken[0] = true;
+                                }
+                            }
+                        }.runTaskLater(expertiseStylePlugin, 1L);
+                    }
+                });
             }
         }.runTaskLater(expertiseStylePlugin, 30L);
 
@@ -217,49 +241,55 @@ public class MartialArtistAbilityEffects {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (user.hasMetadata("using ability")) {
-                    hitEntityUUIDs.clear();
-                    CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
-
-                    dashUntilCollision(2, 5, new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            EnergyManager.useEnergy(user, 10);
-
-                            Vector slam = new Vector(0, -1, 0);
-                            user.setVelocity(slam);
-                            user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
-                            user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
-
-                            Location baseLocation = user.getLocation().add(0, 4, 0);
-                            Vector forward = user.getLocation().getDirection().normalize().multiply(2);
-                            Location punch = baseLocation.clone().add(forward);
-
-                            user.getWorld().spawnParticle(Particle.CRIT, punch, 150, 0.15, 4, 0.15);
-
-                            for (Entity entity : user.getWorld().getNearbyEntities(user.getLocation(), 2, 4, 2)) {
-                                if (entity != user) {
-                                    hitEntityUUIDs.add(entity.getUniqueId());
-                                }
-                            }
-
-                            for (UUID uuid : hitEntityUUIDs) {
-                                if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                                    Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
-                                    livingEntity.setNoDamageTicks(0);
-                                    livingEntity.setVelocity(slam); // knockback
-                                }
-                            }
-
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    if (hitEntityUUIDs.isEmpty()) user.removeMetadata("using ability", expertiseStylePlugin);
-                                }
-                            }.runTaskLater(expertiseStylePlugin, 1L);
-                        }
-                    });
+                if (comboBroken[0] || !user.hasMetadata("using ability")) {
+                    cancel();
+                    return;
                 }
+
+                hitEntityUUIDs.clear();
+                CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
+
+                dashUntilCollision(2, 5, new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        EnergyManager.useEnergy(user, 10);
+
+                        Vector slam = new Vector(0, -1, 0);
+                        user.setVelocity(slam);
+                        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
+                        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
+
+                        Location baseLocation = user.getLocation().add(0, 4, 0);
+                        Vector forward = user.getLocation().getDirection().normalize().multiply(2);
+                        Location punch = baseLocation.clone().add(forward);
+
+                        user.getWorld().spawnParticle(Particle.CRIT, punch, 150, 0.15, 4, 0.15);
+
+                        for (Entity entity : user.getWorld().getNearbyEntities(user.getLocation(), 2, 4, 2)) {
+                            if (entity != user) {
+                                hitEntityUUIDs.add(entity.getUniqueId());
+                            }
+                        }
+
+                        for (UUID uuid : hitEntityUUIDs) {
+                            if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                                livingEntity.setNoDamageTicks(0);
+                                livingEntity.setVelocity(slam); // knockback
+                            }
+                        }
+
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                if (hitEntityUUIDs.isEmpty()) {
+                                    user.removeMetadata("using ability", expertiseStylePlugin);
+                                    comboBroken[0] = true;
+                                }
+                            }
+                        }.runTaskLater(expertiseStylePlugin, 1L);
+                    }
+                });
             }
         }.runTaskLater(expertiseStylePlugin, 40L);
 
@@ -267,47 +297,53 @@ public class MartialArtistAbilityEffects {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (user.hasMetadata("using ability")) {
-                    hitEntityUUIDs.clear();
-                    CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
-
-                    dashUntilCollision(2, 5, new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            EnergyManager.useEnergy(user, 10);
-
-                            Location baseLocation = user.getLocation().add(0, 1.5, 0);
-                            Vector forward = user.getLocation().getDirection().normalize().multiply(2);
-                            Location punch = baseLocation.clone().add(forward);
-
-                            user.getWorld().spawnParticle(Particle.CRIT, punch, 100, 0.15, 0.15, 0.15);
-                            user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
-
-                            for (Entity entity : user.getWorld().getNearbyEntities(punch, 1.5, 2, 1.5)) {
-                                if (entity != user) {
-                                    hitEntityUUIDs.add(entity.getUniqueId());
-                                }
-                            }
-
-                            for (UUID uuid : hitEntityUUIDs) {
-                                if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                                    Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
-                                    livingEntity.setNoDamageTicks(0);
-
-                                    Vector knockback = livingEntity.getLocation().toVector().subtract(user.getLocation().toVector()).normalize().setY(.2);
-                                    livingEntity.setVelocity(knockback);
-                                }
-                            }
-
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    if (hitEntityUUIDs.isEmpty()) user.removeMetadata("using ability", expertiseStylePlugin);
-                                }
-                            }.runTaskLater(expertiseStylePlugin, 1L);
-                        }
-                    });
+                if (comboBroken[0] || !user.hasMetadata("using ability")) {
+                    cancel();
+                    return;
                 }
+
+                hitEntityUUIDs.clear();
+                CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
+
+                dashUntilCollision(2, 5, new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        EnergyManager.useEnergy(user, 10);
+
+                        Location baseLocation = user.getLocation().add(0, 1.5, 0);
+                        Vector forward = user.getLocation().getDirection().normalize().multiply(2);
+                        Location punch = baseLocation.clone().add(forward);
+
+                        user.getWorld().spawnParticle(Particle.CRIT, punch, 100, 0.15, 0.15, 0.15);
+                        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
+
+                        for (Entity entity : user.getWorld().getNearbyEntities(punch, 1.5, 2, 1.5)) {
+                            if (entity != user) {
+                                hitEntityUUIDs.add(entity.getUniqueId());
+                            }
+                        }
+
+                        for (UUID uuid : hitEntityUUIDs) {
+                            if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                                livingEntity.setNoDamageTicks(0);
+
+                                Vector knockback = livingEntity.getLocation().toVector().subtract(user.getLocation().toVector()).normalize().setY(.2);
+                                livingEntity.setVelocity(knockback);
+                            }
+                        }
+
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                if (hitEntityUUIDs.isEmpty()) {
+                                    user.removeMetadata("using ability", expertiseStylePlugin);
+                                    comboBroken[0] = true;
+                                }
+                            }
+                        }.runTaskLater(expertiseStylePlugin, 1L);
+                    }
+                });
             }
         }.runTaskLater(expertiseStylePlugin, 50L);
 
@@ -315,58 +351,66 @@ public class MartialArtistAbilityEffects {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (user.hasMetadata("using ability")) {
-                    hitEntityUUIDs.clear();
-                    CooldownManager.putAllOtherAbilitesOnCooldown(user, .8, hotbarSlot);
-
-                    dashUntilCollision(2, 5, new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            EnergyManager.useEnergy(user, 10);
-
-                            Location baseLocation = user.getLocation().add(0, 1.5, 0);
-                            Vector forward = user.getLocation().getDirection().normalize().multiply(2);
-                            Location punch = baseLocation.clone().add(forward);
-
-                            user.swingMainHand();
-                            user.getWorld().spawnParticle(Particle.CRIT, punch, 100, 0.25, 0.25, 0.25);
-                            user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
-                            user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
-
-                            for (int i = 0; i < 8; i++) {
-                                double angle = 2 * Math.PI * i / 8;
-                                double x = Math.cos(angle);
-                                double z = Math.sin(angle);
-
-                                Location particleLocation = user.getLocation().clone().add(x, 1, z);
-                                user.getWorld().spawnParticle(Particle.SWEEP_ATTACK, particleLocation, 1, 0, 0, 0, 0);
-                            }
-
-                            for (Entity entity : user.getWorld().getNearbyEntities(punch, 1.5, 2, 1.5)) {
-                                if (entity != user) {
-                                    hitEntityUUIDs.add(entity.getUniqueId());
-                                }
-                            }
-
-                            for (UUID uuid : hitEntityUUIDs) {
-                                if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                                    Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
-                                    livingEntity.setNoDamageTicks(0);
-
-                                    Vector knockback = livingEntity.getLocation().toVector().subtract(user.getLocation().toVector()).normalize().setY(.1);
-                                    livingEntity.setVelocity(knockback);
-                                }
-                            }
-
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    if (hitEntityUUIDs.isEmpty()) user.removeMetadata("using ability", expertiseStylePlugin);
-                                }
-                            }.runTaskLater(expertiseStylePlugin, 1L);
-                        }
-                    });
+                if (comboBroken[0] || !user.hasMetadata("using ability")) {
+                    cancel();
+                    return;
                 }
+
+                hitEntityUUIDs.clear();
+                CooldownManager.putAllOtherAbilitesOnCooldown(user, .8, hotbarSlot);
+
+                dashUntilCollision(2, 5, new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        EnergyManager.useEnergy(user, 10);
+
+                        Location baseLocation = user.getLocation().add(0, 1.5, 0);
+                        Vector forward = user.getLocation().getDirection().normalize().multiply(2);
+                        Location punch = baseLocation.clone().add(forward);
+                        Vector tinyJump = user.getLocation().getDirection().multiply(.5).setY(.25);
+
+                        user.swingMainHand();
+                        user.setVelocity(tinyJump);
+                        user.getWorld().spawnParticle(Particle.CRIT, punch, 100, 0.25, 0.25, 0.25);
+                        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
+                        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
+
+                        for (int i = 0; i < 8; i++) {
+                            double angle = 2 * Math.PI * i / 8;
+                            double x = Math.cos(angle);
+                            double z = Math.sin(angle);
+
+                            Location particleLocation = user.getLocation().clone().add(x, 1, z);
+                            user.getWorld().spawnParticle(Particle.SWEEP_ATTACK, particleLocation, 1, 0, 0, 0, 0);
+                        }
+
+                        for (Entity entity : user.getWorld().getNearbyEntities(punch, 1.5, 2, 1.5)) {
+                            if (entity != user) {
+                                hitEntityUUIDs.add(entity.getUniqueId());
+                            }
+                        }
+
+                        for (UUID uuid : hitEntityUUIDs) {
+                            if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                                livingEntity.setNoDamageTicks(0);
+
+                                Vector knockback = livingEntity.getLocation().toVector().subtract(user.getLocation().toVector()).normalize().setY(.1);
+                                livingEntity.setVelocity(knockback);
+                            }
+                        }
+
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                if (hitEntityUUIDs.isEmpty()) {
+                                    user.removeMetadata("using ability", expertiseStylePlugin);
+                                    comboBroken[0] = true;
+                                }
+                            }
+                        }.runTaskLater(expertiseStylePlugin, 1L);
+                    }
+                });
             }
         }.runTaskLater(expertiseStylePlugin, 60L);
 
@@ -374,58 +418,66 @@ public class MartialArtistAbilityEffects {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (user.hasMetadata("using ability")) {
-                    hitEntityUUIDs.clear();
-                    CooldownManager.putAllOtherAbilitesOnCooldown(user, .8, hotbarSlot);
-
-                    dashUntilCollision(2, 5, new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            EnergyManager.useEnergy(user, 10);
-
-                            Location baseLocation = user.getLocation().add(0, 1.5, 0);
-                            Vector forward = user.getLocation().getDirection().normalize().multiply(2);
-                            Location punch = baseLocation.clone().add(forward);
-
-                            user.swingOffHand();
-                            user.getWorld().spawnParticle(Particle.CRIT, punch, 100, 0.25, 0.25, 0.25);
-                            user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
-                            user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
-
-                            for (int i = 0; i < 8; i++) {
-                                double angle = 2 * Math.PI * i / 8;
-                                double x = Math.cos(angle);
-                                double z = Math.sin(angle);
-
-                                Location particleLocation = user.getLocation().clone().add(x, 1, z);
-                                user.getWorld().spawnParticle(Particle.SWEEP_ATTACK, particleLocation, 1, 0, 0, 0, 0);
-                            }
-
-                            for (Entity entity : user.getWorld().getNearbyEntities(punch, 1.5, 2, 1.5)) {
-                                if (entity != user) {
-                                    hitEntityUUIDs.add(entity.getUniqueId());
-                                }
-                            }
-
-                            for (UUID uuid : hitEntityUUIDs) {
-                                if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                                    Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
-                                    livingEntity.setNoDamageTicks(0);
-
-                                    Vector knockback = livingEntity.getLocation().toVector().subtract(user.getLocation().toVector()).normalize().setY(.1);
-                                    livingEntity.setVelocity(knockback);
-                                }
-                            }
-
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    if (hitEntityUUIDs.isEmpty()) user.removeMetadata("using ability", expertiseStylePlugin);
-                                }
-                            }.runTaskLater(expertiseStylePlugin, 1L);
-                        }
-                    });
+                if (comboBroken[0] || !user.hasMetadata("using ability")) {
+                    cancel();
+                    return;
                 }
+
+                hitEntityUUIDs.clear();
+                CooldownManager.putAllOtherAbilitesOnCooldown(user, .8, hotbarSlot);
+
+                dashUntilCollision(2, 5, new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        EnergyManager.useEnergy(user, 10);
+
+                        Location baseLocation = user.getLocation().add(0, 1.5, 0);
+                        Vector forward = user.getLocation().getDirection().normalize().multiply(2);
+                        Location punch = baseLocation.clone().add(forward);
+                        Vector tinyJump = user.getLocation().getDirection().multiply(.5).setY(.25);
+
+                        user.swingOffHand();
+                        user.setVelocity(tinyJump);
+                        user.getWorld().spawnParticle(Particle.CRIT, punch, 100, 0.25, 0.25, 0.25);
+                        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
+                        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
+
+                        for (int i = 0; i < 8; i++) {
+                            double angle = 2 * Math.PI * i / 8;
+                            double x = Math.cos(angle);
+                            double z = Math.sin(angle);
+
+                            Location particleLocation = user.getLocation().clone().add(x, 1, z);
+                            user.getWorld().spawnParticle(Particle.SWEEP_ATTACK, particleLocation, 1, 0, 0, 0, 0);
+                        }
+
+                        for (Entity entity : user.getWorld().getNearbyEntities(punch, 1.5, 2, 1.5)) {
+                            if (entity != user) {
+                                hitEntityUUIDs.add(entity.getUniqueId());
+                            }
+                        }
+
+                        for (UUID uuid : hitEntityUUIDs) {
+                            if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                                livingEntity.setNoDamageTicks(0);
+
+                                Vector knockback = livingEntity.getLocation().toVector().subtract(user.getLocation().toVector()).normalize().setY(.1);
+                                livingEntity.setVelocity(knockback);
+                            }
+                        }
+
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                if (hitEntityUUIDs.isEmpty()) {
+                                    user.removeMetadata("using ability", expertiseStylePlugin);
+                                    comboBroken[0] = true;
+                                }
+                            }
+                        }.runTaskLater(expertiseStylePlugin, 1L);
+                    }
+                });
             }
         }.runTaskLater(expertiseStylePlugin, 75L);
 
@@ -433,58 +485,66 @@ public class MartialArtistAbilityEffects {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (user.hasMetadata("using ability")) {
-                    hitEntityUUIDs.clear();
-                    CooldownManager.putAllOtherAbilitesOnCooldown(user, .8, hotbarSlot);
-
-                    dashUntilCollision(2, 5, new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            EnergyManager.useEnergy(user, 10);
-
-                            Location baseLocation = user.getLocation().add(0, 1.5, 0);
-                            Vector forward = user.getLocation().getDirection().normalize().multiply(2);
-                            Location punch = baseLocation.clone().add(forward);
-
-                            user.swingMainHand();
-                            user.getWorld().spawnParticle(Particle.CRIT, punch, 100, 0.25, 0.25, 0.25);
-                            user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
-                            user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
-
-                            for (int i = 0; i < 8; i++) {
-                                double angle = 2 * Math.PI * i / 8;
-                                double x = Math.cos(angle);
-                                double z = Math.sin(angle);
-
-                                Location particleLocation = user.getLocation().clone().add(x, 1, z);
-                                user.getWorld().spawnParticle(Particle.SWEEP_ATTACK, particleLocation, 1, 0, 0, 0, 0);
-                            }
-
-                            for (Entity entity : user.getWorld().getNearbyEntities(punch, 1.5, 2, 1.5)) {
-                                if (entity != user) {
-                                    hitEntityUUIDs.add(entity.getUniqueId());
-                                }
-                            }
-
-                            for (UUID uuid : hitEntityUUIDs) {
-                                if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                                    Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
-                                    livingEntity.setNoDamageTicks(0);
-
-                                    Vector knockback = livingEntity.getLocation().toVector().subtract(user.getLocation().toVector()).normalize().setY(.1);
-                                    livingEntity.setVelocity(knockback);
-                                }
-                            }
-
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    if (hitEntityUUIDs.isEmpty()) user.removeMetadata("using ability", expertiseStylePlugin);
-                                }
-                            }.runTaskLater(expertiseStylePlugin, 1L);
-                        }
-                    });
+                if (comboBroken[0] || !user.hasMetadata("using ability")) {
+                    cancel();
+                    return;
                 }
+
+                hitEntityUUIDs.clear();
+                CooldownManager.putAllOtherAbilitesOnCooldown(user, .8, hotbarSlot);
+
+                dashUntilCollision(2, 5, new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        EnergyManager.useEnergy(user, 10);
+
+                        Location baseLocation = user.getLocation().add(0, 1.5, 0);
+                        Vector forward = user.getLocation().getDirection().normalize().multiply(2);
+                        Location punch = baseLocation.clone().add(forward);
+                        Vector tinyJump = user.getLocation().getDirection().multiply(.5).setY(.25);
+
+                        user.swingMainHand();
+                        user.setVelocity(tinyJump);
+                        user.getWorld().spawnParticle(Particle.CRIT, punch, 100, 0.25, 0.25, 0.25);
+                        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
+                        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
+
+                        for (int i = 0; i < 8; i++) {
+                            double angle = 2 * Math.PI * i / 8;
+                            double x = Math.cos(angle);
+                            double z = Math.sin(angle);
+
+                            Location particleLocation = user.getLocation().clone().add(x, 1, z);
+                            user.getWorld().spawnParticle(Particle.SWEEP_ATTACK, particleLocation, 1, 0, 0, 0, 0);
+                        }
+
+                        for (Entity entity : user.getWorld().getNearbyEntities(punch, 1.5, 2, 1.5)) {
+                            if (entity != user) {
+                                hitEntityUUIDs.add(entity.getUniqueId());
+                            }
+                        }
+
+                        for (UUID uuid : hitEntityUUIDs) {
+                            if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                                livingEntity.setNoDamageTicks(0);
+
+                                Vector knockback = livingEntity.getLocation().toVector().subtract(user.getLocation().toVector()).normalize().setY(.1);
+                                livingEntity.setVelocity(knockback);
+                            }
+                        }
+
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                if (hitEntityUUIDs.isEmpty()) {
+                                    user.removeMetadata("using ability", expertiseStylePlugin);
+                                    comboBroken[0] = true;
+                                }
+                            }
+                        }.runTaskLater(expertiseStylePlugin, 1L);
+                    }
+                });
             }
         }.runTaskLater(expertiseStylePlugin, 90L);
 
@@ -494,83 +554,87 @@ public class MartialArtistAbilityEffects {
 
             @Override
             public void run() {
-                if (user.hasMetadata("using ability")) {
-                    user.setMetadata("falling", new FixedMetadataValue(expertiseStylePlugin, true));
-                    hitEntityUUIDs.clear();
-                    CooldownManager.putAllOtherAbilitesOnCooldown(user, .8, hotbarSlot);
-
-                    dashUntilCollision(2, 5, new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            EnergyManager.useEnergy(user, 25);
-
-                            Vector jump = user.getLocation().getDirection().multiply(1.5).setY(1.5);
-                            Location baseLocation = user.getLocation().add(0, 4, 0);
-                            Vector forward = user.getLocation().getDirection().normalize().multiply(2);
-                            Location punch = baseLocation.clone().add(forward);
-
-                            user.setVelocity(jump);
-                            user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
-                            user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
-                            user.playSound(user.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.PLAYERS, 3f, 1f);
-
-                            // uppercut particles
-                            new BukkitRunnable() {
-                                int particleticks = 20;
-                                int i = 0;
-                                double angleStep = Math.PI / 20;
-
-                                @Override
-                                public void run() {
-                                    Location baseLocation = user.getLocation().clone().add(0, 1, 0);
-                                    Location trail = baseLocation.clone().add(user.getLocation().getDirection().normalize().multiply(-1));
-
-                                    for (double j = 0; j < 20; j++) {
-                                        double radius = 1.5;
-                                        double angle = (2 * (i * angleStep) + (j * 0.05)) - 180;
-                                        double reverseAngle = angle - 180;
-                                        double x = Math.cos(angle) * radius;
-                                        double z = Math.sin(angle) * radius;
-                                        double reverseX = Math.cos(reverseAngle) * radius;
-                                        double reverseZ = Math.sin(reverseAngle) * radius;
-                                        Location soulFireLocation = user.getLocation().clone().add(x, 2, z);
-                                        Location fireLocation = user.getLocation().clone().add(reverseX,  2, reverseZ);
-
-                                        user.getWorld().spawnParticle(Particle.SNOWFLAKE, trail, 10, .05, .05, .05, 0);
-                                        user.getWorld().spawnParticle(Particle.FLAME, fireLocation, 30, 0, 0, 0, 0);
-                                        user.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, soulFireLocation, 30, 0, 0, 0, 0);
-                                    }
-
-                                    particleticks--;
-                                    i++;
-                                    if (particleticks == 0) cancel();
-                                }
-                            }.runTaskTimer(expertiseStylePlugin, 0L, 1L);
-
-                            for (Entity entity : user.getWorld().getNearbyEntities(punch, 1.5, 2, 1.5)) {
-                                if (entity != user) {
-                                    hitEntityUUIDs.add(entity.getUniqueId());
-                                }
-                            }
-
-                            for (UUID uuid : hitEntityUUIDs) {
-                                if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                                    Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
-                                    livingEntity.setNoDamageTicks(0);
-                                    livingEntity.setVelocity(jump.multiply(2).setY(2)); // knockback
-                                }
-                            }
-
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    hitEntityUUIDs.clear();
-                                    user.removeMetadata("using ability", expertiseStylePlugin);
-                                }
-                            }.runTaskLater(expertiseStylePlugin, 1L);
-                        }
-                    });
+                if (comboBroken[0] || !user.hasMetadata("using ability")) {
+                    cancel();
+                    return;
                 }
+
+                user.setMetadata("falling", new FixedMetadataValue(expertiseStylePlugin, true));
+                hitEntityUUIDs.clear();
+                CooldownManager.putAllOtherAbilitesOnCooldown(user, .8, hotbarSlot);
+
+                dashUntilCollision(2, 5, new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        EnergyManager.useEnergy(user, 25);
+
+                        Vector jump = user.getLocation().getDirection().multiply(1.5).setY(1.5);
+                        Location baseLocation = user.getLocation().add(0, 4, 0);
+                        Vector forward = user.getLocation().getDirection().normalize().multiply(2);
+                        Location punch = baseLocation.clone().add(forward);
+
+                        user.setVelocity(jump);
+                        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
+                        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
+                        user.playSound(user.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, SoundCategory.PLAYERS, 3f, 1f);
+
+                        // uppercut particles
+                        new BukkitRunnable() {
+                            int particleticks = 20;
+                            int i = 0;
+                            double angleStep = Math.PI / 20;
+
+                            @Override
+                            public void run() {
+                                Location baseLocation = user.getLocation().clone().add(0, 1, 0);
+                                Location trail = baseLocation.clone().add(user.getLocation().getDirection().normalize().multiply(-1));
+
+                                for (double j = 0; j < 20; j++) {
+                                    double radius = 1.5;
+                                    double angle = (2 * (i * angleStep) + (j * 0.05)) - 180;
+                                    double reverseAngle = angle - 180;
+                                    double x = Math.cos(angle) * radius;
+                                    double z = Math.sin(angle) * radius;
+                                    double reverseX = Math.cos(reverseAngle) * radius;
+                                    double reverseZ = Math.sin(reverseAngle) * radius;
+                                    Location soulFireLocation = user.getLocation().clone().add(x, 2, z);
+                                    Location fireLocation = user.getLocation().clone().add(reverseX,  2, reverseZ);
+
+                                    user.getWorld().spawnParticle(Particle.SNOWFLAKE, trail, 10, .05, .05, .05, 0);
+                                    user.getWorld().spawnParticle(Particle.FLAME, fireLocation, 30, 0, 0, 0, 0);
+                                    user.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, soulFireLocation, 30, 0, 0, 0, 0);
+                                }
+
+                                particleticks--;
+                                i++;
+                                if (particleticks == 0) cancel();
+                            }
+                        }.runTaskTimer(expertiseStylePlugin, 0L, 1L);
+
+                        for (Entity entity : user.getWorld().getNearbyEntities(punch, 1.5, 2, 1.5)) {
+                            if (entity != user) {
+                                hitEntityUUIDs.add(entity.getUniqueId());
+                            }
+                        }
+
+                        for (UUID uuid : hitEntityUUIDs) {
+                            if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                                livingEntity.setNoDamageTicks(0);
+                                livingEntity.setVelocity(jump.multiply(2).setY(2)); // knockback
+                            }
+                        }
+
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                hitEntityUUIDs.clear();
+                                user.removeMetadata("using ability", expertiseStylePlugin);
+                                comboBroken[0] = true;
+                            }
+                        }.runTaskLater(expertiseStylePlugin, 1L);
+                    }
+                });
             }
         }.runTaskLater(expertiseStylePlugin, 105L);
     }
