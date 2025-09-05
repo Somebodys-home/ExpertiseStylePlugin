@@ -37,13 +37,12 @@ public class MartialArtistAbilityEffects {
 
         HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.multiplyAllDamageStats(weapon, .25));
         CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
+        EnergyManager.useEnergy(user, 5);
 
         // punch 1
         dashUntilCollision(2, 5, new BukkitRunnable() {
             @Override
             public void run() {
-                EnergyManager.useEnergy(user, 5);
-
                 Location baseLocation = user.getLocation().add(0, 1.5, 0);
                 Vector forward = user.getLocation().getDirection().normalize().multiply(2);
                 Location punch = baseLocation.clone().add(forward);

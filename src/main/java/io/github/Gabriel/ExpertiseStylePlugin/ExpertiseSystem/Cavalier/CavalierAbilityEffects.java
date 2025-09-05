@@ -52,7 +52,7 @@ public class CavalierAbilityEffects {
         BukkitTask flyingParticles = new BukkitRunnable() {
             @Override
             public void run() {
-                user.getWorld().spawnParticle(Particle.SNOWFLAKE, user.getLocation(), 50, .25, 1, .25, 0);
+                user.getWorld().spawnParticle(Particle.SNOWFLAKE, user.getLocation(), 75, .15, 1, .15, 0);
             }
         }.runTaskTimer(expertiseStylePlugin, 0L, 1L);
 
@@ -68,6 +68,9 @@ public class CavalierAbilityEffects {
                 @Override
                 public void run() {
                     if (user.isOnGround()) {
+                        user.removeMetadata("using ability", expertiseStylePlugin);
+                        user.removeMetadata("falling", expertiseStylePlugin);
+
                         flyingParticles.cancel();
                         user.stopSound(Sound.ENTITY_PLAYER_ATTACK_SWEEP);
                         user.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, user.getLocation().add(0, .5, 0), 3, .25, 0, .25, 0);
@@ -91,8 +94,6 @@ public class CavalierAbilityEffects {
                             }
                         }
 
-                        user.removeMetadata("using ability", expertiseStylePlugin);
-                        user.removeMetadata("falling", expertiseStylePlugin);
                         cancel();
                     }
                 }

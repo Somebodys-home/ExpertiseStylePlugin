@@ -110,7 +110,7 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         lore.add("");
 
         // misc stats
-        lore.add(ChatColor.WHITE + "Targeting: " + ChatColor.BLUE + targeting);
+        lore.add(ChatColor.WHITE + "Target: " + ChatColor.BLUE + targeting);
         lore.add(ChatColor.WHITE + "Range: " + ChatColor.GREEN + range + "m");
         if (duration != 0) lore.add(ChatColor.WHITE + "Duration: " + ChatColor.DARK_AQUA + duration + "s");
         lore.add(ChatColor.WHITE + "Cooldown: " + ChatColor.AQUA + cooldown + "s");
