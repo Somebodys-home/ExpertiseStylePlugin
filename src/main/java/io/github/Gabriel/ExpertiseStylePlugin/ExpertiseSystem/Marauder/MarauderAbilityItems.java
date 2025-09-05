@@ -18,7 +18,7 @@ public class MarauderAbilityItems extends AbilityItemTemplate {
                 "Blade Tornado",
                 "Hurl yourself forwards as a whirligig of anger issues, bad intentions, and BLADES!",
                 "Self",
-                50,
+                5,
                 5,
                 20,
                 30,

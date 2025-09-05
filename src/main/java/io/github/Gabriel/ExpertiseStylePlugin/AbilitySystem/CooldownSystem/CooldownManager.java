@@ -8,10 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.UUID;
+import java.util.*;
 
 public class CooldownManager {
     private ExpertiseStylePlugin expertiseStylePlugin;
@@ -52,6 +49,12 @@ public class CooldownManager {
     }
 
     public void stop() {
+        for (Map.Entry<UUID, HashSet<CooldownInstance>> playersCooldowns : ongoingCooldowns.entrySet()) {
+            Player player = Bukkit.getPlayer(playersCooldowns.getKey());
+
+            if (player != null) resetAllCooldowns(player);
+        }
+
         ongoingCooldowns.clear();
         serverCooldownTask.cancel();
     }
@@ -89,5 +92,15 @@ public class CooldownManager {
         if (exception != 1) putOnCooldown(player, 1, cooldown);
         if (exception != 2) putOnCooldown(player, 2, cooldown);
         if (exception != 3) putOnCooldown(player, 3, cooldown);
+    }
+
+    public static void resetAllCooldowns(Player player) {
+        HashSet<CooldownInstance> cooldowns = ongoingCooldowns.get(player.getUniqueId());
+
+        for (CooldownInstance cooldownInstance : cooldowns) {
+            player.getInventory().setItem(cooldownInstance.getHotbarSlot(), cooldownInstance.getOriginalItem());
+        }
+
+        ongoingCooldowns.remove(player.getUniqueId());
     }
 }

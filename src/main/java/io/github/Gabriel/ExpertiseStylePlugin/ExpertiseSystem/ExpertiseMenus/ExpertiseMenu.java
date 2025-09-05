@@ -1,5 +1,6 @@
 package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus;
 
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.CooldownManager;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedAbilities;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Assassin.AssassinMenu;
@@ -48,6 +49,7 @@ public class ExpertiseMenu extends Menu {
             case 14 -> new CavalierMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 15 -> new MartialArtistMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 44 -> {
+                CooldownManager.resetAllCooldowns(player);
                 player.getInventory().setItem(0, StyleAbilityItemTemplate.emptyStyleAbilityItem());
                 player.getInventory().setItem(1, StyleAbilityItemTemplate.emptyStyleAbilityItem());
                 player.getInventory().setItem(2, ExpertiseItemTemplate.emptyExpertiseAbilityItem());

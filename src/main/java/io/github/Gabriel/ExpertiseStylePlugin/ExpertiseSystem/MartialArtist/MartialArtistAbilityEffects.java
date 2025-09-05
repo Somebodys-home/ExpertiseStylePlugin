@@ -314,6 +314,10 @@ public class MartialArtistAbilityEffects {
                         Vector forward = user.getLocation().getDirection().normalize().multiply(2);
                         Location punch = baseLocation.clone().add(forward);
 
+                        Vector tinyDashDirection = user.getLocation().getDirection().normalize();
+                        Vector tinyDash = tinyDashDirection.clone().multiply(.5).setY(0);
+                        user.setVelocity(tinyDash);
+
                         user.getWorld().spawnParticle(Particle.CRIT, punch, 100, 0.15, 0.15, 0.15);
                         user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 1f);
 
@@ -641,9 +645,8 @@ public class MartialArtistAbilityEffects {
 
     private void dashUntilCollision(double velocity, int fallbackTicks, BukkitRunnable onFinish) {
         Vector dashDirection = user.getLocation().getDirection().normalize();
-        Vector punch1 = dashDirection.clone().multiply(velocity);
-        punch1.setY(0);
-        user.setVelocity(punch1);
+        Vector dash = dashDirection.clone().multiply(velocity).setY(0);
+        user.setVelocity(dash);
 
         user.getAttribute(Attribute.GENERIC_STEP_HEIGHT).setBaseValue(1);
         new BukkitRunnable() {
