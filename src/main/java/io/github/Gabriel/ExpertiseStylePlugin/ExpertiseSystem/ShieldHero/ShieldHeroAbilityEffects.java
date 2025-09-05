@@ -35,7 +35,8 @@ public class ShieldHeroAbilityEffects {
         EnergyManager.useEnergy(user, 20);
         CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
 
-        user.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40, 3, false, false, false));
+        user.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 30, 10, false, false, false));
+        user.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 30, 255, false, false, false));
         user.playSound(user, Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 1f, 1f);
 
         new BukkitRunnable() {
