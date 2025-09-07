@@ -24,6 +24,7 @@ public class MarauderAbilityItems extends AbilityItemTemplate {
                 30,
                 List.of("§f§n50%" + "§r§f" + " Weapon Damage \uD83D\uDDE1 §7§o(every .25s)"),
                 null,
-                List.of(SWORD, AXE));
+                List.of(SWORD, AXE),
+                false);
     }
 }

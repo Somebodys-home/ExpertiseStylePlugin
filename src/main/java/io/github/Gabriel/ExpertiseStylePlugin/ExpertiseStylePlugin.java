@@ -1,7 +1,7 @@
 package io.github.Gabriel.expertiseStylePlugin;
 
-import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemListener;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityListener;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.CooldownManager;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedConfig;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedListener;
@@ -11,10 +11,11 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Cavalier.CavalierL
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseCommand;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marauder.MarauderListener;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marksman.MarksmanAbilityEffects;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marksman.MarksmanListener;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.MartialArtist.MartialArtistListener;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ShieldHero.ShieldHeroListener;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierListener;
-import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleAbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleCommand;
 import io.github.NoOne.menuSystem.MenuListener;
 import io.github.NoOne.nMLShields.NMLShields;
@@ -36,7 +37,7 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         new AbilityItemTemplate(this);
         new ExpertiseItemTemplate(this);
         new ExpertiseManager(this);
-        new StyleAbilityItemTemplate(this);
+        new MarksmanAbilityEffects(this);
 
         selectedConfig = new SelectedConfig(this, "abilities");
         selectedConfig.loadConfig();
@@ -51,13 +52,14 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         getCommand("style").setExecutor(new StyleCommand());
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
         getServer().getPluginManager().registerEvents(new SelectedListener(this), this);
-        getServer().getPluginManager().registerEvents(new AbilityItemListener(this), this);
+        getServer().getPluginManager().registerEvents(new AbilityListener(), this);
         getServer().getPluginManager().registerEvents(new SoldierListener(this), this);
         getServer().getPluginManager().registerEvents(new AssassinListener(this), this);
         getServer().getPluginManager().registerEvents(new MarauderListener(this), this);
         getServer().getPluginManager().registerEvents(new CavalierListener(this), this);
         getServer().getPluginManager().registerEvents(new MartialArtistListener(this), this);
         getServer().getPluginManager().registerEvents(new ShieldHeroListener(this), this);
+        getServer().getPluginManager().registerEvents(new MarksmanListener(this), this);
     }
 
     @Override

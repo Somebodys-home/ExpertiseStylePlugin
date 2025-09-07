@@ -1,35 +1,33 @@
 package io.github.Gabriel.expertiseStylePlugin.AbilitySystem;
 
+import io.github.Gabriel.damagePlugin.customDamage.CustomDamageEvent;
+import io.github.Gabriel.damagePlugin.customDamage.DamageType;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.CooldownManager;
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
-import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleAbilityItemTemplate;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.metadata.MetadataValue;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
 
-public class AbilityItemListener implements Listener {
-    private static ExpertiseStylePlugin expertiseStylePlugin;
-    private final ItemStack expertiseAbilityItem = ExpertiseItemTemplate.emptyExpertiseAbilityItem();
-    private final ItemStack styleAbilityItem = StyleAbilityItemTemplate.emptyStyleAbilityItem();
-    private final ItemStack cooldownItem = AbilityItemTemplate.abilityCooldownItem();
+public class AbilityListener implements Listener {
+    private final ItemStack expertiseAbilityItem = AbilityItemTemplate.emptyExpertiseAbilityItem();
+    private final ItemStack styleAbilityItem = AbilityItemTemplate.emptyStyleAbilityItem();
     private final ArrayList<UUID> triggeringPlayer = new ArrayList<>();
 
-    public AbilityItemListener(ExpertiseStylePlugin expertiseStylePlugin) {
-        this.expertiseStylePlugin = expertiseStylePlugin;
-    }
+    public AbilityListener() {}
 
     @EventHandler
     public void onPlayerFirstJoin(PlayerJoinEvent event) {
@@ -52,36 +50,33 @@ public class AbilityItemListener implements Listener {
 
     @EventHandler
     public void onInventoryClickAbilityItem(InventoryClickEvent event) {
-        if (event.getClickedInventory() instanceof PlayerInventory playerInventory) {
-            ItemStack clickedItem = event.getCurrentItem();
+        ItemStack clickedItem = event.getCurrentItem();
 
-            if (AbilityItemTemplate.isImmovable(clickedItem)) {
-                if (event.getClick() == ClickType.SHIFT_LEFT ||
-                        event.getClick() == ClickType.SHIFT_RIGHT ||
-                        event.getClick() == ClickType.DOUBLE_CLICK ||
-                        event.getClick() == ClickType.NUMBER_KEY ||
-                        event.getClick() == ClickType.SWAP_OFFHAND) {
+        if (AbilityItemTemplate.isImmovable(clickedItem)) {
+            if (event.getClick() == ClickType.SHIFT_LEFT ||
+                    event.getClick() == ClickType.SHIFT_RIGHT ||
+                    event.getClick() == ClickType.DOUBLE_CLICK ||
+                    event.getClick() == ClickType.NUMBER_KEY ||
+                    event.getClick() == ClickType.SWAP_OFFHAND) {
 
-                    event.setCancelled(true);
-                }
+                event.setCancelled(true);
+            }
 
-                if (event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY ||
-                        event.getAction() == InventoryAction.PICKUP_ALL ||
-                        event.getAction() == InventoryAction.PICKUP_HALF ||
-                        event.getAction() == InventoryAction.PICKUP_SOME ||
-                        event.getAction() == InventoryAction.PICKUP_ONE ||
-                        event.getAction() == InventoryAction.PLACE_ALL ||
-                        event.getAction() == InventoryAction.PLACE_SOME ||
-                        event.getAction() == InventoryAction.PLACE_ONE ||
-                        event.getAction() == InventoryAction.SWAP_WITH_CURSOR) {
+            if (event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY ||
+                    event.getAction() == InventoryAction.PICKUP_ALL ||
+                    event.getAction() == InventoryAction.PICKUP_HALF ||
+                    event.getAction() == InventoryAction.PICKUP_SOME ||
+                    event.getAction() == InventoryAction.PICKUP_ONE ||
+                    event.getAction() == InventoryAction.PLACE_ALL ||
+                    event.getAction() == InventoryAction.PLACE_SOME ||
+                    event.getAction() == InventoryAction.PLACE_ONE ||
+                    event.getAction() == InventoryAction.SWAP_WITH_CURSOR) {
 
-                    event.setCancelled(true);
-                }
+                event.setCancelled(true);
+            }
 
-                if (isContainer(event.getClickedInventory().getType())) {
-                    event.setCancelled(true);
-                }
-
+            if (isContainer(event.getClickedInventory().getType())) {
+                event.setCancelled(true);
             }
         }
     }
@@ -134,15 +129,23 @@ public class AbilityItemListener implements Listener {
         ItemStack abilityItem = player.getInventory().getItem(newSlot);
         ItemStack weapon = player.getInventory().getItem(event.getPreviousSlot());
 
-        if (AbilityItemTemplate.isImmovable(abilityItem)) {
+        if (AbilityItemTemplate.isImmovable(abilityItem)) { // if it's an ability item
             event.setCancelled(true);
 
-            if (player.hasCooldown(abilityItem.getType())) return;
+            if (player.hasCooldown(abilityItem.getType())) return; // return if ability is alr on cooldown
 
             triggeringPlayer.add(uuid);
             Bukkit.getPluginManager().callEvent(new UseAbilityEvent(player, weapon, abilityItem, newSlot));
 
-            if (AbilityItemTemplate.getCooldown(abilityItem) != -1) { // if the item has a cooldown timer
+            if (AbilityItemTemplate.isToggleable(abilityItem)) { // if it's a toggleable ability
+                boolean toggle = !AbilityItemTemplate.getToggleState(abilityItem); // boolean of its inverse state
+
+                AbilityItemTemplate.toggleAbility(abilityItem, toggle);
+
+                if (!toggle) { // if were turning it off, put it on cooldown
+                    CooldownManager.putOnCooldown(player, newSlot, AbilityItemTemplate.getCooldown(abilityItem));
+                }
+            } else { // if it isnt a toggleable
                 CooldownManager.putOnCooldown(player, newSlot, AbilityItemTemplate.getCooldown(abilityItem));
             }
         }
@@ -156,6 +159,20 @@ public class AbilityItemListener implements Listener {
                     event.setCancelled(true);
                 }
             }
+        }
+    }
+
+    @EventHandler
+    public void damageWithAbilityArrow(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof Arrow arrow && arrow.getShooter() instanceof Player player && arrow.hasMetadata("ability arrow")) {
+            MetadataValue meta = arrow.getMetadata("ability arrow").get(0);
+            HashMap<DamageType, Double> damageMap = (HashMap<DamageType, Double>) meta.value();
+
+            event.setDamage(0);
+            arrow.remove();
+            if (event.getEntity() instanceof LivingEntity livingEntity) livingEntity.setNoDamageTicks(0);
+
+            Bukkit.getPluginManager().callEvent(new CustomDamageEvent((LivingEntity) event.getEntity(), player, damageMap));
         }
     }
 

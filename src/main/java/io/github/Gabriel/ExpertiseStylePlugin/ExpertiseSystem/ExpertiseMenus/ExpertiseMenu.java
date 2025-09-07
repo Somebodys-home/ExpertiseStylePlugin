@@ -1,5 +1,6 @@
 package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus;
 
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.CooldownManager;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.AbilityProfile;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedAbilities;
@@ -7,10 +8,10 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Assassin.AssassinMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Cavalier.CavalierMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marauder.MarauderMenu;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marksman.MarksmanMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.MartialArtist.MartialArtistMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ShieldHero.ShieldHeroMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierMenu;
-import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleAbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
 import io.github.NoOne.menuSystem.Menu;
 import io.github.NoOne.menuSystem.PlayerMenuUtility;
@@ -51,12 +52,13 @@ public class ExpertiseMenu extends Menu {
             case 14 -> new CavalierMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 15 -> new MartialArtistMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 16 -> new ShieldHeroMenu(expertiseStylePlugin, playerMenuUtility).open();
+            case 22 -> new MarksmanMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 44 -> {
                 CooldownManager.resetAllCooldowns(player);
-                player.getInventory().setItem(0, StyleAbilityItemTemplate.emptyStyleAbilityItem());
-                player.getInventory().setItem(1, StyleAbilityItemTemplate.emptyStyleAbilityItem());
-                player.getInventory().setItem(2, ExpertiseItemTemplate.emptyExpertiseAbilityItem());
-                player.getInventory().setItem(3, ExpertiseItemTemplate.emptyExpertiseAbilityItem());
+                player.getInventory().setItem(0, AbilityItemTemplate.emptyStyleAbilityItem());
+                player.getInventory().setItem(1, AbilityItemTemplate.emptyStyleAbilityItem());
+                player.getInventory().setItem(2, AbilityItemTemplate.emptyExpertiseAbilityItem());
+                player.getInventory().setItem(3, AbilityItemTemplate.emptyExpertiseAbilityItem());
                 selectedAbilities.resetSelectedAbilities();
             }
         }

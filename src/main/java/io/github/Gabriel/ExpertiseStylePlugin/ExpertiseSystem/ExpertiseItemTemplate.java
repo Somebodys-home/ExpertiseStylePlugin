@@ -25,24 +25,8 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         expertiseKey = new NamespacedKey(expertiseStylePlugin, "expertise");
     }
 
-    public static ItemStack emptyExpertiseAbilityItem() {
-        ItemStack expertise = new ItemStack(Material.MAGENTA_DYE);
-        ItemMeta meta = expertise.getItemMeta();
-        assert meta != null;
-        List<String> lore = new ArrayList<>();
-        PersistentDataContainer pdc = meta.getPersistentDataContainer();
-
-        pdc.set(AbilityItemTemplate.getImmovableKey(), PersistentDataType.INTEGER, 1);
-        meta.setDisplayName(ChatColor.LIGHT_PURPLE + "Empty Expertise Ability");
-        lore.add(ChatColor.GRAY + "An empty ability slot. Dunno why you'd put nothing here.");
-        meta.setLore(lore);
-        expertise.setItemMeta(meta);
-
-        return expertise;
-    }
-
     public static ItemStack makeExpertiseAbilityItem(String expertise, String name, String description, String targeting, int range, int duration, int cooldown, int cost,
-                                                     List<String> damage, List<String> effects, List<ItemType> weapons) {
+                                                     List<String> damage, List<String> effects, List<ItemType> weapons, boolean toggleable) {
 
         ItemStack expertiseItem = new ItemStack(Material.BARRIER);
         ChatColor color = null;
@@ -108,6 +92,11 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         lore.add("");
         for (String line : linebreak(description, 33)) lore.add(ChatColor.GRAY + line);
         lore.add("");
+
+        if (toggleable) {
+            pdc.set(AbilityItemTemplate.getToggleKey(), PersistentDataType.BOOLEAN, false);
+            pdc.set(AbilityItemTemplate.getOriginalItemKey(), PersistentDataType.STRING, expertiseItem.getType().toString());
+        }
 
         // misc stats
         lore.add(ChatColor.WHITE + "Target: " + ChatColor.BLUE + targeting);

@@ -24,6 +24,7 @@ public class ShieldHeroAbilityItems extends AbilityItemTemplate {
                 20,
                 null,
                 List.of("§fRestore your §nGuard§r§f ⛨"),
-                List.of(SHIELD));
+                List.of(SHIELD),
+                false);
     }
 }

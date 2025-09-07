@@ -24,6 +24,7 @@ public class AssassinAbilityItems extends AbilityItemTemplate {
                 20,
                 List.of("§f§n150%" + "§r§f" + " Weapon Damage \uD83D\uDDE1"),
                 null,
-                List.of(DAGGER));
+                List.of(DAGGER),
+                false);
     }
 }

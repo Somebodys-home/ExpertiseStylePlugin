@@ -24,6 +24,7 @@ public class CavalierAbilityItems extends AbilityItemTemplate {
                 30,
                 List.of("§f§n200%" + "§r§f" + " Weapon Damage \uD83D\uDDE1"),
                 null,
-                List.of(SPEAR, HAMMER));
+                List.of(SPEAR, HAMMER),
+                false);
     }
 }

@@ -40,7 +40,7 @@ public class CooldownManager {
                             it.remove();
                         } else {
                             // Still on cooldown: show cooldown item
-                            player.getInventory().setItem(ci.getHotbarSlot(), AbilityItemTemplate.abilityCooldownItem());
+                            player.getInventory().setItem(ci.getHotbarSlot(), AbilityItemTemplate.cooldownItem());
                         }
                     }
                 }
@@ -73,7 +73,7 @@ public class CooldownManager {
                     .add(new CooldownInstance(hotbarSlot, cooldown, originalItem));
 
             // immediately swap the item out
-            player.getInventory().setItem(hotbarSlot, AbilityItemTemplate.abilityCooldownItem());
+            player.getInventory().setItem(hotbarSlot, AbilityItemTemplate.cooldownItem());
         }
     }
 
