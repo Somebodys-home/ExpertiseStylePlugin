@@ -13,6 +13,7 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.MartialArtist.Mart
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ShieldHero.ShieldHeroMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Sorcerer.SorcererMenu;
 import io.github.NoOne.menuSystem.Menu;
 import io.github.NoOne.menuSystem.PlayerMenuUtility;
 import org.bukkit.entity.Player;
@@ -53,6 +54,7 @@ public class ExpertiseMenu extends Menu {
             case 15 -> new MartialArtistMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 16 -> new ShieldHeroMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 22 -> new MarksmanMenu(expertiseStylePlugin, playerMenuUtility).open();
+            case 29 -> new SorcererMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 44 -> {
                 CooldownManager.resetAllCooldowns(player);
                 player.getInventory().setItem(0, AbilityItemTemplate.emptyStyleAbilityItem());

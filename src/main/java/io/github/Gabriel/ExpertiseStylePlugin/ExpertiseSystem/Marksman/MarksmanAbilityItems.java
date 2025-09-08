@@ -23,7 +23,7 @@ public class MarksmanAbilityItems extends AbilityItemTemplate {
                 0,
                 10,
                 25,
-                List.of("§f§n100%" + "§r§f" + " Weapon Damage \uD83D\uDDE1 §7§o(per arrow)"),
+                List.of("§f§n50%" + "§r§f" + " Weapon Damage \uD83D\uDDE1 §7§o(per arrow)"),
                 null,
                 List.of(BOW));
     }

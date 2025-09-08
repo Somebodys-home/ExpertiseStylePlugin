@@ -39,8 +39,8 @@ public class MarksmanAbilityEffects {
     public static void rapidShot(Player user, int hotbarSlot, ItemStack abilityItem) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
-        HashMap<DamageType, Double> damageStats = DamageConverter.convertPlayerStats2Damage(
-                nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats());
+        HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
+                nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats()), .5);
         boolean toggle = AbilityItemTemplate.getToggleState(abilityItem);
         final int[] preparedArrows = {0};
 

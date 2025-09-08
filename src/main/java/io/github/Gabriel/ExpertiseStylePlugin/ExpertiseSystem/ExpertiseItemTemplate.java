@@ -71,7 +71,7 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
                 color = ChatColor.GREEN;
             }
             case "sorcerer" -> {
-                expertiseItem = new ItemStack(Material.ENCHANTED_BOOK);
+                expertiseItem = new ItemStack(Material.BOOK);
                 color = ChatColor.GOLD;
             }
             case "druid" -> {
@@ -124,9 +124,9 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
                 if (weapon == SHIELD) {
                     lore.add("§e- " + ItemType.getItemTypeString(weapon) + " (in offhand)");
                 } else if (weapon == BOW) {
-                    lore.add("§e- " + ItemType.getItemTypeString(weapon) + " and Quiver");
+                    lore.add("§e- " + ItemType.getItemTypeString(weapon) + " and quiver");
                 } else if (weapon == GLOVE) {
-                    lore.add("§e- " + ItemType.getItemTypeString(weapon) + " (Both)");
+                    lore.add("§e- " + ItemType.getItemTypeString(weapon) + "s (both)");
                 } else {
                     lore.add("§e- " + ItemType.getItemTypeString(weapon) + "s");
                 }

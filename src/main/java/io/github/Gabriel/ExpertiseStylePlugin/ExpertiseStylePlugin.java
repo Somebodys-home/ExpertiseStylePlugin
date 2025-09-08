@@ -22,6 +22,8 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ShieldHero.ShieldH
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ShieldHero.ShieldHeroListener;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierAbilityEffects;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierListener;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Sorcerer.SorcererAbilityEffects;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Sorcerer.SorcererListener;
 import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleCommand;
 import io.github.NoOne.menuSystem.MenuListener;
 import io.github.NoOne.nMLPlayerStats.NMLPlayerStats;
@@ -53,6 +55,7 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         new MartialArtistAbilityEffects(this);
         new ShieldHeroAbilityEffects(this);
         new MarksmanAbilityEffects(this);
+        new SorcererAbilityEffects(this);
 
         selectedConfig = new SelectedConfig(this, "abilities");
         selectedConfig.loadConfig();
@@ -75,6 +78,7 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new MartialArtistListener(this), this);
         getServer().getPluginManager().registerEvents(new ShieldHeroListener(this), this);
         getServer().getPluginManager().registerEvents(new MarksmanListener(this), this);
+        getServer().getPluginManager().registerEvents(new SorcererListener(this), this);
     }
 
     @Override
