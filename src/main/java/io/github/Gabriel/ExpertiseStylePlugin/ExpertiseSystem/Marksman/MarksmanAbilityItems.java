@@ -16,15 +16,15 @@ public class MarksmanAbilityItems extends AbilityItemTemplate {
         return ExpertiseItemTemplate.makeExpertiseAbilityItem(
                 "marksman",
                 "Rapid Shot",
-                "Prepare an arrow to fire for every .5 second this ability is toggled on. After untoggling, or reaching 10 arrows, shoot all prepared arrows rapidly",
+                "Nock an arrow every .5 second this ability is toggled on. After untoggling, or nocking 10 arrows, shoot all prepared arrows rapidly",
+                true,
                 "Single",
-                10,
+                70,
                 0,
                 10,
-                15,
+                25,
                 List.of("§f§n100%" + "§r§f" + " Weapon Damage \uD83D\uDDE1 §7§o(per arrow)"),
                 null,
-                List.of(BOW),
-                true);
+                List.of(BOW));
     }
 }

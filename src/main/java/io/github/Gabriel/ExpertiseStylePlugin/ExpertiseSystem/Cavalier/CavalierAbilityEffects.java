@@ -8,6 +8,7 @@ import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.Coold
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLItems.ItemSystem;
+import io.github.NoOne.nMLPlayerStats.NMLPlayerStats;
 import org.bukkit.Bukkit;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -23,22 +24,22 @@ import org.bukkit.util.Vector;
 import java.util.*;
 
 public class CavalierAbilityEffects {
-    private ExpertiseStylePlugin expertiseStylePlugin;
-    private Set<UUID> hitEntityUUIDs = new HashSet<>();
-    private Player user;
-    private int hotbarSlot;
+    private static ExpertiseStylePlugin expertiseStylePlugin;
+    private static NMLPlayerStats nmlPlayerStats;
+    private static Set<UUID> hitEntityUUIDs = new HashSet<>();
 
-    public CavalierAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin, Player user, int hotbarSlot) {
+    public CavalierAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
-        this.user = user;
-        this.hotbarSlot = hotbarSlot;
+        nmlPlayerStats = expertiseStylePlugin.getNmlPlayerStats();
     }
 
-    public void seismicSlam(ItemStack weapon) {
+    public static void seismicSlam(Player user, int hotbarSlot) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
         user.setMetadata("falling", new FixedMetadataValue(expertiseStylePlugin, true));
 
-        HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.multiplyAllDamageStats(weapon, 2));
+        HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
+                nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats()), 2);
+
         EnergyManager.useEnergy(user, 30);
         CooldownManager.putAllOtherAbilitesOnCooldown(user, 4, hotbarSlot);
 
@@ -84,7 +85,7 @@ public class CavalierAbilityEffects {
 
                         for (UUID uuid : hitEntityUUIDs) {
                             if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
 
                                 // knockback
                                 Vector knockback = livingEntity.getLocation().toVector().subtract(user.getLocation().toVector()).normalize().multiply(1.2);

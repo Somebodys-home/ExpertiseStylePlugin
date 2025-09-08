@@ -7,6 +7,7 @@ import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.Coold
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLItems.ItemSystem;
+import io.github.NoOne.nMLPlayerStats.NMLPlayerStats;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -14,7 +15,6 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -22,19 +22,20 @@ import org.bukkit.util.Vector;
 import java.util.*;
 
 public class AssassinAbilityEffects {
-    private ExpertiseStylePlugin expertiseStylePlugin;
-    private Set<UUID> hitEntityUUIDs = new HashSet<>();
-    private Player user;
-    private int hotbarSlot;
+    private static ExpertiseStylePlugin expertiseStylePlugin;
+    private static NMLPlayerStats nmlPlayerStats;
+    private static Set<UUID> hitEntityUUIDs = new HashSet<>();
 
-    public AssassinAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin, Player user, int hotbarSlot) {
+    public AssassinAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
-        this.user = user;
-        this.hotbarSlot = hotbarSlot;
+        nmlPlayerStats = expertiseStylePlugin.getNmlPlayerStats();
     }
 
-    public void slashAndDash(ItemStack weapon) {
-        HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.multiplyAllDamageStats(weapon, 1.5));
+    public static void slashAndDash(Player user, int hotbarSlot) {
+        user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
+
+        HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
+                nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats()), 1.5);
 
         EnergyManager.useEnergy(user, 20);
         CooldownManager.putAllOtherAbilitesOnCooldown(user, 1, hotbarSlot);
@@ -52,8 +53,6 @@ public class AssassinAbilityEffects {
 
             @Override
             public void run() {
-                user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
-
                 Location particleLocation = user.getLocation().add(0, 1, 0);
                 Vector direction = particleLocation.getDirection().multiply(1.2); // distance in blocks of particle from player
 
@@ -63,7 +62,7 @@ public class AssassinAbilityEffects {
                 for (Entity entity : user.getWorld().getNearbyEntities(user.getLocation(), 2, 1, 2)) {
                     if (entity instanceof LivingEntity livingEntity && !entity.equals(user)) {
                         if (!hitEntityUUIDs.contains(entity.getUniqueId())) {
-                            Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                            Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
                             hitEntityUUIDs.add(entity.getUniqueId());
                         }
                     }

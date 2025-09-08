@@ -8,6 +8,7 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLItems.ItemStat;
 import io.github.NoOne.nMLItems.ItemSystem;
+import io.github.NoOne.nMLPlayerStats.NMLPlayerStats;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -26,19 +27,22 @@ import java.util.*;
 
 public class MarksmanAbilityEffects {
     private static ExpertiseStylePlugin expertiseStylePlugin;
-    private Set<UUID> hitEntityUUIDs = new HashSet<>();
+    private static NMLPlayerStats nmlPlayerStats;
     private static HashMap<UUID, HashMap<String, BukkitTask>> ongoingEffects = new HashMap<>();
+    private static Set<UUID> hitEntityUUIDs = new HashSet<>();
 
     public MarksmanAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
+        nmlPlayerStats = expertiseStylePlugin.getNmlPlayerStats();
     }
 
-    public static void rapidShot(Player user, int hotbarSlot, ItemStack weapon, ItemStack abilityItem) {
+    public static void rapidShot(Player user, int hotbarSlot, ItemStack abilityItem) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
+        HashMap<DamageType, Double> damageStats = DamageConverter.convertPlayerStats2Damage(
+                nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats());
         boolean toggle = AbilityItemTemplate.getToggleState(abilityItem);
         final int[] preparedArrows = {0};
-        HashMap<DamageType, Double> damageStats = DamageConverter.convertStatMap2DamageTypes(ItemSystem.getAllDamageStats(weapon));
 
         CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
         user.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 100, 2));
@@ -67,7 +71,7 @@ public class MarksmanAbilityEffects {
                         public void run() {
                             arrows--;
 
-                            user.sendTitle("§a" + arrows + " \uD83C\uDFF9", "", 5, 20, 5);
+                            user.sendTitle("§a" + arrows + " \uD83C\uDFF9", "", 2, 20, 5);
                             shootArrow(user, 3.5, .5, damageStats);
                             user.getWorld().playSound(user, Sound.ENTITY_ARROW_SHOOT, 1f, 1f);
                             user.removePotionEffect(PotionEffectType.SLOWNESS);
@@ -90,7 +94,7 @@ public class MarksmanAbilityEffects {
             ongoingEffects.computeIfAbsent(user.getUniqueId(), k -> new HashMap<>());
 
             if (!ongoingEffects.get(user.getUniqueId()).containsKey("rapidShot")) {
-                EnergyManager.useEnergy(user, 15);
+                EnergyManager.useEnergy(user, 25);
                 ongoingEffects.get(user.getUniqueId()).put("rapidShot", rapidShot.runTaskTimer(expertiseStylePlugin, 0L, 10L));
             }
 
@@ -106,7 +110,7 @@ public class MarksmanAbilityEffects {
                     public void run() {
                         arrows--;
 
-                        user.sendTitle("§a" + arrows + " \uD83C\uDFF9", "", 5, 20, 5);
+                        user.sendTitle("§a" + arrows + " \uD83C\uDFF9", "", 2, 20, 5);
                         shootArrow(user, 3.5, .5, damageStats);
                         user.getWorld().playSound(user, Sound.ENTITY_ARROW_SHOOT, 1f, 1f);
                         user.removePotionEffect(PotionEffectType.SLOWNESS);

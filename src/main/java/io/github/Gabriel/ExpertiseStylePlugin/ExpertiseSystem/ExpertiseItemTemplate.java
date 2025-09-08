@@ -25,8 +25,8 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         expertiseKey = new NamespacedKey(expertiseStylePlugin, "expertise");
     }
 
-    public static ItemStack makeExpertiseAbilityItem(String expertise, String name, String description, String targeting, int range, int duration, int cooldown, int cost,
-                                                     List<String> damage, List<String> effects, List<ItemType> weapons, boolean toggleable) {
+    public static ItemStack makeExpertiseAbilityItem(String expertise, String name, String description, boolean toggleable, String targeting, int range, int duration,
+                                                     int cooldown, int cost, List<String> damage, List<String> effects, List<ItemType> weapons) {
 
         ItemStack expertiseItem = new ItemStack(Material.BARRIER);
         ChatColor color = null;
@@ -93,13 +93,15 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         for (String line : linebreak(description, 33)) lore.add(ChatColor.GRAY + line);
         lore.add("");
 
+        // misc stats
         if (toggleable) {
+            lore.add(ChatColor.WHITE + "Target: " + ChatColor.BLUE + targeting + ", Toggle");
             pdc.set(AbilityItemTemplate.getToggleKey(), PersistentDataType.BOOLEAN, false);
             pdc.set(AbilityItemTemplate.getOriginalItemKey(), PersistentDataType.STRING, expertiseItem.getType().toString());
+        } else {
+            lore.add(ChatColor.WHITE + "Target: " + ChatColor.BLUE + targeting);
         }
 
-        // misc stats
-        lore.add(ChatColor.WHITE + "Target: " + ChatColor.BLUE + targeting);
         if (range != 0) lore.add(ChatColor.WHITE + "Range: " + ChatColor.GREEN + range + "m");
         if (duration != 0) lore.add(ChatColor.WHITE + "Duration: " + ChatColor.DARK_AQUA + duration + "s");
         lore.add(ChatColor.WHITE + "Cooldown: " + ChatColor.AQUA + cooldown + "s");
@@ -111,7 +113,6 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
             for (String damageString : damage) { lore.add(damageString); }
         }
 
-        // todo: add stats effects (when i eventually get to that)
         if (effects != null) {
             lore.add("§b§l----------Effects----------");
             for (String statusString : effects) { lore.add(statusString); }
@@ -121,7 +122,11 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
             lore.add("§b§l----------Weapons---------");
             for (ItemType weapon : weapons) {
                 if (weapon == SHIELD) {
-                    lore.add("§e- " + ItemType.getItemTypeString(weapon) + "s (in offhand)");
+                    lore.add("§e- " + ItemType.getItemTypeString(weapon) + " (in offhand)");
+                } else if (weapon == BOW) {
+                    lore.add("§e- " + ItemType.getItemTypeString(weapon) + " and Quiver");
+                } else if (weapon == GLOVE) {
+                    lore.add("§e- " + ItemType.getItemTypeString(weapon) + " (Both)");
                 } else {
                     lore.add("§e- " + ItemType.getItemTypeString(weapon) + "s");
                 }

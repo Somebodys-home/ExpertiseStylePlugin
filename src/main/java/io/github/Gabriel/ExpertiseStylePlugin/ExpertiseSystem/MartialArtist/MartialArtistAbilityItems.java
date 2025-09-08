@@ -17,6 +17,7 @@ public class MartialArtistAbilityItems extends AbilityItemTemplate {
                 "martial",
                 "10-Hit Combo",
                 "Perform a devastating 10 hit combo, ending with an uppercut. WARNING: Prone to failure if the target's kneecaps are unbroken.",
+                false,
                 "Single",
                 5,
                 0,
@@ -24,7 +25,6 @@ public class MartialArtistAbilityItems extends AbilityItemTemplate {
                 115,
                 List.of("§f§n300%" + "§r§f" + " Weapon Damage \uD83D\uDDE1"),
                 null,
-                List.of(GLOVE),
-                false);
+                List.of(GLOVE));
     }
 }

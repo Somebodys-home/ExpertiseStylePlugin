@@ -17,21 +17,17 @@ import org.bukkit.util.Vector;
 import java.util.*;
 
 public class ShieldHeroAbilityEffects {
-    private ExpertiseStylePlugin expertiseStylePlugin;
-    private GuardingSystem guardingSystem;
-    private Set<UUID> hitEntityUUIDs = new HashSet<>();
-    private Player user;
-    private int hotbarSlot;
+    private static ExpertiseStylePlugin expertiseStylePlugin;
+    private static GuardingSystem guardingSystem;
 
-    public ShieldHeroAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin, Player user, int hotbarSlot) {
+    public ShieldHeroAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
         guardingSystem = expertiseStylePlugin.getNmlShields().getGuardingSystem();
-        this.user = user;
-        this.hotbarSlot = hotbarSlot;
     }
 
-    public void secondWind() {
+    public static void secondWind(Player user, int hotbarSlot) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
+
         EnergyManager.useEnergy(user, 20);
         CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
 

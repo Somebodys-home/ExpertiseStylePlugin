@@ -17,6 +17,7 @@ public class AssassinAbilityItems extends AbilityItemTemplate {
                 "assassin",
                 "Slash & Dash",
                 "Dash forwards, dealing damage to anyone in your way",
+                false,
                 "Area",
                 10,
                 0,
@@ -24,7 +25,6 @@ public class AssassinAbilityItems extends AbilityItemTemplate {
                 20,
                 List.of("§f§n150%" + "§r§f" + " Weapon Damage \uD83D\uDDE1"),
                 null,
-                List.of(DAGGER),
-                false);
+                List.of(DAGGER));
     }
 }

@@ -34,16 +34,18 @@ public class ExpertiseManager {
         return weapons;
     }
 
-    public static boolean isHoldingWeaponForAbility(UseAbilityEvent event) {
-        List<ItemType> requiredWeapons = getWeaponsForAbility(event.getAbility());
-        Player player = event.getPlayer();
-        ItemStack mainhand = event.getWeapon();
+    public static boolean isHoldingWeaponForAbility(Player player, ItemStack abilityItem, ItemStack mainhand) {
+        List<ItemType> requiredWeapons = getWeaponsForAbility(abilityItem);
         ItemStack offhand = player.getInventory().getItemInOffHand();
 
-        if (!requiredWeapons.contains(SHIELD)) {
-            return (requiredWeapons.contains(ItemSystem.getItemType(mainhand)));
+        if (requiredWeapons.contains(SHIELD)) {
+            return (ItemSystem.getItemType(offhand) == SHIELD);
+        } else if (requiredWeapons.contains(GLOVE)) {
+            return (ItemSystem.getItemType(mainhand) == GLOVE && (ItemSystem.getItemType(offhand) == GLOVE));
+        } else if (requiredWeapons.contains(BOW)) {
+            return (ItemSystem.getItemType(mainhand) == BOW && (ItemSystem.getItemType(offhand) == QUIVER));
         } else {
-            return (requiredWeapons.contains(ItemSystem.getItemType(offhand)));
+            return (requiredWeapons.contains(ItemSystem.getItemType(mainhand)));
         }
     }
 }

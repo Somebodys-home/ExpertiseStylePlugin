@@ -1,13 +1,14 @@
 package io.github.Gabriel.expertiseStylePlugin.AbilitySystem;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 
-public class UseAbilityEvent extends Event {
+public class UseAbilityEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private final Player player;
     private final ItemStack weapon;
@@ -34,5 +35,15 @@ public class UseAbilityEvent extends Event {
 
     public int getHotbarSlot() {
         return hotbarSlot;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return false;
+    }
+
+    @Override
+    public void setCancelled(boolean cancel) {
+
     }
 }

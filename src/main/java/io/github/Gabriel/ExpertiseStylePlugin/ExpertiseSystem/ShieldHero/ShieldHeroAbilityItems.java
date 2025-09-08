@@ -17,6 +17,7 @@ public class ShieldHeroAbilityItems extends AbilityItemTemplate {
                 "shield",
                 "Second Wind",
                 "Take some time to steel your resolve, fully regaining your guard",
+                false,
                 "Self",
                 0,
                 0,
@@ -24,7 +25,6 @@ public class ShieldHeroAbilityItems extends AbilityItemTemplate {
                 20,
                 null,
                 List.of("§fRestore your §nGuard§r§f ⛨"),
-                List.of(SHIELD),
-                false);
+                List.of(SHIELD));
     }
 }

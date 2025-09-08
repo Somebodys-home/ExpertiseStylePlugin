@@ -7,6 +7,7 @@ import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.Coold
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLItems.ItemSystem;
+import io.github.NoOne.nMLPlayerStats.NMLPlayerStats;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
@@ -20,28 +21,27 @@ import org.bukkit.util.Vector;
 import java.util.*;
 
 public class MartialArtistAbilityEffects {
-    private ExpertiseStylePlugin expertiseStylePlugin;
-    private Set<UUID> hitEntityUUIDs = new HashSet<>();
-    private Player user;
-    private int hotbarSlot;
+    private static ExpertiseStylePlugin expertiseStylePlugin;
+    private static NMLPlayerStats nmlPlayerStats;
+    private static Set<UUID> hitEntityUUIDs = new HashSet<>();
 
-    public MartialArtistAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin, Player user, int hotbarSlot) {
+    public MartialArtistAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
-        this.user = user;
-        this.hotbarSlot = hotbarSlot;
+        nmlPlayerStats = expertiseStylePlugin.getNmlPlayerStats();
     }
 
-    public void tenHitCombo(ItemStack weapon) {
+    public static void tenHitCombo(Player user, int hotbarSlot) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
         user.setMetadata("falling", new FixedMetadataValue(expertiseStylePlugin, true));
 
-        HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.multiplyAllDamageStats(weapon, .25));
+        HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
+                nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats()), .25);
         final boolean[] comboBroken = {false};
         CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
         EnergyManager.useEnergy(user, 5);
 
         // punch 1
-        dashUntilCollision(2, 5, new BukkitRunnable() {
+        dashUntilCollision(user, 2, 5, new BukkitRunnable() {
             @Override
             public void run() {
                 Location baseLocation = user.getLocation().add(0, 1.5, 0);
@@ -60,7 +60,7 @@ public class MartialArtistAbilityEffects {
 
                 for (UUID uuid : hitEntityUUIDs) {
                     if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                        Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                        Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
                         livingEntity.setNoDamageTicks(0);
                     }
                 }
@@ -89,7 +89,7 @@ public class MartialArtistAbilityEffects {
                 hitEntityUUIDs.clear();
                 CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
 
-                dashUntilCollision(2, 5, new BukkitRunnable() {
+                dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override
                     public void run() {
                         EnergyManager.useEnergy(user, 5);
@@ -110,7 +110,7 @@ public class MartialArtistAbilityEffects {
 
                         for (UUID uuid : hitEntityUUIDs) {
                             if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
                                 livingEntity.setNoDamageTicks(0);
                             }
                         }
@@ -141,7 +141,7 @@ public class MartialArtistAbilityEffects {
                 hitEntityUUIDs.clear();
                 CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
 
-                dashUntilCollision(2, 5, new BukkitRunnable() {
+                dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override
                     public void run() {
                         EnergyManager.useEnergy(user, 5);
@@ -162,7 +162,7 @@ public class MartialArtistAbilityEffects {
 
                         for (UUID uuid : hitEntityUUIDs) {
                             if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
                                 livingEntity.setNoDamageTicks(0);
                             }
                         }
@@ -193,7 +193,7 @@ public class MartialArtistAbilityEffects {
                 hitEntityUUIDs.clear();
                 CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
 
-                dashUntilCollision(2, 5, new BukkitRunnable() {
+                dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override
                     public void run() {
                         EnergyManager.useEnergy(user, 10);
@@ -217,7 +217,7 @@ public class MartialArtistAbilityEffects {
 
                         for (UUID uuid : hitEntityUUIDs) {
                             if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
                                 livingEntity.setNoDamageTicks(0);
                                 livingEntity.setVelocity(jump); // knockback
                             }
@@ -249,7 +249,7 @@ public class MartialArtistAbilityEffects {
                 hitEntityUUIDs.clear();
                 CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
 
-                dashUntilCollision(2, 5, new BukkitRunnable() {
+                dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override
                     public void run() {
                         EnergyManager.useEnergy(user, 10);
@@ -273,7 +273,7 @@ public class MartialArtistAbilityEffects {
 
                         for (UUID uuid : hitEntityUUIDs) {
                             if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
                                 livingEntity.setNoDamageTicks(0);
                                 livingEntity.setVelocity(slam); // knockback
                             }
@@ -305,7 +305,7 @@ public class MartialArtistAbilityEffects {
                 hitEntityUUIDs.clear();
                 CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
 
-                dashUntilCollision(2, 5, new BukkitRunnable() {
+                dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override
                     public void run() {
                         EnergyManager.useEnergy(user, 10);
@@ -329,7 +329,7 @@ public class MartialArtistAbilityEffects {
 
                         for (UUID uuid : hitEntityUUIDs) {
                             if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
                                 livingEntity.setNoDamageTicks(0);
 
                                 Vector knockback = livingEntity.getLocation().toVector().subtract(user.getLocation().toVector()).normalize().setY(.2);
@@ -363,7 +363,7 @@ public class MartialArtistAbilityEffects {
                 hitEntityUUIDs.clear();
                 CooldownManager.putAllOtherAbilitesOnCooldown(user, .8, hotbarSlot);
 
-                dashUntilCollision(2, 5, new BukkitRunnable() {
+                dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override
                     public void run() {
                         EnergyManager.useEnergy(user, 10);
@@ -396,7 +396,7 @@ public class MartialArtistAbilityEffects {
 
                         for (UUID uuid : hitEntityUUIDs) {
                             if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
                                 livingEntity.setNoDamageTicks(0);
 
                                 Vector knockback = livingEntity.getLocation().toVector().subtract(user.getLocation().toVector()).normalize().setY(.1);
@@ -430,7 +430,7 @@ public class MartialArtistAbilityEffects {
                 hitEntityUUIDs.clear();
                 CooldownManager.putAllOtherAbilitesOnCooldown(user, .8, hotbarSlot);
 
-                dashUntilCollision(2, 5, new BukkitRunnable() {
+                dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override
                     public void run() {
                         EnergyManager.useEnergy(user, 10);
@@ -463,7 +463,7 @@ public class MartialArtistAbilityEffects {
 
                         for (UUID uuid : hitEntityUUIDs) {
                             if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
                                 livingEntity.setNoDamageTicks(0);
 
                                 Vector knockback = livingEntity.getLocation().toVector().subtract(user.getLocation().toVector()).normalize().setY(.1);
@@ -497,7 +497,7 @@ public class MartialArtistAbilityEffects {
                 hitEntityUUIDs.clear();
                 CooldownManager.putAllOtherAbilitesOnCooldown(user, .8, hotbarSlot);
 
-                dashUntilCollision(2, 5, new BukkitRunnable() {
+                dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override
                     public void run() {
                         EnergyManager.useEnergy(user, 10);
@@ -530,7 +530,7 @@ public class MartialArtistAbilityEffects {
 
                         for (UUID uuid : hitEntityUUIDs) {
                             if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
                                 livingEntity.setNoDamageTicks(0);
 
                                 Vector knockback = livingEntity.getLocation().toVector().subtract(user.getLocation().toVector()).normalize().setY(.1);
@@ -554,7 +554,8 @@ public class MartialArtistAbilityEffects {
 
         // uppercut 10
         new BukkitRunnable() {
-            HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.multiplyAllDamageStats(weapon, .75));
+            HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
+                    nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats()), .75);
 
             @Override
             public void run() {
@@ -567,7 +568,7 @@ public class MartialArtistAbilityEffects {
                 hitEntityUUIDs.clear();
                 CooldownManager.putAllOtherAbilitesOnCooldown(user, .8, hotbarSlot);
 
-                dashUntilCollision(2, 5, new BukkitRunnable() {
+                dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override
                     public void run() {
                         EnergyManager.useEnergy(user, 25);
@@ -623,7 +624,7 @@ public class MartialArtistAbilityEffects {
 
                         for (UUID uuid : hitEntityUUIDs) {
                             if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
                                 livingEntity.setNoDamageTicks(0);
                                 livingEntity.setVelocity(jump.multiply(2).setY(2)); // knockback
                             }
@@ -643,38 +644,38 @@ public class MartialArtistAbilityEffects {
         }.runTaskLater(expertiseStylePlugin, 105L);
     }
 
-    private void dashUntilCollision(double velocity, int fallbackTicks, BukkitRunnable onFinish) {
-        Vector dashDirection = user.getLocation().getDirection().normalize();
+    private static void dashUntilCollision(Player dasher, double velocity, int fallbackTicks, BukkitRunnable onFinish) {
+        Vector dashDirection = dasher.getLocation().getDirection().normalize();
         Vector dash = dashDirection.clone().multiply(velocity).setY(0);
-        user.setVelocity(dash);
+        dasher.setVelocity(dash);
 
-        user.getAttribute(Attribute.GENERIC_STEP_HEIGHT).setBaseValue(1);
+        dasher.getAttribute(Attribute.GENERIC_STEP_HEIGHT).setBaseValue(1);
         new BukkitRunnable() {
             int ticks = 0;
             boolean triggered = false;
 
             @Override
             public void run() {
-                Location baseLocation = user.getLocation().add(0, 1, 0);
+                Location baseLocation = dasher.getLocation().add(0, 1, 0);
                 Location hitbox = baseLocation.clone().add(dashDirection);
 
-                for (Entity entity : user.getWorld().getNearbyEntities(hitbox, 1.5, 2, 1.5)) {
-                    if (entity != user && entity instanceof LivingEntity livingEntity) {
+                for (Entity entity : dasher.getWorld().getNearbyEntities(hitbox, 1.5, 2, 1.5)) {
+                    if (entity != dasher && entity instanceof LivingEntity livingEntity) {
                         hitEntityUUIDs.add(entity.getUniqueId());
-                        user.setVelocity(new Vector(0, 0, 0));
+                        dasher.setVelocity(new Vector(0, 0, 0));
                         triggered = true;
                     }
                 }
 
                 if (!triggered && ticks >= fallbackTicks) {
-                    user.setVelocity(new Vector(0, 0, 0));
+                    dasher.setVelocity(new Vector(0, 0, 0));
                     triggered = true;
                 }
 
                 if (triggered) {
                     cancel();
                     onFinish.runTaskLater(expertiseStylePlugin, 1L);
-                    user.getAttribute(Attribute.GENERIC_STEP_HEIGHT).setBaseValue(.6);
+                    dasher.getAttribute(Attribute.GENERIC_STEP_HEIGHT).setBaseValue(.6);
                 }
 
                 ticks++;

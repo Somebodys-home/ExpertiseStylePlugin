@@ -17,6 +17,7 @@ public class CavalierAbilityItems extends AbilityItemTemplate {
                 "cavalier",
                 "Seismic Slam",
                 "Jump into the air, then crash into the ground, launching anyone nearby away from you",
+                false,
                 "Area",
                 16,
                 0,
@@ -24,7 +25,6 @@ public class CavalierAbilityItems extends AbilityItemTemplate {
                 30,
                 List.of("§f§n200%" + "§r§f" + " Weapon Damage \uD83D\uDDE1"),
                 null,
-                List.of(SPEAR, HAMMER),
-                false);
+                List.of(SPEAR, HAMMER));
     }
 }

@@ -6,24 +6,32 @@ import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.Coold
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedConfig;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedListener;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedManager;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Assassin.AssassinAbilityEffects;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Assassin.AssassinListener;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Cavalier.CavalierAbilityEffects;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Cavalier.CavalierListener;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseCommand;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marauder.MarauderAbilityEffects;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marauder.MarauderListener;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marksman.MarksmanAbilityEffects;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marksman.MarksmanListener;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.MartialArtist.MartialArtistAbilityEffects;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.MartialArtist.MartialArtistListener;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ShieldHero.ShieldHeroAbilityEffects;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ShieldHero.ShieldHeroListener;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierAbilityEffects;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierListener;
 import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleCommand;
 import io.github.NoOne.menuSystem.MenuListener;
+import io.github.NoOne.nMLPlayerStats.NMLPlayerStats;
 import io.github.NoOne.nMLShields.NMLShields;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ExpertiseStylePlugin extends JavaPlugin {
     private static ExpertiseStylePlugin instance;
     private NMLShields nmlShields;
+    private NMLPlayerStats nmlPlayerStats;
     private SelectedManager selectedManager;
     private SelectedConfig selectedConfig;
     private CooldownManager cooldownManager;
@@ -33,10 +41,17 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         instance = this;
 
         nmlShields = JavaPlugin.getPlugin(NMLShields.class);
+        nmlPlayerStats = JavaPlugin.getPlugin(NMLPlayerStats.class);
 
         new AbilityItemTemplate(this);
         new ExpertiseItemTemplate(this);
         new ExpertiseManager(this);
+        new SoldierAbilityEffects(this);
+        new AssassinAbilityEffects(this);
+        new MarauderAbilityEffects(this);
+        new CavalierAbilityEffects(this);
+        new MartialArtistAbilityEffects(this);
+        new ShieldHeroAbilityEffects(this);
         new MarksmanAbilityEffects(this);
 
         selectedConfig = new SelectedConfig(this, "abilities");
@@ -83,5 +98,9 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
 
     public NMLShields getNmlShields() {
         return nmlShields;
+    }
+
+    public NMLPlayerStats getNmlPlayerStats() {
+        return nmlPlayerStats;
     }
 }

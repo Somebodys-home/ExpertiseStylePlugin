@@ -6,7 +6,7 @@ import io.github.Gabriel.damagePlugin.customDamage.DamageType;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.CooldownManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
-import io.github.NoOne.nMLItems.ItemSystem;
+import io.github.NoOne.nMLPlayerStats.NMLPlayerStats;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -14,29 +14,27 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
 import java.util.*;
 
 public class SoldierAbilityEffects {
-    private ExpertiseStylePlugin expertiseStylePlugin;
-    private Set<UUID> hitEntityUUIDs = new HashSet<>();
-    private Player user;
-    private int hotbarSlot;
+    private static ExpertiseStylePlugin expertiseStylePlugin;
+    private static NMLPlayerStats nmlPlayerStats;
+    private static Set<UUID> hitEntityUUIDs = new HashSet<>();
 
-    public SoldierAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin, Player user, int hotbarSlot) {
+    public SoldierAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
-        this.user = user;
-        this.hotbarSlot = hotbarSlot;
+        nmlPlayerStats = expertiseStylePlugin.getNmlPlayerStats();
     }
 
-    public void slash(ItemStack weapon) {
+    public static void slash(Player user, int hotbarSlot) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
         Location location = user.getLocation();
-        HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.multiplyAllDamageStats(weapon, 1.2));
+        HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
+                nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats()), 1.2);
 
         CooldownManager.putAllOtherAbilitesOnCooldown(user, 1, hotbarSlot);
         EnergyManager.useEnergy(user, 15);
@@ -59,7 +57,7 @@ public class SoldierAbilityEffects {
 
         for (UUID uuid : hitEntityUUIDs) {
             if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
                 hitEntityUUIDs.remove(uuid);
             }
         }

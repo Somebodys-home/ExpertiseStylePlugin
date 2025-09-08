@@ -106,7 +106,7 @@
         <dependency>
             <groupId>com.github.Somebodys-home</groupId>
             <artifactId>DamagePlugin</artifactId>
-            <version>3e30fddf72</version>
+            <version>f64882c66f</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -125,6 +125,12 @@
             <groupId>com.github.Somebodys-home</groupId>
             <artifactId>NMLShields</artifactId>
             <version>50869deba2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.Somebodys-home</groupId>
+            <artifactId>NMLPlayerStats</artifactId>
+            <version>e06dc4c45c</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -8,6 +8,7 @@ import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.Coold
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLItems.ItemSystem;
+import io.github.NoOne.nMLPlayerStats.NMLPlayerStats;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -24,19 +25,20 @@ import org.bukkit.util.Vector;
 import java.util.*;
 
 public class MarauderAbilityEffects {
-    private ExpertiseStylePlugin expertiseStylePlugin;
-    private Set<UUID> hitEntityUUIDs = new HashSet<>();
-    private Player user;
-    private int hotbarSlot;
+    private static ExpertiseStylePlugin expertiseStylePlugin;
+    private static NMLPlayerStats nmlPlayerStats;
+    private static Set<UUID> hitEntityUUIDs = new HashSet<>();
 
-    public MarauderAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin, Player user, int hotbarSlot) {
+    public MarauderAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
-        this.user = user;
-        this.hotbarSlot = hotbarSlot;
+        nmlPlayerStats = expertiseStylePlugin.getNmlPlayerStats();
     }
 
-    public void bladeTornado(ItemStack weapon) {
-        HashMap<DamageType, Double> multipliedDamageMap = DamageConverter.convertStatMap2DamageTypes(ItemSystem.multiplyAllDamageStats(weapon, .5));
+    public static void bladeTornado(Player user, int hotbarSlot) {
+        user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
+
+        HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
+                nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats()), .5);
 
         EnergyManager.useEnergy(user, 30);
         CooldownManager.putAllOtherAbilitesOnCooldown(user, 6, hotbarSlot);
@@ -47,7 +49,6 @@ public class MarauderAbilityEffects {
 
             @Override
             public void run() {
-                user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
                 // tiny dash
                 Vector knockback = user.getLocation().getDirection().multiply(.5);
@@ -88,7 +89,7 @@ public class MarauderAbilityEffects {
                 if (tornadoTicks % 5 == 0) {
                     for (Entity entity : user.getWorld().getNearbyEntities(user.getLocation(), 2.25, 2, 2.25)) {
                         if (entity instanceof LivingEntity livingEntity && !entity.equals(user)) {
-                            Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, multipliedDamageMap));
+                            Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
                             livingEntity.setNoDamageTicks(5);
                         }
                     }

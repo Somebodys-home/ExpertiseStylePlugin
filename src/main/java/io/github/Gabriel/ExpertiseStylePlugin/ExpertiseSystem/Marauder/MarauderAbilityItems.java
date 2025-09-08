@@ -17,6 +17,7 @@ public class MarauderAbilityItems extends AbilityItemTemplate {
                 "marauder",
                 "Blade Tornado",
                 "Hurl yourself forwards as a whirligig of anger issues, bad intentions, and BLADES!",
+                false,
                 "Self",
                 5,
                 5,
@@ -24,7 +25,6 @@ public class MarauderAbilityItems extends AbilityItemTemplate {
                 30,
                 List.of("§f§n50%" + "§r§f" + " Weapon Damage \uD83D\uDDE1 §7§o(every .25s)"),
                 null,
-                List.of(SWORD, AXE),
-                false);
+                List.of(SWORD, AXE));
     }
 }
