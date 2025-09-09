@@ -8,7 +8,6 @@ C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\m
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\AbilitySystem\SaveAbilitiesSystem\SelectedListener.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\AbilitySystem\SaveAbilitiesSystem\SelectedManager.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\AbilitySystem\UseAbilityEvent.java
-C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseManager.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseStylePlugin.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Assassin\AssassinAbilityEffects.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Assassin\AssassinAbilityItems.java
@@ -20,6 +19,7 @@ C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\m
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Cavalier\CavalierMenu.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseCommand.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseItemTemplate.java
+C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseManager.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseMenus\ExpertiseConfirmMenu.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseMenus\ExpertiseMenu.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseMenus\ExpertiseMenuItems.java
@@ -35,6 +35,10 @@ C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\m
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArtistAbilityItems.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArtistListener.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArtistMenu.java
+C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Primordial\PrimordialAbilityEffects.java
+C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Primordial\PrimordialAbilityItems.java
+C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Primordial\PrimordialListener.java
+C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Primordial\PrimordialMenu.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ShieldHero\ShieldHeroAbilityEffects.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ShieldHero\ShieldHeroAbilityItems.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ShieldHero\ShieldHeroListener.java

@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import static io.github.NoOne.nMLItems.ItemType.*;
 
@@ -74,7 +75,7 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
                 expertiseItem = new ItemStack(Material.BOOK);
                 color = ChatColor.GOLD;
             }
-            case "druid" -> {
+            case "primordial" -> {
                 expertiseItem = new ItemStack(Material.OAK_SAPLING);
                 color = ChatColor.DARK_GREEN;
             }
@@ -82,7 +83,7 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
                 expertiseItem = new ItemStack(Material.OXEYE_DAISY);
                 color = ChatColor.WHITE;
             }
-            case "abyssnian" -> {
+            case "annulled" -> {
                 expertiseItem = new ItemStack(Material.CRYING_OBSIDIAN);
                 color = ChatColor.DARK_PURPLE;
             }
@@ -120,18 +121,32 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
 
         if (weapons != null) {
             lore.add("§b§l----------Weapons---------");
-            for (ItemType weapon : weapons) {
-                if (weapon == SHIELD) {
-                    lore.add("§e- " + ItemType.getItemTypeString(weapon) + " (in offhand)");
-                } else if (weapon == BOW) {
-                    lore.add("§e- " + ItemType.getItemTypeString(weapon) + " and quiver");
-                } else if (weapon == GLOVE) {
-                    lore.add("§e- " + ItemType.getItemTypeString(weapon) + "s (both)");
-                } else {
-                    lore.add("§e- " + ItemType.getItemTypeString(weapon) + "s");
+            if (weapons.isEmpty()) {
+                lore.add("§e- Any");
+
+                for (ItemType type : ItemType.getAllWeaponTypes()) {
+                    pdc.set(new NamespacedKey(expertiseStylePlugin, ItemType.getItemTypeString(type)),
+                            PersistentDataType.BOOLEAN, true);
                 }
 
-                pdc.set(new NamespacedKey(expertiseStylePlugin, ItemType.getItemTypeString(weapon)), PersistentDataType.BOOLEAN, true);
+            } else {
+                // Specific subset of weapons
+                for (ItemType weapon : weapons) {
+                    if (weapon == SHIELD) {
+                        lore.add("§e- " + ItemType.getItemTypeString(weapon) + " (in offhand)");
+                    } else if (weapon == BOW) {
+                        lore.add("§e- " + ItemType.getItemTypeString(weapon) + " and quiver");
+                    } else if (weapon == GLOVE) {
+                        lore.add("§e- " + ItemType.getItemTypeString(weapon) + "s (both)");
+                    } else if (weapon == STAFF) {
+                        lore.add("§e- Staves");
+                    } else {
+                        lore.add("§e- " + ItemType.getItemTypeString(weapon) + "s");
+                    }
+
+                    pdc.set(new NamespacedKey(expertiseStylePlugin, ItemType.getItemTypeString(weapon)),
+                            PersistentDataType.BOOLEAN, true);
+                }
             }
         }
 

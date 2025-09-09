@@ -12,12 +12,15 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Cavalier.CavalierA
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Cavalier.CavalierListener;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseCommand;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marauder.MarauderAbilityEffects;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marauder.MarauderListener;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marksman.MarksmanAbilityEffects;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marksman.MarksmanListener;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.MartialArtist.MartialArtistAbilityEffects;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.MartialArtist.MartialArtistListener;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Primordial.PrimordialAbilityEffects;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Primordial.PrimordialListener;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ShieldHero.ShieldHeroAbilityEffects;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ShieldHero.ShieldHeroListener;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierAbilityEffects;
@@ -27,12 +30,13 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Sorcerer.SorcererL
 import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleCommand;
 import io.github.NoOne.menuSystem.MenuListener;
 import io.github.NoOne.nMLPlayerStats.NMLPlayerStats;
+import io.github.NoOne.nMLShields.GuardingSystem;
 import io.github.NoOne.nMLShields.NMLShields;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ExpertiseStylePlugin extends JavaPlugin {
     private static ExpertiseStylePlugin instance;
-    private NMLShields nmlShields;
+    private GuardingSystem guardingSystem;
     private NMLPlayerStats nmlPlayerStats;
     private SelectedManager selectedManager;
     private SelectedConfig selectedConfig;
@@ -42,7 +46,7 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        nmlShields = JavaPlugin.getPlugin(NMLShields.class);
+        guardingSystem = JavaPlugin.getPlugin(NMLShields.class).getGuardingSystem();
         nmlPlayerStats = JavaPlugin.getPlugin(NMLPlayerStats.class);
 
         new AbilityItemTemplate(this);
@@ -56,6 +60,7 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         new ShieldHeroAbilityEffects(this);
         new MarksmanAbilityEffects(this);
         new SorcererAbilityEffects(this);
+        new PrimordialAbilityEffects(this);
 
         selectedConfig = new SelectedConfig(this, "abilities");
         selectedConfig.loadConfig();
@@ -79,6 +84,7 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ShieldHeroListener(this), this);
         getServer().getPluginManager().registerEvents(new MarksmanListener(this), this);
         getServer().getPluginManager().registerEvents(new SorcererListener(this), this);
+        getServer().getPluginManager().registerEvents(new PrimordialListener(this), this);
     }
 
     @Override
@@ -100,8 +106,8 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         return selectedConfig;
     }
 
-    public NMLShields getNmlShields() {
-        return nmlShields;
+    public GuardingSystem getGuardingSystem() {
+        return guardingSystem;
     }
 
     public NMLPlayerStats getNmlPlayerStats() {

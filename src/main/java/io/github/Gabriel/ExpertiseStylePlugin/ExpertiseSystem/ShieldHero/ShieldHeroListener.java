@@ -2,7 +2,6 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ShieldHero;
 
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.UseAbilityEvent;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedManager;
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

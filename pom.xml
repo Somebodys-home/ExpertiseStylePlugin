@@ -106,7 +106,7 @@
         <dependency>
             <groupId>com.github.Somebodys-home</groupId>
             <artifactId>DamagePlugin</artifactId>
-            <version>f64882c66f</version>
+            <version>fa83df4f48</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -118,7 +118,7 @@
         <dependency>
             <groupId>com.github.Somebodys-home</groupId>
             <artifactId>NMLItems</artifactId>
-            <version>a32090f992</version>
+            <version>3d8a9df469</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

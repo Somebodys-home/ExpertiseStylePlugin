@@ -1,4 +1,4 @@
-package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Cavalier;
+package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Primordial;
 
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.UseAbilityEvent;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedManager;
@@ -10,10 +10,10 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 
-public class CavalierListener implements Listener {
+public class PrimordialListener implements Listener {
     private SelectedManager selectedManager;
 
-    public CavalierListener(ExpertiseStylePlugin expertiseStylePlugin) {
+    public PrimordialListener(ExpertiseStylePlugin expertiseStylePlugin) {
         selectedManager = expertiseStylePlugin.getSelectedManager();
     }
 
@@ -28,7 +28,7 @@ public class CavalierListener implements Listener {
 
             if (Arrays.asList(selectedAbilities).contains(abilityName)) {
                 switch (abilityName) {
-                    case "§9§lSeismic Slam" -> CavalierAbilityEffects.seismicSlam(player, hotbarSlot);
+                    case "§2§lChuck Rock" -> PrimordialAbilityEffects.chuckRock(player, hotbarSlot);
                 }
             }
         }

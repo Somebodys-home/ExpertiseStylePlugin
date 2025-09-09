@@ -16,7 +16,7 @@ public class SorcererAbilityItems extends AbilityItemTemplate {
         return ExpertiseItemTemplate.makeExpertiseAbilityItem(
                 "sorcerer",
                 "Magic Missile EX",
-                "Shoot your basic attack 5 times. (Don't get the name twisted, this is still the lamest ability you could muster.)",
+                "Shoot your basic attack 5 times. (Don't get it twisted, this is still the lamest ability you could muster.)",
                 false,
                 "Single",
                 16,

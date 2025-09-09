@@ -22,7 +22,7 @@ public class ShieldHeroAbilityEffects {
 
     public ShieldHeroAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
-        guardingSystem = expertiseStylePlugin.getNmlShields().getGuardingSystem();
+        guardingSystem = expertiseStylePlugin.getGuardingSystem();
     }
 
     public static void secondWind(Player user, int hotbarSlot) {

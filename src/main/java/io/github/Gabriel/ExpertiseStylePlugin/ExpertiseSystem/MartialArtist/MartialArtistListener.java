@@ -2,10 +2,7 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.MartialArtist;
 
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.UseAbilityEvent;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedManager;
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
-import io.github.NoOne.nMLItems.ItemSystem;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

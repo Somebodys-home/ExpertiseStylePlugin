@@ -3,7 +3,8 @@ package io.github.Gabriel.expertiseStylePlugin.AbilitySystem;
 import io.github.Gabriel.damagePlugin.customDamage.CustomDamageEvent;
 import io.github.Gabriel.damagePlugin.customDamage.DamageType;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.CooldownManager;
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseManager;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseManager;
+import io.github.NoOne.nMLItems.ItemSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
@@ -49,24 +50,23 @@ public class AbilityListener implements Listener {
             event.setCancelled(true);
 
             if (abilityItem.isSimilar(AbilityItemTemplate.cooldownItem())) return;
-            if (!ExpertiseManager.isHoldingWeaponForAbility(player, abilityItem, weapon)) { // return if not holding proper items
+            if (!ExpertiseManager.isHoldingWeaponForAbility(player, abilityItem, weapon)) {
                 event.getPlayer().sendMessage("§c⚠ §nRequirements not met!§r§c ⚠");
-                return;
-            }
+            } else {
+                triggeringPlayer.add(uuid);
+                Bukkit.getPluginManager().callEvent(new UseAbilityEvent(player, weapon, abilityItem, newSlot));
 
-            triggeringPlayer.add(uuid);
-            Bukkit.getPluginManager().callEvent(new UseAbilityEvent(player, weapon, abilityItem, newSlot));
+                if (AbilityItemTemplate.isToggleable(abilityItem)) { // if it's a toggleable ability
+                    boolean toggle = !AbilityItemTemplate.getToggleState(abilityItem); // boolean of its inverse state
 
-            if (AbilityItemTemplate.isToggleable(abilityItem)) { // if it's a toggleable ability
-                boolean toggle = !AbilityItemTemplate.getToggleState(abilityItem); // boolean of its inverse state
+                    AbilityItemTemplate.toggleAbility(abilityItem, toggle);
 
-                AbilityItemTemplate.toggleAbility(abilityItem, toggle);
-
-                if (!toggle) { // if were turning it off, put it on cooldown
+                    if (!toggle) { // if were turning it off, put it on cooldown
+                        CooldownManager.putOnCooldown(player, newSlot, AbilityItemTemplate.getCooldown(abilityItem));
+                    }
+                } else { // if it isnt a toggleable
                     CooldownManager.putOnCooldown(player, newSlot, AbilityItemTemplate.getCooldown(abilityItem));
                 }
-            } else { // if it isnt a toggleable
-                CooldownManager.putOnCooldown(player, newSlot, AbilityItemTemplate.getCooldown(abilityItem));
             }
         }
     }
