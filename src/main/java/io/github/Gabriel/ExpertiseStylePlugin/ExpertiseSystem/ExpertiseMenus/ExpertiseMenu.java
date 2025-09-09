@@ -7,6 +7,7 @@ import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Assassin.AssassinMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Cavalier.CavalierMenu;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Hallowed.HallowedMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marauder.MarauderMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marksman.MarksmanMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.MartialArtist.MartialArtistMenu;
@@ -57,6 +58,7 @@ public class ExpertiseMenu extends Menu {
             case 22 -> new MarksmanMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 29 -> new SorcererMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 30 -> new PrimordialMenu(expertiseStylePlugin, playerMenuUtility).open();
+            case 32 -> new HallowedMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 44 -> {
                 CooldownManager.resetAllCooldowns(player);
                 player.getInventory().setItem(0, AbilityItemTemplate.emptyStyleAbilityItem());

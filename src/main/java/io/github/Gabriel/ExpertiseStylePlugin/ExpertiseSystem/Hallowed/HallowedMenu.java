@@ -1,4 +1,4 @@
-package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Sorcerer;
+package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Hallowed;
 
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus.ExpertiseConfirmMenu;
@@ -11,17 +11,17 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class SorcererMenu extends Menu {
+public class HallowedMenu extends Menu {
     private ExpertiseStylePlugin expertiseStylePlugin;
 
-    public SorcererMenu(ExpertiseStylePlugin expertiseStylePlugin, PlayerMenuUtility playerMenuUtility) {
+    public HallowedMenu(ExpertiseStylePlugin expertiseStylePlugin, PlayerMenuUtility playerMenuUtility) {
         super(playerMenuUtility);
         this.expertiseStylePlugin = expertiseStylePlugin;
     }
 
     @Override
     public String getMenuName() {
-        return "§6§lSorcerer Abilities";
+        return "§f§lHallowed Abilities";
     }
 
     @Override
@@ -48,7 +48,7 @@ public class SorcererMenu extends Menu {
 
     @Override
     public void setMenuItems() {
-        inventory.setItem(10, SorcererAbilityItems.magicMissileEX());
+        inventory.setItem(10, HallowedAbilityItems.halo());
 
         // Backout button
         ItemStack nvm = new ItemStack(Material.BARRIER);

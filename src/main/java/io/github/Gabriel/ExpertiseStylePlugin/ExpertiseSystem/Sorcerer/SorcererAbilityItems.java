@@ -12,7 +12,7 @@ public class SorcererAbilityItems extends AbilityItemTemplate {
         super(ExpertiseStylePlugin.getInstance());
     }
 
-    public static ItemStack slashandDash() {
+    public static ItemStack magicMissileEX() {
         return ExpertiseItemTemplate.makeExpertiseAbilityItem(
                 "sorcerer",
                 "Magic Missile EX",

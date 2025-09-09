@@ -13,6 +13,8 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Cavalier.CavalierL
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseCommand;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseManager;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Hallowed.HallowedAbilityEffects;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Hallowed.HallowedListener;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marauder.MarauderAbilityEffects;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marauder.MarauderListener;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marksman.MarksmanAbilityEffects;
@@ -61,6 +63,7 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         new MarksmanAbilityEffects(this);
         new SorcererAbilityEffects(this);
         new PrimordialAbilityEffects(this);
+        new HallowedAbilityEffects(this);
 
         selectedConfig = new SelectedConfig(this, "abilities");
         selectedConfig.loadConfig();
@@ -85,6 +88,7 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new MarksmanListener(this), this);
         getServer().getPluginManager().registerEvents(new SorcererListener(this), this);
         getServer().getPluginManager().registerEvents(new PrimordialListener(this), this);
+        getServer().getPluginManager().registerEvents(new HallowedListener(this), this);
     }
 
     @Override
