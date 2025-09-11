@@ -63,6 +63,7 @@ public class MarksmanAbilityEffects {
                     CooldownManager.putOnCooldown(user, hotbarSlot, AbilityItemTemplate.getCooldown(abilityItem));
                     ongoingEffects.get(user.getUniqueId()).get("rapidShot").cancel();
                     ongoingEffects.get(user.getUniqueId()).remove("rapidShot");
+                    AbilityItemTemplate.toggleAbility(abilityItem, false);
 
                     new BukkitRunnable() {
                         int arrows = user.getMetadata("rapid shot arrows").getFirst().asInt();
@@ -89,7 +90,7 @@ public class MarksmanAbilityEffects {
             }
         };
 
-        if (!toggle) { // toggling ON
+        if (toggle) { // toggling ON
             // Make sure player's map exists
             ongoingEffects.computeIfAbsent(user.getUniqueId(), k -> new HashMap<>());
 

@@ -81,7 +81,7 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         getCommand("style").setExecutor(new StyleCommand());
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
         getServer().getPluginManager().registerEvents(new SelectedListener(this), this);
-        getServer().getPluginManager().registerEvents(new AbilityListener(), this);
+        getServer().getPluginManager().registerEvents(new AbilityListener(this), this);
         getServer().getPluginManager().registerEvents(new SoldierListener(this), this);
         getServer().getPluginManager().registerEvents(new AssassinListener(this), this);
         getServer().getPluginManager().registerEvents(new MarauderListener(this), this);

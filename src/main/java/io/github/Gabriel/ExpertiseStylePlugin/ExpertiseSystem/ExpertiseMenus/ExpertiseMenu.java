@@ -65,8 +65,8 @@ public class ExpertiseMenu extends Menu {
                 CooldownManager.resetAllCooldowns(player);
                 player.getInventory().setItem(0, AbilityItemTemplate.emptyStyleAbilityItem());
                 player.getInventory().setItem(1, AbilityItemTemplate.emptyStyleAbilityItem());
-                player.getInventory().setItem(2, AbilityItemTemplate.emptyExpertiseAbilityItem());
-                player.getInventory().setItem(3, AbilityItemTemplate.emptyExpertiseAbilityItem());
+                player.getInventory().setItem(2, ExpertiseItemTemplate.emptyExpertiseAbilityItem());
+                player.getInventory().setItem(3, ExpertiseItemTemplate.emptyExpertiseAbilityItem());
                 selectedAbilities.resetSelectedAbilities();
             }
         }

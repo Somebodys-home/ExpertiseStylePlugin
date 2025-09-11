@@ -26,6 +26,21 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         expertiseKey = new NamespacedKey(expertiseStylePlugin, "expertise");
     }
 
+    public static ItemStack emptyExpertiseAbilityItem() {
+        ItemStack expertise = new ItemStack(Material.MAGENTA_DYE);
+        ItemMeta meta = expertise.getItemMeta();
+        List<String> lore = new ArrayList<>();
+        PersistentDataContainer pdc = meta.getPersistentDataContainer();
+
+        pdc.set(AbilityItemTemplate.getImmovableKey(), PersistentDataType.INTEGER, 1);
+        meta.setDisplayName(ChatColor.LIGHT_PURPLE + "Empty Expertise Ability");
+        lore.add(ChatColor.GRAY + "An empty ability slot. Dunno why you'd put nothing here.");
+        meta.setLore(lore);
+        expertise.setItemMeta(meta);
+
+        return expertise;
+    }
+
     public static ItemStack makeExpertiseAbilityItem(String expertise, String name, String description, boolean toggleable, String targeting, int range, int duration,
                                                      int cooldown, int cost, List<String> damage, List<String> effects, List<ItemType> weapons) {
 
@@ -34,9 +49,10 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         ItemMeta meta = expertiseItem.getItemMeta();
         List<String> lore = new ArrayList<>();
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
-        pdc.set(AbilityItemTemplate.getImmovableKey(), PersistentDataType.INTEGER, 1);
         pdc.set(expertiseKey, PersistentDataType.INTEGER, 1);
+        pdc.set(AbilityItemTemplate.getImmovableKey(), PersistentDataType.INTEGER, 1);
         pdc.set(AbilityItemTemplate.getCooldownKey(), PersistentDataType.INTEGER, cooldown);
+        pdc.set(AbilityItemTemplate.getEnergyKey(), PersistentDataType.INTEGER, cost);
 
         // color and itemstack of ability
         switch (expertise) {

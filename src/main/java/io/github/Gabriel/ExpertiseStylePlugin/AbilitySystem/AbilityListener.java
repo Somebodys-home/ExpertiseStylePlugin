@@ -3,8 +3,9 @@ package io.github.Gabriel.expertiseStylePlugin.AbilitySystem;
 import io.github.Gabriel.damagePlugin.customDamage.CustomDamageEvent;
 import io.github.Gabriel.damagePlugin.customDamage.DamageType;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.CooldownManager;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseManager;
-import io.github.NoOne.nMLItems.ItemSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
@@ -25,26 +26,30 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class AbilityListener implements Listener {
-    private final ItemStack expertiseAbilityItem = AbilityItemTemplate.emptyExpertiseAbilityItem();
+    private ExpertiseStylePlugin expertiseStylePlugin;
+    private final ItemStack expertiseAbilityItem = ExpertiseItemTemplate.emptyExpertiseAbilityItem();
     private final ItemStack styleAbilityItem = AbilityItemTemplate.emptyStyleAbilityItem();
     private final ArrayList<UUID> triggeringPlayer = new ArrayList<>();
 
-    public AbilityListener() {}
+    public AbilityListener(ExpertiseStylePlugin expertiseStylePlugin) {
+        this.expertiseStylePlugin = expertiseStylePlugin;
+    }
 
     // put items on cooldown when selecting them (using the ability)
     @EventHandler
     public void onUseAbility(PlayerItemHeldEvent event) {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
+        double currentEnergy = expertiseStylePlugin.getNmlPlayerStats().getProfileManager().getPlayerProfile(uuid).getStats().getCurrentEnergy();
+        int newSlot = event.getNewSlot();
+        ItemStack abilityItem = player.getInventory().getItem(newSlot);
+        ItemStack weapon = player.getInventory().getItem(event.getPreviousSlot());
 
         if (triggeringPlayer.contains(uuid)) { // double trigger guard
             triggeringPlayer.remove(uuid);
             return;
         }
 
-        int newSlot = event.getNewSlot();
-        ItemStack abilityItem = player.getInventory().getItem(newSlot);
-        ItemStack weapon = player.getInventory().getItem(event.getPreviousSlot());
 
         if (AbilityItemTemplate.isImmovable(abilityItem)) { // if it's an ability item
             event.setCancelled(true);
@@ -54,7 +59,6 @@ public class AbilityListener implements Listener {
                 event.getPlayer().sendMessage("§c⚠ §nRequirements not met!§r§c ⚠");
             } else {
                 triggeringPlayer.add(uuid);
-                Bukkit.getPluginManager().callEvent(new UseAbilityEvent(player, weapon, abilityItem, newSlot));
 
                 if (AbilityItemTemplate.isToggleable(abilityItem)) { // if it's a toggleable ability
                     boolean toggle = !AbilityItemTemplate.getToggleState(abilityItem); // boolean of its inverse state
@@ -62,10 +66,22 @@ public class AbilityListener implements Listener {
                     AbilityItemTemplate.toggleAbility(abilityItem, toggle);
 
                     if (!toggle) { // if were turning it off, put it on cooldown
+                        Bukkit.getPluginManager().callEvent(new UseAbilityEvent(player, weapon, abilityItem, newSlot));
                         CooldownManager.putOnCooldown(player, newSlot, AbilityItemTemplate.getCooldown(abilityItem));
+                    } else { // if turning on, energy check
+                        if (AbilityItemTemplate.getRequiredEnergy(abilityItem) <= currentEnergy) {
+                            Bukkit.getPluginManager().callEvent(new UseAbilityEvent(player, weapon, abilityItem, newSlot));
+                        } else {
+                            player.sendMessage("§c⚠ §nNot enough energy!§r§c ⚠");
+                        }
                     }
                 } else { // if it isnt a toggleable
-                    CooldownManager.putOnCooldown(player, newSlot, AbilityItemTemplate.getCooldown(abilityItem));
+                    if (AbilityItemTemplate.getRequiredEnergy(abilityItem) <= currentEnergy) { // energy check
+                        Bukkit.getPluginManager().callEvent(new UseAbilityEvent(player, weapon, abilityItem, newSlot));
+                        CooldownManager.putOnCooldown(player, newSlot, AbilityItemTemplate.getCooldown(abilityItem));
+                    } else {
+                        player.sendMessage("§c⚠ §nNot enough energy!§r§c ⚠");
+                    }
                 }
             }
         }

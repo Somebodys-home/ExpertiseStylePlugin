@@ -117,11 +117,9 @@ public class AnnulledAbilityEffects {
                                 if (entity instanceof LivingEntity && entity != user) {
                                     Vector toCenter = center.clone().subtract(entity.getLocation()).toVector();
                                     double distance = toCenter.length();
+                                    Vector pull = toCenter.normalize().multiply(.03 * distance);
 
-                                    if (distance > 0.5) {
-                                        Vector pull = toCenter.normalize().multiply(.03 * distance);
-                                        entity.setVelocity(entity.getVelocity().add(pull));
-                                    }
+                                    entity.setVelocity(entity.getVelocity().add(pull));
                                 }
                             }
 
