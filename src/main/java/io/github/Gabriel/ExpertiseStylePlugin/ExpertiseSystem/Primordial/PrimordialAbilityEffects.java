@@ -38,7 +38,7 @@ public class PrimordialAbilityEffects {
 
         stone.setCancelDrop(true);
         stone.setVelocity(user.getLocation().getDirection().multiply(2).add(new Vector(0, .3, 0)));
-        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 2f);
+        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, .5f, 2f);
 
         // sweep particle
         Location baseLocation = user.getEyeLocation().clone().subtract(0, .5, 0);

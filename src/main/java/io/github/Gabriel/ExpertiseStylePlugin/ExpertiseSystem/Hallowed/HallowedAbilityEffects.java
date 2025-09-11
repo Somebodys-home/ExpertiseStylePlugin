@@ -84,7 +84,7 @@ public class HallowedAbilityEffects {
                                 double radius = .5; // <- max radius
                                 int particleCount = 100;
 
-                                if (timer != 40 && timer % 5 == 0) {
+                                if (timer != 40) {
                                     for (int i = 0; i < particleCount; i++) {
                                         double angle = 2 * Math.PI * i / particleCount;
                                         double x = radius * Math.cos(angle);
@@ -92,7 +92,7 @@ public class HallowedAbilityEffects {
                                         double z = radius * Math.sin(angle);
                                         Location particleLocation = center.clone().add(x, y, z);
 
-                                        user.getWorld().spawnParticle(Particle.END_ROD, particleLocation, 1, 0, 0, 0, 0);
+                                        user.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, particleLocation, 1, 0, 0, 0, 0);
                                     }
                                 }
 
@@ -140,9 +140,9 @@ public class HallowedAbilityEffects {
                     double z = currentRadius * Math.sin(angle);
                     double x2 = (currentRadius - .1) * Math.cos(angle);
                     double z2 = (currentRadius - .1) * Math.sin(angle);
-
                     Location particleLocation = center.clone().add(x, 0, z);
                     Location particleLocation2 = center.clone().add(x2, 0, z2);
+
                     user.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, particleLocation2, 1, 0, 0, 0, 0);
                     user.getWorld().spawnParticle(Particle.END_ROD, particleLocation, 5, 0, 0, 0, 0);
                 }

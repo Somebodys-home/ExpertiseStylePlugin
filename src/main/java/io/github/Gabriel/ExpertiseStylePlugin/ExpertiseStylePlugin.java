@@ -6,6 +6,8 @@ import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.Coold
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedConfig;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedListener;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedManager;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Annulled.AnnulledAbilityEffects;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Annulled.AnnulledListener;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Assassin.AssassinAbilityEffects;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Assassin.AssassinListener;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Cavalier.CavalierAbilityEffects;
@@ -64,6 +66,7 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         new SorcererAbilityEffects(this);
         new PrimordialAbilityEffects(this);
         new HallowedAbilityEffects(this);
+        new AnnulledAbilityEffects(this);
 
         selectedConfig = new SelectedConfig(this, "abilities");
         selectedConfig.loadConfig();
@@ -89,6 +92,7 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SorcererListener(this), this);
         getServer().getPluginManager().registerEvents(new PrimordialListener(this), this);
         getServer().getPluginManager().registerEvents(new HallowedListener(this), this);
+        getServer().getPluginManager().registerEvents(new AnnulledListener(this), this);
     }
 
     @Override

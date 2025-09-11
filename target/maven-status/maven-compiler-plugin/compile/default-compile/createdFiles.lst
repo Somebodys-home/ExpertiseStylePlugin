@@ -15,11 +15,13 @@ io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Marauder\MarauderMenu.cla
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Primordial\PrimordialAbilityItems.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Sorcerer\SorcererAbilityItems.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArtistAbilityEffects$8$1.class
+io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Annulled\AnnulledAbilityEffects$1$1.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ShieldHero\ShieldHeroListener.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseCommand.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseManager.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseMenus\ExpertiseConfirmMenu.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Cavalier\CavalierAbilityItems.class
+io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Annulled\AnnulledAbilityEffects$1$1$1.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Marksman\MarksmanAbilityItems.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArtistAbilityItems.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Hallowed\HallowedAbilityEffects$1$1.class
@@ -30,12 +32,14 @@ io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArti
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Cavalier\CavalierAbilityEffects.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Hallowed\HallowedListener.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Marauder\MarauderAbilityItems.class
+io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Annulled\AnnulledAbilityItems.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArtistAbilityEffects$1$1.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ShieldHero\ShieldHeroAbilityEffects$1.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArtistAbilityEffects$5.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Hallowed\HallowedAbilityEffects$1.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArtistAbilityEffects$5$1.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArtistAbilityEffects$3$1$1.class
+io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Annulled\AnnulledListener.class
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\AbilityItemTemplate.class
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\UseAbilityEvent.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ExpertiseItemTemplate.class
@@ -51,6 +55,7 @@ io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArti
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArtistAbilityEffects$9$1$1.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Marauder\MarauderAbilityEffects.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Marksman\MarksmanMenu.class
+io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Annulled\AnnulledMenu.class
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\CooldownSystem\CooldownManager.class
 io\github\Gabriel\expertiseStylePlugin\AbilitySystem\CooldownSystem\CooldownInstance.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArtistMenu.class
@@ -77,6 +82,7 @@ io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArti
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Cavalier\CavalierListener.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\ShieldHero\ShieldHeroAbilityItems.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Primordial\PrimordialListener.class
+io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Annulled\AnnulledAbilityEffects.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArtistAbilityEffects$1.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArtistAbilityEffects$7.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Soldier\SoldierAbilityEffects.class
@@ -100,6 +106,7 @@ io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Soldier\SoldierAbilityIte
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Cavalier\CavalierAbilityEffects$1.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Soldier\SoldierMenu.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArtistListener.class
+io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Annulled\AnnulledAbilityEffects$1.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Hallowed\HallowedAbilityEffects.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\MartialArtist\MartialArtistAbilityEffects$2$1$1.class
 io\github\Gabriel\expertiseStylePlugin\ExpertiseSystem\Sorcerer\SorcererListener.class
