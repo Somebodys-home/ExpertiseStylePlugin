@@ -649,7 +649,7 @@ public class MartialArtistAbilityEffects {
         Vector dash = dashDirection.clone().multiply(velocity).setY(0);
         dasher.setVelocity(dash);
 
-        dasher.getAttribute(Attribute.GENERIC_STEP_HEIGHT).setBaseValue(1);
+        dasher.getAttribute(Attribute.STEP_HEIGHT).setBaseValue(1);
         new BukkitRunnable() {
             int ticks = 0;
             boolean triggered = false;
@@ -675,7 +675,7 @@ public class MartialArtistAbilityEffects {
                 if (triggered) {
                     cancel();
                     onFinish.runTaskLater(expertiseStylePlugin, 1L);
-                    dasher.getAttribute(Attribute.GENERIC_STEP_HEIGHT).setBaseValue(.6);
+                    dasher.getAttribute(Attribute.STEP_HEIGHT).setBaseValue(.6);
                 }
 
                 ticks++;

@@ -42,7 +42,7 @@ public class MarauderAbilityEffects {
 
         EnergyManager.useEnergy(user, 30);
         CooldownManager.putAllOtherAbilitesOnCooldown(user, 6, hotbarSlot);
-        user.getAttribute(Attribute.GENERIC_STEP_HEIGHT).setBaseValue(1);
+        user.getAttribute(Attribute.STEP_HEIGHT).setBaseValue(1);
 
         new BukkitRunnable() {
             int tornadoTicks = 100;
@@ -99,7 +99,7 @@ public class MarauderAbilityEffects {
                 if (tornadoTicks == 0) {
                     this.cancel();
                     user.removeMetadata("using ability", expertiseStylePlugin);
-                    user.getAttribute(Attribute.GENERIC_STEP_HEIGHT).setBaseValue(.6);
+                    user.getAttribute(Attribute.STEP_HEIGHT).setBaseValue(.6);
                 }
             }
         }.runTaskTimer(expertiseStylePlugin, 0L, 1L);
