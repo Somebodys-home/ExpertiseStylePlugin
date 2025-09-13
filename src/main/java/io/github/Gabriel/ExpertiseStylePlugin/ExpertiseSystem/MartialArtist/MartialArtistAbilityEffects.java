@@ -37,7 +37,7 @@ public class MartialArtistAbilityEffects {
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
                 nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats()), .25);
         final boolean[] comboBroken = {false};
-        CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
+        CooldownManager.putAllOtherAbilitiesOnCooldown(user, 2, hotbarSlot);
         EnergyManager.useEnergy(user, 5);
 
         // punch 1
@@ -87,7 +87,7 @@ public class MartialArtistAbilityEffects {
                 }
 
                 hitEntityUUIDs.clear();
-                CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
+                CooldownManager.putAllOtherAbilitiesOnCooldown(user, .5, hotbarSlot);
 
                 dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override
@@ -139,7 +139,7 @@ public class MartialArtistAbilityEffects {
                 }
 
                 hitEntityUUIDs.clear();
-                CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
+                CooldownManager.putAllOtherAbilitiesOnCooldown(user, .5, hotbarSlot);
 
                 dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override
@@ -191,7 +191,7 @@ public class MartialArtistAbilityEffects {
                 }
 
                 hitEntityUUIDs.clear();
-                CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
+                CooldownManager.putAllOtherAbilitiesOnCooldown(user, .5, hotbarSlot);
 
                 dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override
@@ -247,7 +247,7 @@ public class MartialArtistAbilityEffects {
                 }
 
                 hitEntityUUIDs.clear();
-                CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
+                CooldownManager.putAllOtherAbilitiesOnCooldown(user, .5, hotbarSlot);
 
                 dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override
@@ -303,7 +303,7 @@ public class MartialArtistAbilityEffects {
                 }
 
                 hitEntityUUIDs.clear();
-                CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
+                CooldownManager.putAllOtherAbilitiesOnCooldown(user, .5, hotbarSlot);
 
                 dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override
@@ -361,7 +361,7 @@ public class MartialArtistAbilityEffects {
                 }
 
                 hitEntityUUIDs.clear();
-                CooldownManager.putAllOtherAbilitesOnCooldown(user, .8, hotbarSlot);
+                CooldownManager.putAllOtherAbilitiesOnCooldown(user, .8, hotbarSlot);
 
                 dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override
@@ -428,7 +428,7 @@ public class MartialArtistAbilityEffects {
                 }
 
                 hitEntityUUIDs.clear();
-                CooldownManager.putAllOtherAbilitesOnCooldown(user, .8, hotbarSlot);
+                CooldownManager.putAllOtherAbilitiesOnCooldown(user, .8, hotbarSlot);
 
                 dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override
@@ -495,7 +495,7 @@ public class MartialArtistAbilityEffects {
                 }
 
                 hitEntityUUIDs.clear();
-                CooldownManager.putAllOtherAbilitesOnCooldown(user, .8, hotbarSlot);
+                CooldownManager.putAllOtherAbilitiesOnCooldown(user, .8, hotbarSlot);
 
                 dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override
@@ -566,7 +566,7 @@ public class MartialArtistAbilityEffects {
 
                 user.setMetadata("falling", new FixedMetadataValue(expertiseStylePlugin, true));
                 hitEntityUUIDs.clear();
-                CooldownManager.putAllOtherAbilitesOnCooldown(user, .8, hotbarSlot);
+                CooldownManager.putAllOtherAbilitiesOnCooldown(user, .8, hotbarSlot);
 
                 dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override

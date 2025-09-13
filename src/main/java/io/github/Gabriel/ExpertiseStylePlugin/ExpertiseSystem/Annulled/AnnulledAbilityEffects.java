@@ -34,7 +34,7 @@ public class AnnulledAbilityEffects {
                 nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats(), "darkdamage"), 3) ;
 
         EnergyManager.useEnergy(user, 50);
-        CooldownManager.putAllOtherAbilitesOnCooldown(user, 1.5, hotbarSlot);
+        CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1.5, hotbarSlot);
         user.playSound(user, Sound.ENTITY_WITHER_SHOOT, 1f, 1f);
 
         new BukkitRunnable() {

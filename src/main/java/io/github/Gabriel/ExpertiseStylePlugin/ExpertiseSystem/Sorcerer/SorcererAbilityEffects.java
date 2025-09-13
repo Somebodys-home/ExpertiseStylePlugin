@@ -38,7 +38,7 @@ public class SorcererAbilityEffects {
                 nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats());
 
         EnergyManager.useEnergy(user, 20);
-        CooldownManager.putAllOtherAbilitesOnCooldown(user, 2.5, hotbarSlot);
+        CooldownManager.putAllOtherAbilitiesOnCooldown(user, 2.5, hotbarSlot);
 
         new BukkitRunnable() {
             int missiles = 0;

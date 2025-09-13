@@ -29,7 +29,7 @@ public class ShieldHeroAbilityEffects {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
         EnergyManager.useEnergy(user, 20);
-        CooldownManager.putAllOtherAbilitesOnCooldown(user, 2, hotbarSlot);
+        CooldownManager.putAllOtherAbilitiesOnCooldown(user, 2, hotbarSlot);
 
         user.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 30, 10, false, false, false));
         user.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 30, 255, false, false, false));

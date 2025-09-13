@@ -38,7 +38,7 @@ public class AssassinAbilityEffects {
                 nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats()), 1.5);
 
         EnergyManager.useEnergy(user, 20);
-        CooldownManager.putAllOtherAbilitesOnCooldown(user, 1, hotbarSlot);
+        CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1, hotbarSlot);
         user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
 
         // dash

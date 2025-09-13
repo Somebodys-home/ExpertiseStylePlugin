@@ -41,7 +41,7 @@ public class MarauderAbilityEffects {
                 nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats()), .5);
 
         EnergyManager.useEnergy(user, 30);
-        CooldownManager.putAllOtherAbilitesOnCooldown(user, 6, hotbarSlot);
+        CooldownManager.putAllOtherAbilitiesOnCooldown(user, 6, hotbarSlot);
         user.getAttribute(Attribute.STEP_HEIGHT).setBaseValue(1);
 
         new BukkitRunnable() {

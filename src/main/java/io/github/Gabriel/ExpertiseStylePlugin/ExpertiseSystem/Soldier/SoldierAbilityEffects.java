@@ -36,7 +36,7 @@ public class SoldierAbilityEffects {
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
                 nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats()), 1.2);
 
-        CooldownManager.putAllOtherAbilitesOnCooldown(user, 1, hotbarSlot);
+        CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1, hotbarSlot);
         EnergyManager.useEnergy(user, 15);
         user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
 

@@ -34,7 +34,7 @@ public class HallowedAbilityEffects {
                 nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats(), "lightdamage"), .5) ;
 
         EnergyManager.useEnergy(user, 25);
-        CooldownManager.putAllOtherAbilitesOnCooldown(user, 1.5, hotbarSlot);
+        CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1.5, hotbarSlot);
         user.playSound(user, Sound.ITEM_TRIDENT_RIPTIDE_1, 1f, 1f);
         user.playSound(user, Sound.ITEM_ELYTRA_FLYING, .5f, 1f);
 

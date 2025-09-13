@@ -87,11 +87,18 @@ public class CooldownManager {
                 .orElse(null);
     }
 
-    public static void putAllOtherAbilitesOnCooldown(Player player, double cooldown, int exception) {
+    public static void putAllOtherAbilitiesOnCooldown(Player player, double cooldown, int exception) {
         if (exception != 0) putOnCooldown(player, 0, cooldown);
         if (exception != 1) putOnCooldown(player, 1, cooldown);
         if (exception != 2) putOnCooldown(player, 2, cooldown);
         if (exception != 3) putOnCooldown(player, 3, cooldown);
+    }
+
+    public static void putAllAbilitiesOnCooldown(Player player, double cooldown) {
+        putOnCooldown(player, 0, cooldown);
+        putOnCooldown(player, 1, cooldown);
+        putOnCooldown(player, 2, cooldown);
+        putOnCooldown(player, 3, cooldown);
     }
 
     public static void resetAllCooldowns(Player player) {

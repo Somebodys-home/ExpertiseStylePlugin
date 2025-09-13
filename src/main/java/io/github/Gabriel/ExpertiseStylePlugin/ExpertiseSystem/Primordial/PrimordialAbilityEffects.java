@@ -34,7 +34,7 @@ public class PrimordialAbilityEffects {
         FallingBlock stone = user.getWorld().spawnFallingBlock(user.getLocation().add(0, 1.5, 0), Bukkit.createBlockData(Material.STONE_BUTTON));
 
         EnergyManager.useEnergy(user, 10);
-        CooldownManager.putAllOtherAbilitesOnCooldown(user, 2.5, hotbarSlot);
+        CooldownManager.putAllOtherAbilitiesOnCooldown(user, 2.5, hotbarSlot);
 
         stone.setCancelDrop(true);
         stone.setVelocity(user.getLocation().getDirection().multiply(2).add(new Vector(0, .3, 0)));

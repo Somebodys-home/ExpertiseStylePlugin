@@ -41,7 +41,7 @@ public class CavalierAbilityEffects {
                 nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats()), 2);
 
         EnergyManager.useEnergy(user, 30);
-        CooldownManager.putAllOtherAbilitesOnCooldown(user, 4, hotbarSlot);
+        CooldownManager.putAllOtherAbilitiesOnCooldown(user, 4, hotbarSlot);
 
         // jump
         Vector jump = user.getLocation().getDirection().multiply(.5);

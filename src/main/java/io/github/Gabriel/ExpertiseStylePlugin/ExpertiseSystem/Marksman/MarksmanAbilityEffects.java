@@ -44,7 +44,7 @@ public class MarksmanAbilityEffects {
         boolean toggle = AbilityItemTemplate.getToggleState(abilityItem);
         final int[] preparedArrows = {0};
 
-        CooldownManager.putAllOtherAbilitesOnCooldown(user, .5, hotbarSlot);
+        CooldownManager.putAllOtherAbilitiesOnCooldown(user, .5, hotbarSlot);
         user.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 100, 2));
 
         BukkitRunnable rapidShot = new BukkitRunnable() {
@@ -54,7 +54,7 @@ public class MarksmanAbilityEffects {
                 preparedArrows[0]++;
                 user.sendTitle("§a" + preparedArrows[0] + " \uD83C\uDFF9", "", 5, 30, 5);
                 user.setMetadata("rapid shot arrows", new FixedMetadataValue(expertiseStylePlugin, preparedArrows[0]));
-                CooldownManager.putAllOtherAbilitesOnCooldown(user, .75, hotbarSlot);
+                CooldownManager.putAllOtherAbilitiesOnCooldown(user, .75, hotbarSlot);
                 user.getWorld().playSound(user, Sound.ITEM_CROSSBOW_LOADING_END, 1f, 1f);
 
                 // fire arrows at 10
