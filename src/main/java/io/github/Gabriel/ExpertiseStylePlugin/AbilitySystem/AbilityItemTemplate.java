@@ -13,14 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AbilityItemTemplate {
-    private static NamespacedKey immovableKey;
+    private static NamespacedKey abilityKey;
     private static NamespacedKey cooldownKey;
     private static NamespacedKey toggleKey;
     private static NamespacedKey originalItemKey;
     private static NamespacedKey energyKey;
 
     public AbilityItemTemplate(ExpertiseStylePlugin expertiseStylePlugin) {
-        immovableKey = new NamespacedKey(expertiseStylePlugin, "immovable");
+        abilityKey = new NamespacedKey(expertiseStylePlugin, "ability");
         cooldownKey = new NamespacedKey(expertiseStylePlugin, "cooldown");
         toggleKey = new NamespacedKey(expertiseStylePlugin, "toggle");
         originalItemKey = new NamespacedKey(expertiseStylePlugin, "originalItem");
@@ -33,7 +33,7 @@ public class AbilityItemTemplate {
         List<String> lore = new ArrayList<>();
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
 
-        pdc.set(immovableKey, PersistentDataType.INTEGER, 1);
+        pdc.set(abilityKey, PersistentDataType.INTEGER, 1);
         meta.setDisplayName(ChatColor.AQUA + "Empty Style Ability");
         lore.add(ChatColor.GRAY + "An empty ability slot. Dunno why you'd put nothing here.");
         meta.setLore(lore);
@@ -47,18 +47,18 @@ public class AbilityItemTemplate {
         ItemMeta meta = cooldown.getItemMeta();
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
 
-        pdc.set(immovableKey, PersistentDataType.INTEGER, 1);
+        pdc.set(abilityKey, PersistentDataType.INTEGER, 1);
         meta.setDisplayName(ChatColor.GRAY + "This ability is on cooldown!");
         cooldown.setItemMeta(meta);
 
         return cooldown;
     }
 
-    public static boolean isImmovable(ItemStack item) {
+    public static boolean isAnAbility(ItemStack item) {
         if (item != null && item.hasItemMeta()) {
             PersistentDataContainer pdc = item.getItemMeta().getPersistentDataContainer();
 
-            return pdc.has(immovableKey);
+            return pdc.has(abilityKey);
         }
 
         return false;
@@ -141,8 +141,8 @@ public class AbilityItemTemplate {
         return null;
     }
 
-    public static NamespacedKey getImmovableKey() {
-        return immovableKey;
+    public static NamespacedKey getAbilityKey() {
+        return abilityKey;
     }
 
     public static NamespacedKey getCooldownKey() {

@@ -12,7 +12,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import static io.github.NoOne.nMLItems.ItemType.*;
 
@@ -32,7 +31,7 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         List<String> lore = new ArrayList<>();
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
 
-        pdc.set(AbilityItemTemplate.getImmovableKey(), PersistentDataType.INTEGER, 1);
+        pdc.set(AbilityItemTemplate.getAbilityKey(), PersistentDataType.INTEGER, 1);
         meta.setDisplayName(ChatColor.LIGHT_PURPLE + "Empty Expertise Ability");
         lore.add(ChatColor.GRAY + "An empty ability slot. Dunno why you'd put nothing here.");
         meta.setLore(lore);
@@ -50,7 +49,7 @@ public class ExpertiseItemTemplate extends AbilityItemTemplate {
         List<String> lore = new ArrayList<>();
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
         pdc.set(expertiseKey, PersistentDataType.INTEGER, 1);
-        pdc.set(AbilityItemTemplate.getImmovableKey(), PersistentDataType.INTEGER, 1);
+        pdc.set(AbilityItemTemplate.getAbilityKey(), PersistentDataType.INTEGER, 1);
         pdc.set(AbilityItemTemplate.getCooldownKey(), PersistentDataType.INTEGER, cooldown);
         pdc.set(AbilityItemTemplate.getEnergyKey(), PersistentDataType.INTEGER, cost);
 

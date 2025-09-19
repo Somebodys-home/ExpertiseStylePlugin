@@ -51,7 +51,8 @@ public class AbilityListener implements Listener {
         }
 
 
-        if (AbilityItemTemplate.isImmovable(abilityItem)) { // if it's an ability item
+        if (AbilityItemTemplate.isAnAbility(abilityItem)) { // if it's an ability item
+            player.sendMessage("ability item");
             event.setCancelled(true);
 
             if (abilityItem.isSimilar(AbilityItemTemplate.cooldownItem())) return;
@@ -84,6 +85,8 @@ public class AbilityListener implements Listener {
                     }
                 }
             }
+        } else {
+            player.sendMessage("doesnt have immovable key");
         }
     }
 
@@ -101,7 +104,7 @@ public class AbilityListener implements Listener {
 
     @EventHandler
     public void onPlayerDropAbilityItem(PlayerDropItemEvent event) {
-        if (AbilityItemTemplate.isImmovable(event.getItemDrop().getItemStack())) {
+        if (AbilityItemTemplate.isAnAbility(event.getItemDrop().getItemStack())) {
             event.setCancelled(true);
         }
     }
@@ -110,7 +113,7 @@ public class AbilityListener implements Listener {
     public void onInventoryClickAbilityItem(InventoryClickEvent event) {
         ItemStack clickedItem = event.getCurrentItem();
 
-        if (AbilityItemTemplate.isImmovable(clickedItem)) {
+        if (AbilityItemTemplate.isAnAbility(clickedItem)) {
             if (event.getClick() == ClickType.SHIFT_LEFT ||
                     event.getClick() == ClickType.SHIFT_RIGHT ||
                     event.getClick() == ClickType.DOUBLE_CLICK ||
@@ -141,7 +144,7 @@ public class AbilityListener implements Listener {
 
     @EventHandler
     public void onPlayerSwapHandAbilityItem(PlayerSwapHandItemsEvent event) {
-        if (AbilityItemTemplate.isImmovable(Objects.requireNonNull(event.getOffHandItem()))) {
+        if (AbilityItemTemplate.isAnAbility(Objects.requireNonNull(event.getOffHandItem()))) {
             event.setCancelled(true);
         }
     }
@@ -166,7 +169,7 @@ public class AbilityListener implements Listener {
             ItemStack item = player.getInventory().getItem(event.getHotbarButton());
 
             assert item != null;
-            if (AbilityItemTemplate.isImmovable(item)) {
+            if (AbilityItemTemplate.isAnAbility(item)) {
                 event.setCancelled(true);
             }
         }
