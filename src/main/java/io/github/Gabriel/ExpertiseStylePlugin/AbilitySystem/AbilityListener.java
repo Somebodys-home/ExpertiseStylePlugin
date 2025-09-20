@@ -19,7 +19,6 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -29,13 +28,11 @@ public class AbilityListener implements Listener {
     private ExpertiseStylePlugin expertiseStylePlugin;
     private final ItemStack expertiseAbilityItem = ExpertiseItemTemplate.emptyExpertiseAbilityItem();
     private final ItemStack styleAbilityItem = AbilityItemTemplate.emptyStyleAbilityItem();
-    private final ArrayList<UUID> triggeringPlayer = new ArrayList<>();
 
     public AbilityListener(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
     }
 
-    // put items on cooldown when selecting them (using the ability)
     @EventHandler
     public void onUseAbility(PlayerItemHeldEvent event) {
         Player player = event.getPlayer();
@@ -45,22 +42,13 @@ public class AbilityListener implements Listener {
         ItemStack abilityItem = player.getInventory().getItem(newSlot);
         ItemStack weapon = player.getInventory().getItem(event.getPreviousSlot());
 
-        if (triggeringPlayer.contains(uuid)) { // double trigger guard
-            triggeringPlayer.remove(uuid);
-            return;
-        }
-
-
         if (AbilityItemTemplate.isAnAbility(abilityItem)) { // if it's an ability item
-            player.sendMessage("ability item");
             event.setCancelled(true);
 
             if (abilityItem.isSimilar(AbilityItemTemplate.cooldownItem())) return;
             if (!ExpertiseManager.isHoldingWeaponForAbility(player, abilityItem, weapon)) {
                 event.getPlayer().sendMessage("§c⚠ §nRequirements not met!§r§c ⚠");
             } else {
-                triggeringPlayer.add(uuid);
-
                 if (AbilityItemTemplate.isToggleable(abilityItem)) { // if it's a toggleable ability
                     boolean toggle = !AbilityItemTemplate.getToggleState(abilityItem); // boolean of its inverse state
 
@@ -85,13 +73,11 @@ public class AbilityListener implements Listener {
                     }
                 }
             }
-        } else {
-            player.sendMessage("doesnt have immovable key");
         }
     }
 
     @EventHandler
-    public void onPlayerFirstJoin(PlayerJoinEvent event) {
+    public void blankAbilitiesOnFirstJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
         if (!player.hasPlayedBefore()) {
@@ -103,14 +89,14 @@ public class AbilityListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerDropAbilityItem(PlayerDropItemEvent event) {
+    public void dontDropAbilities(PlayerDropItemEvent event) {
         if (AbilityItemTemplate.isAnAbility(event.getItemDrop().getItemStack())) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler
-    public void onInventoryClickAbilityItem(InventoryClickEvent event) {
+    public void dontInventoryClickAbilities(InventoryClickEvent event) {
         ItemStack clickedItem = event.getCurrentItem();
 
         if (AbilityItemTemplate.isAnAbility(clickedItem)) {
@@ -143,7 +129,7 @@ public class AbilityListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerSwapHandAbilityItem(PlayerSwapHandItemsEvent event) {
+    public void onPlayerSwapHandAbilities(PlayerSwapHandItemsEvent event) {
         if (AbilityItemTemplate.isAnAbility(Objects.requireNonNull(event.getOffHandItem()))) {
             event.setCancelled(true);
         }
@@ -162,7 +148,7 @@ public class AbilityListener implements Listener {
     }
 
     @EventHandler
-    public void onHotkeyAbilityItemIntoContainers(InventoryClickEvent event) {
+    public void dontHotkeyAbilitiesIntoContainers(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
 
         if (event.getClick() == ClickType.NUMBER_KEY) {
@@ -171,17 +157,6 @@ public class AbilityListener implements Listener {
             assert item != null;
             if (AbilityItemTemplate.isAnAbility(item)) {
                 event.setCancelled(true);
-            }
-        }
-    }
-
-    @EventHandler
-    public void fallingFromAbilityUse(EntityDamageEvent event) {
-        if (event.getEntity() instanceof Player player) {
-            if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
-                if (player.hasMetadata("falling")) {
-                    event.setCancelled(true);
-                }
             }
         }
     }
@@ -197,6 +172,17 @@ public class AbilityListener implements Listener {
             if (event.getEntity() instanceof LivingEntity livingEntity) livingEntity.setNoDamageTicks(0);
 
             Bukkit.getPluginManager().callEvent(new CustomDamageEvent((LivingEntity) event.getEntity(), player, damageMap));
+        }
+    }
+
+    @EventHandler
+    public void fallingFromAbilityUse(EntityDamageEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
+                if (player.hasMetadata("falling")) {
+                    event.setCancelled(true);
+                }
+            }
         }
     }
 
