@@ -9,6 +9,7 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLItems.ItemSystem;
 import io.github.NoOne.nMLPlayerStats.NMLPlayerStats;
+import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -25,12 +26,12 @@ import java.util.*;
 
 public class CavalierAbilityEffects {
     private static ExpertiseStylePlugin expertiseStylePlugin;
-    private static NMLPlayerStats nmlPlayerStats;
+    private static ProfileManager profileManager;
     private static Set<UUID> hitEntityUUIDs = new HashSet<>();
 
     public CavalierAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
-        nmlPlayerStats = expertiseStylePlugin.getNmlPlayerStats();
+        profileManager = expertiseStylePlugin.getProfileManager();
     }
 
     public static void seismicSlam(Player user, int hotbarSlot) {
@@ -38,7 +39,7 @@ public class CavalierAbilityEffects {
         user.setMetadata("falling", new FixedMetadataValue(expertiseStylePlugin, true));
 
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
-                nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats()), 2);
+                profileManager.getPlayerProfile(user.getUniqueId()).getStats()), 2);
 
         EnergyManager.useEnergy(user, 30);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 4, hotbarSlot);

@@ -7,6 +7,7 @@ import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.Coold
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLPlayerStats.NMLPlayerStats;
+import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -21,12 +22,12 @@ import java.util.*;
 
 public class SoldierAbilityEffects {
     private static ExpertiseStylePlugin expertiseStylePlugin;
-    private static NMLPlayerStats nmlPlayerStats;
+    private static ProfileManager profileManager;
     private static Set<UUID> hitEntityUUIDs = new HashSet<>();
 
     public SoldierAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
-        nmlPlayerStats = expertiseStylePlugin.getNmlPlayerStats();
+        profileManager = expertiseStylePlugin.getProfileManager();
     }
 
     public static void slash(Player user, int hotbarSlot) {
@@ -34,7 +35,7 @@ public class SoldierAbilityEffects {
 
         Location location = user.getLocation();
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
-                nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats()), 1.2);
+                profileManager.getPlayerProfile(user.getUniqueId()).getStats()), 1.2);
 
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1, hotbarSlot);
         EnergyManager.useEnergy(user, 15);

@@ -2,7 +2,7 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ShieldHero;
 
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseAbilityItemTemplate;
 import org.bukkit.inventory.ItemStack;
 import java.util.List;
 import static io.github.NoOne.nMLItems.ItemType.*;
@@ -13,7 +13,7 @@ public class ShieldHeroAbilityItems extends AbilityItemTemplate {
     }
 
     public static ItemStack secondWind() {
-        return ExpertiseItemTemplate.makeExpertiseAbilityItem(
+        return ExpertiseAbilityItemTemplate.makeExpertiseAbilityItem(
                 "shield",
                 "Second Wind",
                 "Take some time to steel your resolve, fully regaining your guard",

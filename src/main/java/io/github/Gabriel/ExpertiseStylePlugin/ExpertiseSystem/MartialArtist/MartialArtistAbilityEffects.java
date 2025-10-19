@@ -8,6 +8,7 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLItems.ItemSystem;
 import io.github.NoOne.nMLPlayerStats.NMLPlayerStats;
+import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
@@ -22,12 +23,12 @@ import java.util.*;
 
 public class MartialArtistAbilityEffects {
     private static ExpertiseStylePlugin expertiseStylePlugin;
-    private static NMLPlayerStats nmlPlayerStats;
+    private static ProfileManager profileManager;
     private static Set<UUID> hitEntityUUIDs = new HashSet<>();
 
     public MartialArtistAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
-        nmlPlayerStats = expertiseStylePlugin.getNmlPlayerStats();
+        profileManager = expertiseStylePlugin.getProfileManager();
     }
 
     public static void tenHitCombo(Player user, int hotbarSlot) {
@@ -35,7 +36,7 @@ public class MartialArtistAbilityEffects {
         user.setMetadata("falling", new FixedMetadataValue(expertiseStylePlugin, true));
 
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
-                nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats()), .25);
+                profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .25);
         final boolean[] comboBroken = {false};
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 2, hotbarSlot);
         EnergyManager.useEnergy(user, 5);
@@ -555,7 +556,7 @@ public class MartialArtistAbilityEffects {
         // uppercut 10
         new BukkitRunnable() {
             HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
-                    nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats()), .75);
+                    profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .75);
 
             @Override
             public void run() {

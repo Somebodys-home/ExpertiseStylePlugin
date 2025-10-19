@@ -2,7 +2,6 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus;
 
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.CooldownManager;
-import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.AbilityProfile;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedAbilities;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Annulled.AnnulledMenu;
@@ -15,7 +14,7 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.MartialArtist.Mart
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Primordial.PrimordialMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ShieldHero.ShieldHeroMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier.SoldierMenu;
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseAbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Sorcerer.SorcererMenu;
 import io.github.NoOne.menuSystem.Menu;
 import io.github.NoOne.menuSystem.PlayerMenuUtility;
@@ -65,8 +64,8 @@ public class ExpertiseMenu extends Menu {
                 CooldownManager.resetAllCooldowns(player);
                 player.getInventory().setItem(0, AbilityItemTemplate.emptyStyleAbilityItem());
                 player.getInventory().setItem(1, AbilityItemTemplate.emptyStyleAbilityItem());
-                player.getInventory().setItem(2, ExpertiseItemTemplate.emptyExpertiseAbilityItem());
-                player.getInventory().setItem(3, ExpertiseItemTemplate.emptyExpertiseAbilityItem());
+                player.getInventory().setItem(2, ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem());
+                player.getInventory().setItem(3, ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem());
                 selectedAbilities.resetSelectedAbilities();
             }
         }

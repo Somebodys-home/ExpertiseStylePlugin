@@ -7,6 +7,7 @@ import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.Coold
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLPlayerStats.NMLPlayerStats;
+import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -23,19 +24,19 @@ import java.util.*;
 
 public class SorcererAbilityEffects {
     private static ExpertiseStylePlugin expertiseStylePlugin;
-    private static NMLPlayerStats nmlPlayerStats;
+    private static ProfileManager profileManager;
     private static Set<UUID> hitEntityUUIDs = new HashSet<>();
 
     public SorcererAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
-        nmlPlayerStats = expertiseStylePlugin.getNmlPlayerStats();
+        profileManager = expertiseStylePlugin.getProfileManager();
     }
 
     public static void magicMissileEX(Player user, int hotbarSlot) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
         HashMap<DamageType, Double> damageStats = DamageConverter.convertPlayerStats2Damage(
-                nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats());
+                profileManager.getPlayerProfile(user.getUniqueId()).getStats());
 
         EnergyManager.useEnergy(user, 20);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 2.5, hotbarSlot);

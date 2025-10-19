@@ -2,8 +2,7 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier;
 
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
-import io.github.NoOne.nMLItems.ItemType;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseAbilityItemTemplate;
 import org.bukkit.inventory.ItemStack;
 import java.util.List;
 import static io.github.NoOne.nMLItems.ItemType.*;
@@ -14,7 +13,7 @@ public class SoldierAbilityItems extends AbilityItemTemplate {
     }
 
     public static ItemStack slash() {
-        return ExpertiseItemTemplate.makeExpertiseAbilityItem(
+        return ExpertiseAbilityItemTemplate.makeExpertiseAbilityItem(
                 "swordsman",
                 "Slash",
                 "Yep.",

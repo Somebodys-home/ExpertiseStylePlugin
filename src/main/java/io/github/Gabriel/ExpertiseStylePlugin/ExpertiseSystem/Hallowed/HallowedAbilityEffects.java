@@ -6,7 +6,7 @@ import io.github.Gabriel.damagePlugin.customDamage.DamageType;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.CooldownManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
-import io.github.NoOne.nMLPlayerStats.NMLPlayerStats;
+import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -19,19 +19,23 @@ import java.util.*;
 
 public class HallowedAbilityEffects {
     private static ExpertiseStylePlugin expertiseStylePlugin;
-    private static NMLPlayerStats nmlPlayerStats;
+    private static ProfileManager profileManager;
     private static Set<UUID> hitEntityUUIDs = new HashSet<>();
 
     public HallowedAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
-        nmlPlayerStats = expertiseStylePlugin.getNmlPlayerStats();
+        profileManager = expertiseStylePlugin.getProfileManager();
     }
 
     public static void halo(Player user, int hotbarSlot) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
-        HashMap<DamageType, Double> lightDamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(
-                nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats(), "lightdamage"), .5) ;
+        HashMap<DamageType, Double> radiant = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "radiantdamage"), .35);
+        HashMap<DamageType, Double> weapon = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .15);
+            weapon.remove("radiantdamage");
+        HashMap<DamageType, Double> totalDamage = new HashMap<>();
+            totalDamage.putAll(radiant);
+            totalDamage.putAll(weapon);
 
         EnergyManager.useEnergy(user, 25);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1.5, hotbarSlot);
@@ -156,7 +160,7 @@ public class HallowedAbilityEffects {
                     }
 
                     for (UUID uuid : hitEntityUUIDs) {
-                        Bukkit.getPluginManager().callEvent(new CustomDamageEvent((LivingEntity) Bukkit.getEntity(uuid), user, lightDamage));
+                        Bukkit.getPluginManager().callEvent(new CustomDamageEvent((LivingEntity) Bukkit.getEntity(uuid), user, totalDamage));
                         ((LivingEntity) Bukkit.getEntity(uuid)).setNoDamageTicks(5);
                     }
 

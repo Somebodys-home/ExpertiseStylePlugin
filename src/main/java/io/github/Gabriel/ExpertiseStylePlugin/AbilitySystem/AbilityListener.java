@@ -4,8 +4,9 @@ import io.github.Gabriel.damagePlugin.customDamage.CustomDamageEvent;
 import io.github.Gabriel.damagePlugin.customDamage.DamageType;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.CooldownManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseAbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseManager;
+import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
@@ -19,25 +20,25 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
 
 public class AbilityListener implements Listener {
-    private ExpertiseStylePlugin expertiseStylePlugin;
-    private final ItemStack expertiseAbilityItem = ExpertiseItemTemplate.emptyExpertiseAbilityItem();
+    private ProfileManager profileManager;
+    private final ItemStack expertiseAbilityItem = ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem();
     private final ItemStack styleAbilityItem = AbilityItemTemplate.emptyStyleAbilityItem();
 
     public AbilityListener(ExpertiseStylePlugin expertiseStylePlugin) {
-        this.expertiseStylePlugin = expertiseStylePlugin;
+        this.profileManager = expertiseStylePlugin.getProfileManager();
     }
 
     @EventHandler
     public void onUseAbility(PlayerItemHeldEvent event) {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
-        double currentEnergy = expertiseStylePlugin.getNmlPlayerStats().getProfileManager().getPlayerProfile(uuid).getStats().getCurrentEnergy();
+        double currentEnergy = profileManager.getPlayerProfile(uuid).getStats().getCurrentEnergy();
         int newSlot = event.getNewSlot();
         ItemStack abilityItem = player.getInventory().getItem(newSlot);
         ItemStack weapon = player.getInventory().getItem(event.getPreviousSlot());

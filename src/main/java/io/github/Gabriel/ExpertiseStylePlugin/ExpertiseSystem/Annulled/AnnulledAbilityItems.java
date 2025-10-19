@@ -2,7 +2,7 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Annulled;
 
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseAbilityItemTemplate;
 import org.bukkit.inventory.ItemStack;
 import java.util.List;
 import static io.github.NoOne.nMLItems.ItemType.*;
@@ -13,7 +13,7 @@ public class AnnulledAbilityItems extends AbilityItemTemplate {
     }
 
     public static ItemStack blackHole() {
-        return ExpertiseItemTemplate.makeExpertiseAbilityItem(
+        return ExpertiseAbilityItemTemplate.makeExpertiseAbilityItem(
                 "annulled",
                 "Black Hole",
                 "...it's a black hole. It pulls in and spaghettifies things, I don't need to spell this out for you.",

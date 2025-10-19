@@ -2,7 +2,7 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.MartialArtist;
 
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseAbilityItemTemplate;
 import org.bukkit.inventory.ItemStack;
 import java.util.List;
 import static io.github.NoOne.nMLItems.ItemType.*;
@@ -13,7 +13,7 @@ public class MartialArtistAbilityItems extends AbilityItemTemplate {
     }
 
     public static ItemStack tenHitCombo() {
-        return ExpertiseItemTemplate.makeExpertiseAbilityItem(
+        return ExpertiseAbilityItemTemplate.makeExpertiseAbilityItem(
                 "martial",
                 "10-Hit Combo",
                 "Perform a devastating 10 hit combo, ending with an uppercut. WARNING: Prone to failure if the target's kneecaps are unbroken.",

@@ -15,11 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import static io.github.NoOne.nMLItems.ItemType.*;
 
-public class ExpertiseItemTemplate extends AbilityItemTemplate {
+public class ExpertiseAbilityItemTemplate extends AbilityItemTemplate {
     private static ExpertiseStylePlugin expertiseStylePlugin;
     private static NamespacedKey expertiseKey;
 
-    public ExpertiseItemTemplate(ExpertiseStylePlugin expertiseStylePlugin) {
+    public ExpertiseAbilityItemTemplate(ExpertiseStylePlugin expertiseStylePlugin) {
         super(expertiseStylePlugin);
         this.expertiseStylePlugin = expertiseStylePlugin;
         expertiseKey = new NamespacedKey(expertiseStylePlugin, "expertise");

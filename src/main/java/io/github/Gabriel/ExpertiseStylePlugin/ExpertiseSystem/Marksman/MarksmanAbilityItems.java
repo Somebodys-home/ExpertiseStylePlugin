@@ -2,7 +2,7 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marksman;
 
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseAbilityItemTemplate;
 import org.bukkit.inventory.ItemStack;
 import java.util.List;
 import static io.github.NoOne.nMLItems.ItemType.*;
@@ -13,7 +13,7 @@ public class MarksmanAbilityItems extends AbilityItemTemplate {
     }
 
     public static ItemStack rapidShot() {
-        return ExpertiseItemTemplate.makeExpertiseAbilityItem(
+        return ExpertiseAbilityItemTemplate.makeExpertiseAbilityItem(
                 "marksman",
                 "Rapid Shot",
                 "Nock an arrow every .5 second this ability is toggled on. After untoggling, or nocking 10 arrows, shoot all prepared arrows rapidly",

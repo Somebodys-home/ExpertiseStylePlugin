@@ -9,6 +9,7 @@ import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLItems.ItemStat;
 import io.github.NoOne.nMLItems.ItemSystem;
 import io.github.NoOne.nMLPlayerStats.NMLPlayerStats;
+import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -27,20 +28,20 @@ import java.util.*;
 
 public class MarksmanAbilityEffects {
     private static ExpertiseStylePlugin expertiseStylePlugin;
-    private static NMLPlayerStats nmlPlayerStats;
+    private static ProfileManager profileManager;
     private static HashMap<UUID, HashMap<String, BukkitTask>> ongoingEffects = new HashMap<>();
     private static Set<UUID> hitEntityUUIDs = new HashSet<>();
 
     public MarksmanAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
-        nmlPlayerStats = expertiseStylePlugin.getNmlPlayerStats();
+        profileManager = expertiseStylePlugin.getProfileManager();
     }
 
     public static void rapidShot(Player user, int hotbarSlot, ItemStack abilityItem) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
-                nmlPlayerStats.getProfileManager().getPlayerProfile(user.getUniqueId()).getStats()), .5);
+                profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .5);
         boolean toggle = AbilityItemTemplate.getToggleState(abilityItem);
         final int[] preparedArrows = {0};
 

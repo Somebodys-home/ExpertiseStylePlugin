@@ -2,7 +2,7 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marauder;
 
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseAbilityItemTemplate;
 import org.bukkit.inventory.ItemStack;
 import java.util.List;
 import static io.github.NoOne.nMLItems.ItemType.*;
@@ -13,7 +13,7 @@ public class MarauderAbilityItems extends AbilityItemTemplate {
     }
 
     public static ItemStack bladeTornado() {
-        return ExpertiseItemTemplate.makeExpertiseAbilityItem(
+        return ExpertiseAbilityItemTemplate.makeExpertiseAbilityItem(
                 "marauder",
                 "Blade Tornado",
                 "Hurl yourself forwards as a whirligig of anger issues, bad intentions, and BLADES!",

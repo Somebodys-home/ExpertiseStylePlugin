@@ -13,7 +13,7 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Assassin.AssassinL
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Cavalier.CavalierAbilityEffects;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Cavalier.CavalierListener;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseCommand;
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseAbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Hallowed.HallowedAbilityEffects;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Hallowed.HallowedListener;
@@ -34,14 +34,15 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Sorcerer.SorcererL
 import io.github.Gabriel.expertiseStylePlugin.StyleSystem.StyleCommand;
 import io.github.NoOne.menuSystem.MenuListener;
 import io.github.NoOne.nMLPlayerStats.NMLPlayerStats;
+import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
 import io.github.NoOne.nMLShields.GuardingSystem;
 import io.github.NoOne.nMLShields.NMLShields;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ExpertiseStylePlugin extends JavaPlugin {
     private static ExpertiseStylePlugin instance;
+    private ProfileManager profileManager;
     private GuardingSystem guardingSystem;
-    private NMLPlayerStats nmlPlayerStats;
     private SelectedManager selectedManager;
     private SelectedConfig selectedConfig;
     private CooldownManager cooldownManager;
@@ -50,11 +51,20 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
+        profileManager = JavaPlugin.getPlugin(NMLPlayerStats.class).getProfileManager();
         guardingSystem = JavaPlugin.getPlugin(NMLShields.class).getGuardingSystem();
-        nmlPlayerStats = JavaPlugin.getPlugin(NMLPlayerStats.class);
+
+        selectedConfig = new SelectedConfig(this, "abilities");
+        selectedConfig.loadConfig();
+
+        selectedManager = new SelectedManager(this);
+        selectedManager.loadProfilesFromConfig();
+
+        cooldownManager = new CooldownManager(this);
+        cooldownManager.start();
 
         new AbilityItemTemplate(this);
-        new ExpertiseItemTemplate(this);
+        new ExpertiseAbilityItemTemplate(this);
         new ExpertiseManager(this);
         new SoldierAbilityEffects(this);
         new AssassinAbilityEffects(this);
@@ -67,15 +77,6 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         new PrimordialAbilityEffects(this);
         new HallowedAbilityEffects(this);
         new AnnulledAbilityEffects(this);
-
-        selectedConfig = new SelectedConfig(this, "abilities");
-        selectedConfig.loadConfig();
-
-        selectedManager = new SelectedManager(this);
-        selectedManager.loadProfilesFromConfig();
-
-        cooldownManager = new CooldownManager(this);
-        cooldownManager.start();
 
         getCommand("expertise").setExecutor(new ExpertiseCommand(this));
         getCommand("style").setExecutor(new StyleCommand());
@@ -118,7 +119,7 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         return guardingSystem;
     }
 
-    public NMLPlayerStats getNmlPlayerStats() {
-        return nmlPlayerStats;
+    public ProfileManager getProfileManager() {
+        return profileManager;
     }
 }

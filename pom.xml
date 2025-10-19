@@ -130,7 +130,7 @@
         <dependency>
             <groupId>com.github.Somebodys-home</groupId>
             <artifactId>NMLPlayerStats</artifactId>
-            <version>e06dc4c45c</version>
+            <version>2746bc371b</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

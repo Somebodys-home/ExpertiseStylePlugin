@@ -2,10 +2,9 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Primordial;
 
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseItemTemplate;
+import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseAbilityItemTemplate;
 import org.bukkit.inventory.ItemStack;
 import java.util.List;
-import static io.github.NoOne.nMLItems.ItemType.*;
 
 public class PrimordialAbilityItems extends AbilityItemTemplate {
     public PrimordialAbilityItems() {
@@ -13,7 +12,7 @@ public class PrimordialAbilityItems extends AbilityItemTemplate {
     }
 
     public static ItemStack chuckRock() {
-        return ExpertiseItemTemplate.makeExpertiseAbilityItem(
+        return ExpertiseAbilityItemTemplate.makeExpertiseAbilityItem(
                 "primordial",
                 "Chuck Rock",
                 "Pick up and chuck a rock. It's not magical or anything, you just find a rock and throw it.",
