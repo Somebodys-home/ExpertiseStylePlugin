@@ -37,11 +37,14 @@ import io.github.NoOne.nMLPlayerStats.NMLPlayerStats;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
 import io.github.NoOne.nMLShields.GuardingSystem;
 import io.github.NoOne.nMLShields.NMLShields;
+import io.github.NoOne.nMLSkills.NMLSkills;
+import io.github.NoOne.nMLSkills.skillSetSystem.SkillSetManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ExpertiseStylePlugin extends JavaPlugin {
     private static ExpertiseStylePlugin instance;
     private ProfileManager profileManager;
+    private SkillSetManager skillSetManager;
     private GuardingSystem guardingSystem;
     private SelectedManager selectedManager;
     private SelectedConfig selectedConfig;
@@ -52,6 +55,7 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         instance = this;
 
         profileManager = JavaPlugin.getPlugin(NMLPlayerStats.class).getProfileManager();
+        skillSetManager = JavaPlugin.getPlugin(NMLSkills.class).getSkillSetManager();
         guardingSystem = JavaPlugin.getPlugin(NMLShields.class).getGuardingSystem();
 
         selectedConfig = new SelectedConfig(this, "abilities");
@@ -109,6 +113,10 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
 
     public SelectedManager getSelectedManager() {
         return selectedManager;
+    }
+
+    public SkillSetManager getSkillSetManager() {
+        return skillSetManager;
     }
 
     public SelectedConfig getSelectedConfig() {

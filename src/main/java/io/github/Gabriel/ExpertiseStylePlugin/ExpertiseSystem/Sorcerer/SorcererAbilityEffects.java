@@ -6,7 +6,6 @@ import io.github.Gabriel.damagePlugin.customDamage.DamageType;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.CooldownSystem.CooldownManager;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
-import io.github.NoOne.nMLPlayerStats.NMLPlayerStats;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -35,8 +34,8 @@ public class SorcererAbilityEffects {
     public static void magicMissileEX(Player user, int hotbarSlot) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
-        HashMap<DamageType, Double> damageStats = DamageConverter.convertPlayerStats2Damage(
-                profileManager.getPlayerProfile(user.getUniqueId()).getStats());
+        HashMap<DamageType, Double> damage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
+                profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .5);
 
         EnergyManager.useEnergy(user, 20);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 2.5, hotbarSlot);
@@ -152,7 +151,7 @@ public class SorcererAbilityEffects {
                         for (Entity entity : nearbyEntities) {
                             if (entity instanceof LivingEntity livingEntity && entity != user) {
                                 if (hitEntityUUIDs.add(entity.getUniqueId())) { // still works
-                                    Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
+                                    Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damage));
                                     livingEntity.setNoDamageTicks(0);
                                 }
                             }

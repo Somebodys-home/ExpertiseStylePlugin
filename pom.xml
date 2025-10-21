@@ -133,5 +133,11 @@
             <version>2746bc371b</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.Somebodys-home</groupId>
+            <artifactId>NMLSkills</artifactId>
+            <version>8623857344</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

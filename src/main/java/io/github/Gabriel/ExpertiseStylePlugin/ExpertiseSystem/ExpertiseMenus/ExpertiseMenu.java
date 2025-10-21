@@ -18,17 +18,24 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseAbilityIt
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Sorcerer.SorcererMenu;
 import io.github.NoOne.menuSystem.Menu;
 import io.github.NoOne.menuSystem.PlayerMenuUtility;
+import io.github.NoOne.nMLSkills.skillSystem.Skills;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class ExpertiseMenu extends Menu {
     private ExpertiseStylePlugin expertiseStylePlugin;
+    private Player player;
     private SelectedAbilities selectedAbilities;
+    private Skills skills;
+    private ExpertiseMenuItems expertiseMenuItems;
 
     public ExpertiseMenu(ExpertiseStylePlugin expertiseStylePlugin, PlayerMenuUtility playerMenuUtility) {
         super(playerMenuUtility);
         this.expertiseStylePlugin = expertiseStylePlugin;
-        selectedAbilities = expertiseStylePlugin.getSelectedManager().getPlayerProfile(playerMenuUtility.getOwner().getUniqueId()).getSelectedAbilities();
+        player = playerMenuUtility.getOwner();
+        selectedAbilities = expertiseStylePlugin.getSelectedManager().getPlayerProfile(player.getUniqueId()).getSelectedAbilities();
+        skills = expertiseStylePlugin.getSkillSetManager().getSkillSet(player.getUniqueId()).getSkills();
+        expertiseMenuItems = new ExpertiseMenuItems(skills);
     }
 
     @Override
@@ -78,17 +85,17 @@ public class ExpertiseMenu extends Menu {
 
     @Override
     public void setMenuItems() {
-        inventory.setItem(10, ExpertiseMenuItems.soldier());
-        inventory.setItem(11, ExpertiseMenuItems.assassin());
-        inventory.setItem(12, ExpertiseMenuItems.marauder());
-        inventory.setItem(14, ExpertiseMenuItems.cavalier());
-        inventory.setItem(15, ExpertiseMenuItems.martialArtist());
-        inventory.setItem(16, ExpertiseMenuItems.shieldHero());
-        inventory.setItem(22, ExpertiseMenuItems.marksman());
-        inventory.setItem(29, ExpertiseMenuItems.sorcerer());
-        inventory.setItem(30, ExpertiseMenuItems.primordial());
-        inventory.setItem(32, ExpertiseMenuItems.hallowed());
-        inventory.setItem(33, ExpertiseMenuItems.annulled());
-        inventory.setItem(44, ExpertiseMenuItems.resetAbilities());
+        inventory.setItem(10, expertiseMenuItems.soldier());
+        inventory.setItem(11, expertiseMenuItems.assassin());
+        inventory.setItem(12, expertiseMenuItems.marauder());
+        inventory.setItem(14, expertiseMenuItems.cavalier());
+        inventory.setItem(15, expertiseMenuItems.martialArtist());
+        inventory.setItem(16, expertiseMenuItems.shieldHero());
+        inventory.setItem(22, expertiseMenuItems.marksman());
+        inventory.setItem(29, expertiseMenuItems.sorcerer());
+        inventory.setItem(30, expertiseMenuItems.primordial());
+        inventory.setItem(32, expertiseMenuItems.hallowed());
+        inventory.setItem(33, expertiseMenuItems.annulled());
+        inventory.setItem(44, expertiseMenuItems.resetAbilities());
     }
 }

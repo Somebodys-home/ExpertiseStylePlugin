@@ -16,14 +16,14 @@ public class SorcererAbilityItems extends AbilityItemTemplate {
         return ExpertiseAbilityItemTemplate.makeExpertiseAbilityItem(
                 "sorcerer",
                 "Magic Missile EX",
-                "Shoot your basic attack 5 times. (Don't get it twisted, this is still the lamest ability you could muster.)",
+                "Shoot your basic magic attack 5 times.",
                 false,
                 "Single",
                 16,
                 0,
                 5,
                 20,
-                List.of("§f§n100%" + "§r§f" + " Weapon Damage \uD83D\uDDE1 §7§o(per missile)"),
+                List.of("§f§n50%" + "§r§f" + " Weapon Damage \uD83D\uDDE1 §7§o(per missile)"),
                 null,
                 List.of(WAND, STAFF, CATALYST));
     }

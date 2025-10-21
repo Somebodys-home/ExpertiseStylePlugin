@@ -61,8 +61,8 @@ public class ShieldHeroAbilityEffects {
                 }
 
                 if (timer == 30) {
-                    // particle hemi sphere
-                    for (double i = 0; i <= Math.PI / 2; i += Math.PI / 30) { // vertical circles
+                    // particle sphere
+                    for (double i = 0; i <= Math.PI; i += Math.PI / 30) { // vertical circles
                         double rad = Math.sin(i);
                         double y = Math.cos(i);
 
