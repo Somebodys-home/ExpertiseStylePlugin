@@ -37,7 +37,7 @@ public class SelectedManager {
     public void loadProfilesFromConfig() {
         for (String id : config.getConfigurationSection("").getKeys(false)) {
             UUID uuid = UUID.fromString(id);
-            String style1 = config.getString(id + ".abilities.style1");
+            String style1 = config.getString(id + ".abilities.style");
             String expertise1 = config.getString(id + ".abilities.expertise1");
             String expertise2 = config.getString(id + ".abilities.expertise2");
             String expertise3 = config.getString(id + ".abilities.expertise3");
@@ -55,7 +55,7 @@ public class SelectedManager {
             AbilityProfile abilityProfile = profileMap.get(uuid);
             SelectedAbilities selectedAbilities = abilityProfile.getSelectedAbilities();
 
-            config.set(id + ".abilities.style1", selectedAbilities.getStyle());
+            config.set(id + ".abilities.style", selectedAbilities.getStyle());
             config.set(id + ".abilities.expertise1", selectedAbilities.getExpertise1());
             config.set(id + ".abilities.expertise2", selectedAbilities.getExpertise2());
             config.set(id + ".abilities.expertise3", selectedAbilities.getExpertise3());
@@ -67,7 +67,7 @@ public class SelectedManager {
         AbilityProfile abilityProfile = profileMap.get(player.getUniqueId());
         SelectedAbilities selectedAbilities = abilityProfile.getSelectedAbilities();
 
-        config.set(id + ".abilities.style1", selectedAbilities.getStyle());
+        config.set(id + ".abilities.style", selectedAbilities.getStyle());
         config.set(id + ".abilities.expertise1", selectedAbilities.getExpertise1());
         config.set(id + ".abilities.expertise2", selectedAbilities.getExpertise2());
         config.set(id + ".abilities.expertise3", selectedAbilities.getExpertise3());
