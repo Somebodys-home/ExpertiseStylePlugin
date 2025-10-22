@@ -38,11 +38,11 @@ public class SelectedManager {
         for (String id : config.getConfigurationSection("").getKeys(false)) {
             UUID uuid = UUID.fromString(id);
             String style1 = config.getString(id + ".abilities.style1");
-            String style2 = config.getString(id + ".abilities.style2");
             String expertise1 = config.getString(id + ".abilities.expertise1");
             String expertise2 = config.getString(id + ".abilities.expertise2");
+            String expertise3 = config.getString(id + ".abilities.expertise3");
 
-            SelectedAbilities selectedAbilities = new SelectedAbilities(style1, style2, expertise1, expertise2);
+            SelectedAbilities selectedAbilities = new SelectedAbilities(style1, expertise1, expertise2, expertise3);
             AbilityProfile abilityProfile = new AbilityProfile(selectedAbilities);
 
             profileMap.put(uuid, abilityProfile);
@@ -55,10 +55,10 @@ public class SelectedManager {
             AbilityProfile abilityProfile = profileMap.get(uuid);
             SelectedAbilities selectedAbilities = abilityProfile.getSelectedAbilities();
 
-            config.set(id + ".abilities.style1", selectedAbilities.getStyle1());
-            config.set(id + ".abilities.style2", selectedAbilities.getStyle2());
+            config.set(id + ".abilities.style1", selectedAbilities.getStyle());
             config.set(id + ".abilities.expertise1", selectedAbilities.getExpertise1());
             config.set(id + ".abilities.expertise2", selectedAbilities.getExpertise2());
+            config.set(id + ".abilities.expertise3", selectedAbilities.getExpertise3());
         }
     }
 
@@ -67,9 +67,9 @@ public class SelectedManager {
         AbilityProfile abilityProfile = profileMap.get(player.getUniqueId());
         SelectedAbilities selectedAbilities = abilityProfile.getSelectedAbilities();
 
-        config.set(id + ".abilities.style1", selectedAbilities.getStyle1());
-        config.set(id + ".abilities.style2", selectedAbilities.getStyle2());
+        config.set(id + ".abilities.style1", selectedAbilities.getStyle());
         config.set(id + ".abilities.expertise1", selectedAbilities.getExpertise1());
         config.set(id + ".abilities.expertise2", selectedAbilities.getExpertise2());
+        config.set(id + ".abilities.expertise3", selectedAbilities.getExpertise3());
     }
 }

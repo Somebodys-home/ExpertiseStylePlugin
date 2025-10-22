@@ -82,10 +82,10 @@ public class AbilityListener implements Listener {
         Player player = event.getPlayer();
 
         if (!player.hasPlayedBefore()) {
-            player.getInventory().setItem(0, expertiseAbilityItem);
+            player.getInventory().setItem(0, styleAbilityItem);
             player.getInventory().setItem(1, expertiseAbilityItem);
-            player.getInventory().setItem(2, styleAbilityItem);
-            player.getInventory().setItem(3, styleAbilityItem);
+            player.getInventory().setItem(2, expertiseAbilityItem);
+            player.getInventory().setItem(3, expertiseAbilityItem);
         }
     }
 
