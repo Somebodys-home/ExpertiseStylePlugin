@@ -57,10 +57,6 @@ public class ExpertiseConfirmMenu extends Menu {
                     player.sendMessage("§c⚠ §nWait for this ability to go off cooldown.§r§c ⚠");
                     return;
                 }
-                if (Arrays.stream(playersAbilities).anyMatch(element -> element.equals(Objects.requireNonNull(selected.getItemMeta()).getDisplayName()))) {
-                    player.sendMessage("§c⚠ §nYou already have this ability selected.§r§c ⚠");
-                    return;
-                }
 
                 player.getInventory().setItem(1, selected);
                 selectedAbilities.setExpertise1(selected.getItemMeta().getDisplayName());
@@ -70,10 +66,6 @@ public class ExpertiseConfirmMenu extends Menu {
                     player.sendMessage("§c⚠ §nWait for this ability to go off cooldown.§r§c ⚠");
                     return;
                 }
-                if (Arrays.stream(playersAbilities).anyMatch(element -> element.equals(Objects.requireNonNull(selected.getItemMeta()).getDisplayName()))) {
-                    player.sendMessage("§c⚠ §nYou already have this ability selected.§r§c ⚠");
-                    return;
-                }
 
                 player.getInventory().setItem(2, selected);
                 selectedAbilities.setExpertise2(selected.getItemMeta().getDisplayName());
@@ -81,10 +73,6 @@ public class ExpertiseConfirmMenu extends Menu {
             case 15 -> {
                 if (expertise3.isSimilar(AbilityItemTemplate.cooldownItem())) {
                     player.sendMessage("§c⚠ §nWait for this ability to go off cooldown.§r§c ⚠");
-                    return;
-                }
-                if (Arrays.stream(playersAbilities).anyMatch(element -> element.equals(Objects.requireNonNull(selected.getItemMeta()).getDisplayName()))) {
-                    player.sendMessage("§c⚠ §nYou already have this ability selected.§r§c ⚠");
                     return;
                 }
 

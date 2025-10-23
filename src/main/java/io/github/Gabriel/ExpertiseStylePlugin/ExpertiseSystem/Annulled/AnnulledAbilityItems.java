@@ -16,7 +16,7 @@ public class AnnulledAbilityItems extends AbilityItemTemplate {
         return ExpertiseAbilityItemTemplate.makeExpertiseAbilityItem(
                 "annulled",
                 "Black Hole",
-                "...it's a black hole. It pulls in and spaghettifies things, I don't need to spell this out for you.",
+                "...it's a black hole. It pulls in and spaghettifies things; I don't need to spell this out for you.",
                 false,
                 "Area",
                 15,

@@ -1,5 +1,6 @@
 package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marauder;
 
+import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.SaveAbilitiesSystem.SelectedAbilities;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus.ExpertiseConfirmMenu;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseMenus.ExpertiseMenu;
@@ -7,16 +8,22 @@ import io.github.NoOne.menuSystem.Menu;
 import io.github.NoOne.menuSystem.PlayerMenuUtility;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class MarauderMenu extends Menu {
     private ExpertiseStylePlugin expertiseStylePlugin;
+    private SelectedAbilities selectedAbilities;
 
     public MarauderMenu(ExpertiseStylePlugin expertiseStylePlugin, PlayerMenuUtility playerMenuUtility) {
         super(playerMenuUtility);
         this.expertiseStylePlugin = expertiseStylePlugin;
+        selectedAbilities = expertiseStylePlugin.getSelectedManager().getPlayerProfile(playerMenuUtility.getOwner().getUniqueId()).getSelectedAbilities();
     }
 
     @Override
@@ -37,6 +44,12 @@ public class MarauderMenu extends Menu {
         if (event.getSlot() == 35) {
             new ExpertiseMenu(expertiseStylePlugin, playerMenuUtility).open();
         } else {
+            if (Arrays.stream(selectedAbilities.getSelectedAbilitiesArray()).anyMatch(element -> element.equals(Objects.requireNonNull(selected.getItemMeta()).getDisplayName()))) {
+                playerMenuUtility.getOwner().sendMessage("§c⚠ §nYou already have this ability selected.§r§c ⚠");
+                playerMenuUtility.getOwner().playSound(playerMenuUtility.getOwner(), Sound.BLOCK_NOTE_BLOCK_BASS, 2f, .5f);
+                return;
+            }
+
             new ExpertiseConfirmMenu(expertiseStylePlugin, playerMenuUtility, selected, this).open();
         }
     }

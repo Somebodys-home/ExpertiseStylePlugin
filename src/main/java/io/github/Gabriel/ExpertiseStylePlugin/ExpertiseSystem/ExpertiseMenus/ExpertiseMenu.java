@@ -40,7 +40,7 @@ public class ExpertiseMenu extends Menu {
 
     @Override
     public String getMenuName() {
-        return "§6§lCHOOSE YOUR EXPERTISE!!!";
+        return "§6§lCHOOSE YOUR EXPERTISE!";
     }
 
     @Override
