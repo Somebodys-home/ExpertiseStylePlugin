@@ -61,7 +61,7 @@ public class ExpertiseMenuItems {
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setDisplayName("§fLv. " + skills.getMarauderLevel() +  " §4§lMarauder");
         lore.add("§8" + skills.getMarauderExp() + " / " + skills.getExp2LvlUpMarauder() + " exp (" + percent + "%)");
-        lore.add("§7Marauder? I barely know her!");
+        lore.add("§7Reject modernity, EMBRACE BARBARITY!");
         lore.add("");
         lore.add("§bCLICK TO SELECT!");
         meta.setLore(lore);
@@ -72,15 +72,14 @@ public class ExpertiseMenuItems {
 
     public ItemStack cavalier() {
         double percent = skills.getCavalierExp() / skills.getExp2LvlUpCavalier() * 100.0;
-        ItemStack cavalier = new ItemStack(Material.IRON_SHOVEL);
+        ItemStack cavalier = new ItemStack(Material.MACE);
         ItemMeta meta = cavalier.getItemMeta();
         ArrayList<String> lore = new ArrayList<>();
 
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setDisplayName("§fLv. " + skills.getCavalierLevel() +  " §1§lCavalier");
         lore.add("§8" + skills.getCavalierExp() + " / " + skills.getExp2LvlUpCavalier() + " exp (" + percent + "%)");
-        lore.add("§7I'M REFERENCING D&D, NOT 17TH CENTURY CLASSISM");
-        lore.add("§7DURING THE AMERICAN CIVIL WAR SHUT UP");
+        lore.add("§7Unfortunately, this has nothing to do with horses.");
         lore.add("");
         lore.add("§bCLICK TO SELECT!");
         meta.setLore(lore);
@@ -131,7 +130,7 @@ public class ExpertiseMenuItems {
 
         meta.setDisplayName("§fLv. " + skills.getMarksmanLevel() +  " §a§lMarksman");
         lore.add("§8" + skills.getMarksmanExp() + " / " + skills.getExp2LvlUpMarksman() + " exp (" + percent + "%)");
-        lore.add("§7SPOILER ALERT: This is the closest thing you're getting to a gun.");
+        lore.add("§7This is the closest you're getting to a gun.");
         lore.add("");
         lore.add("§bCLICK TO SELECT!");
         meta.setLore(lore);
@@ -183,7 +182,7 @@ public class ExpertiseMenuItems {
 
         meta.setDisplayName("§fLv. " + skills.getHallowedLevel() +  " §f§lHallowed");
         lore.add("§8" + skills.getHallowedExp() + " / " + skills.getExp2LvlUpHallowed() + " exp (" + percent + "%)");
-        lore.add("§7\"Say Drake, I hear you like 'em young.\"");
+        lore.add("§7Please just be normal.");
         lore.add("");
         lore.add("§bCLICK TO SELECT!");
         meta.setLore(lore);

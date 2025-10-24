@@ -3,7 +3,10 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Soldier;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseAbilityItemTemplate;
+import io.github.NoOne.nMLSkills.skillSystem.Skills;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
 import java.util.List;
 import static io.github.NoOne.nMLItems.ItemType.*;
 
@@ -12,10 +15,12 @@ public class SoldierAbilityItems extends AbilityItemTemplate {
         super(ExpertiseStylePlugin.getInstance());
     }
 
-    public static ItemStack slash() {
+    public static ItemStack slash(Skills skills) {
         return ExpertiseAbilityItemTemplate.makeExpertiseAbilityItem(
-                "swordsman",
                 "Slash",
+                new HashMap<>() {{
+                    put("soldier", 1);
+                }},
                 "Yep.",
                 false,
                 "Area",
@@ -25,6 +30,7 @@ public class SoldierAbilityItems extends AbilityItemTemplate {
                 15,
                 List.of("§f§n120%" + "§r§f" + " Weapon Damage \uD83D\uDDE1"),
                 null,
-                List.of(SWORD, AXE));
+                List.of(SWORD, AXE),
+                skills);
     }
 }

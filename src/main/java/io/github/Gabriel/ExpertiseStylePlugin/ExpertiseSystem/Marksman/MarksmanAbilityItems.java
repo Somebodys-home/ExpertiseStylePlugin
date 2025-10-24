@@ -3,7 +3,10 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Marksman;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseAbilityItemTemplate;
+import io.github.NoOne.nMLSkills.skillSystem.Skills;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
 import java.util.List;
 import static io.github.NoOne.nMLItems.ItemType.*;
 
@@ -12,11 +15,13 @@ public class MarksmanAbilityItems extends AbilityItemTemplate {
         super(ExpertiseStylePlugin.getInstance());
     }
 
-    public static ItemStack rapidShot() {
+    public static ItemStack rapidShot(Skills skills) {
         return ExpertiseAbilityItemTemplate.makeExpertiseAbilityItem(
-                "marksman",
                 "Rapid Shot",
-                "Nock an arrow every .5 second this ability is toggled on. After untoggling, or nocking 10 arrows, shoot all prepared arrows rapidly",
+                new HashMap<>() {{
+                    put("marksman", 20);
+                }},
+                "Nock an arrow for every .5 second this ability is toggled on. After untoggling, or nocking 10 arrows, shoot all prepared arrows rapidly",
                 true,
                 "Single",
                 70,
@@ -25,6 +30,7 @@ public class MarksmanAbilityItems extends AbilityItemTemplate {
                 25,
                 List.of("§f§n50%" + "§r§f" + " Weapon Damage \uD83D\uDDE1 §7§o(per arrow)"),
                 null,
-                List.of(BOW));
+                List.of(BOW),
+                skills);
     }
 }

@@ -30,8 +30,8 @@ public class HallowedAbilityEffects {
     public static void halo(Player user, int hotbarSlot) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
-        HashMap<DamageType, Double> radiant = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "radiantdamage"), .35);
         HashMap<DamageType, Double> weapon = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .15);
+        HashMap<DamageType, Double> radiant = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "radiantdamage"), .35);
             weapon.remove("radiantdamage");
         HashMap<DamageType, Double> totalDamage = new HashMap<>();
             totalDamage.putAll(radiant);

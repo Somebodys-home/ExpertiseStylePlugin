@@ -32,7 +32,7 @@ public class AnnulledAbilityEffects {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
         HashMap<DamageType, Double> darkDamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(
-                profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "darkdamage"), 3) ;
+                profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "necroticdamage"), 3) ;
 
         EnergyManager.useEnergy(user, 50);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1.5, hotbarSlot);

@@ -9,6 +9,7 @@ import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseManager;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -46,7 +47,7 @@ public class AbilityListener implements Listener {
         if (AbilityItemTemplate.isAnAbility(abilityItem)) { // if it's an ability item
             event.setCancelled(true);
 
-            if (abilityItem.isSimilar(AbilityItemTemplate.cooldownItem())) return;
+            if (abilityItem.isSimilar(AbilityItemTemplate.cooldownItem()) || abilityItem.isSimilar(AbilityItemTemplate.emptyStyleAbilityItem()) || abilityItem.isSimilar(ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem())) return;
             if (!ExpertiseManager.isHoldingWeaponForAbility(player, abilityItem, weapon)) {
                 event.getPlayer().sendMessage("§c⚠ §nRequirements not met!§r§c ⚠");
             } else {
@@ -186,6 +187,16 @@ public class AbilityListener implements Listener {
             }
         }
     }
+
+    @EventHandler
+    public void onFireworkDamage(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof Firework firework) {
+            if (firework.hasMetadata("ability_firework")) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
 
     private boolean isContainer(InventoryType type) {
         return type == InventoryType.CHEST ||

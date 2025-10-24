@@ -39,7 +39,7 @@ public class MartialArtistAbilityEffects {
                 profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .25);
         final boolean[] comboBroken = {false};
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 2, hotbarSlot);
-        EnergyManager.useEnergy(user, 5);
+        EnergyManager.useEnergy(user, 10);
 
         // punch 1
         dashUntilCollision(user, 2, 5, new BukkitRunnable() {
@@ -93,7 +93,7 @@ public class MartialArtistAbilityEffects {
                 dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override
                     public void run() {
-                        EnergyManager.useEnergy(user, 5);
+                        EnergyManager.useEnergy(user, 10);
 
                         Location baseLocation = user.getLocation().add(0, 1.5, 0);
                         Vector forward = user.getLocation().getDirection().normalize().multiply(2);
@@ -145,7 +145,7 @@ public class MartialArtistAbilityEffects {
                 dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override
                     public void run() {
-                        EnergyManager.useEnergy(user, 5);
+                        EnergyManager.useEnergy(user, 10);
 
                         Location baseLocation = user.getLocation().add(0, 1.5, 0);
                         Vector forward = user.getLocation().getDirection().normalize().multiply(2);
@@ -572,7 +572,7 @@ public class MartialArtistAbilityEffects {
                 dashUntilCollision(user, 2, 5, new BukkitRunnable() {
                     @Override
                     public void run() {
-                        EnergyManager.useEnergy(user, 25);
+                        EnergyManager.useEnergy(user, 10);
 
                         Vector jump = user.getLocation().getDirection().multiply(1.5).setY(1.5);
                         Location baseLocation = user.getLocation().add(0, 4, 0);

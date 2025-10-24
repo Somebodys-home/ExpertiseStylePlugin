@@ -29,6 +29,7 @@ public class PrimordialListener implements Listener {
             if (Arrays.asList(selectedAbilities).contains(abilityName)) {
                 switch (abilityName) {
                     case "§2§lChuck Rock" -> PrimordialAbilityEffects.chuckRock(player, hotbarSlot);
+                    case "§2§lPumpkin Bomb" -> PrimordialAbilityEffects.pumpkinBomb(player, hotbarSlot);
                 }
             }
         }

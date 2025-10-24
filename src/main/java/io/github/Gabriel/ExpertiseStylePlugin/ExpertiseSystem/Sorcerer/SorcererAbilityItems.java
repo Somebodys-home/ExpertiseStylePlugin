@@ -3,7 +3,10 @@ package io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.Sorcerer;
 import io.github.Gabriel.expertiseStylePlugin.AbilitySystem.AbilityItemTemplate;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.Gabriel.expertiseStylePlugin.ExpertiseSystem.ExpertiseAbilityItemTemplate;
+import io.github.NoOne.nMLSkills.skillSystem.Skills;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
 import java.util.List;
 import static io.github.NoOne.nMLItems.ItemType.*;
 
@@ -12,11 +15,13 @@ public class SorcererAbilityItems extends AbilityItemTemplate {
         super(ExpertiseStylePlugin.getInstance());
     }
 
-    public static ItemStack magicMissileEX() {
+    public static ItemStack magicMissileEX(Skills skills) {
         return ExpertiseAbilityItemTemplate.makeExpertiseAbilityItem(
-                "sorcerer",
                 "Magic Missile EX",
-                "Shoot your basic magic attack 5 times.",
+                new HashMap<>() {{
+                    put("sorcerer", 1);
+                }},
+                "Shoot your basic magic attack 5 times",
                 false,
                 "Single",
                 16,
@@ -25,6 +30,7 @@ public class SorcererAbilityItems extends AbilityItemTemplate {
                 20,
                 List.of("§f§n50%" + "§r§f" + " Weapon Damage \uD83D\uDDE1 §7§o(per missile)"),
                 null,
-                List.of(WAND, STAFF, CATALYST));
+                List.of(WAND, STAFF, CATALYST),
+                skills);
     }
 }
