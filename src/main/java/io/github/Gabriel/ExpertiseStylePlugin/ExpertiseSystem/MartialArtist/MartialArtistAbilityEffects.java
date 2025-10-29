@@ -648,9 +648,10 @@ public class MartialArtistAbilityEffects {
     private static void dashUntilCollision(Player dasher, double velocity, int fallbackTicks, BukkitRunnable onFinish) {
         Vector dashDirection = dasher.getLocation().getDirection().normalize();
         Vector dash = dashDirection.clone().multiply(velocity).setY(0);
-        dasher.setVelocity(dash);
 
+        dasher.setVelocity(dash);
         dasher.getAttribute(Attribute.STEP_HEIGHT).setBaseValue(1);
+        
         new BukkitRunnable() {
             int ticks = 0;
             boolean triggered = false;

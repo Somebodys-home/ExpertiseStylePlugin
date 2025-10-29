@@ -73,7 +73,6 @@ public class CavalierAbilityEffects {
                         user.removeMetadata("falling", expertiseStylePlugin);
 
                         flyingParticles.cancel();
-                        user.stopSound(Sound.ENTITY_PLAYER_ATTACK_SWEEP);
                         user.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, user.getLocation().add(0, .5, 0), 3, .25, 0, .25, 0);
                         user.playSound(user.getLocation(), Sound.ITEM_MACE_SMASH_GROUND_HEAVY, 3f, 1f);
                         user.playSound(user.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, .8f, 1f);

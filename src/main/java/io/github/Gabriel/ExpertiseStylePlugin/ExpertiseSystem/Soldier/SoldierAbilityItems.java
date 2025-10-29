@@ -30,7 +30,7 @@ public class SoldierAbilityItems extends AbilityItemTemplate {
                 15,
                 List.of("§f§n120%" + "§r§f" + " Weapon Damage \uD83D\uDDE1"),
                 null,
-                List.of(SWORD, AXE),
+                List.of(SWORD, AXE, SPEAR),
                 skills);
     }
 }
