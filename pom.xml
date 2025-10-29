@@ -15,6 +15,8 @@
         <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <shade.prefix>io.github.NoOne.expertisestyleplugin.shaded</shade.prefix>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
 
     <build>
@@ -106,7 +108,7 @@
         <dependency>
             <groupId>com.github.Somebodys-home</groupId>
             <artifactId>DamagePlugin</artifactId>
-            <version>5c1ba32149</version>
+            <version>c2c013a5cb</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
