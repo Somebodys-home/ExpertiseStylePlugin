@@ -24,7 +24,6 @@ import java.util.*;
 public class SorcererAbilityEffects {
     private static ExpertiseStylePlugin expertiseStylePlugin;
     private static ProfileManager profileManager;
-    private static Set<UUID> hitEntityUUIDs = new HashSet<>();
 
     public SorcererAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;

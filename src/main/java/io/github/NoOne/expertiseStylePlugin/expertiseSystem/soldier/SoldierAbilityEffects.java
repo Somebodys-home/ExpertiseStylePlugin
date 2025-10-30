@@ -22,8 +22,6 @@ import java.util.*;
 public class SoldierAbilityEffects {
     private static ExpertiseStylePlugin expertiseStylePlugin;
     private static ProfileManager profileManager;
-    private static Set<UUID> hitEntityUUIDs = new HashSet<>();
-
     public SoldierAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
         profileManager = expertiseStylePlugin.getProfileManager();
@@ -32,13 +30,14 @@ public class SoldierAbilityEffects {
     public static void slash(Player user, int hotbarSlot) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
+        HashSet<UUID> hitEntityUUIDs = new HashSet<>();
         Location location = user.getLocation();
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
                 profileManager.getPlayerProfile(user.getUniqueId()).getStats()), 1.2);
 
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1, hotbarSlot);
         EnergyManager.useEnergy(user, 15);
-        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
+        user.playSound(location, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
 
         for (double i = -Math.PI / 2; i <= Math.PI / 2; i += Math.PI / 10) {
             double x = Math.sin(i) * 2;

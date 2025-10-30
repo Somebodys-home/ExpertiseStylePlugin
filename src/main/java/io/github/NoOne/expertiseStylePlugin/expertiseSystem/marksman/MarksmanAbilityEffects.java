@@ -27,7 +27,6 @@ public class MarksmanAbilityEffects {
     private static ExpertiseStylePlugin expertiseStylePlugin;
     private static ProfileManager profileManager;
     private static HashMap<UUID, HashMap<String, BukkitTask>> ongoingEffects = new HashMap<>();
-    private static Set<UUID> hitEntityUUIDs = new HashSet<>();
 
     public MarksmanAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;

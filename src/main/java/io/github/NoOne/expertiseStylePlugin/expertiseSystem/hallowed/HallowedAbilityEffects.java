@@ -20,7 +20,6 @@ import java.util.*;
 public class HallowedAbilityEffects {
     private static ExpertiseStylePlugin expertiseStylePlugin;
     private static ProfileManager profileManager;
-    private static Set<UUID> hitEntityUUIDs = new HashSet<>();
 
     public HallowedAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
@@ -30,12 +29,12 @@ public class HallowedAbilityEffects {
     public static void halo(Player user, int hotbarSlot) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
+        HashSet<UUID> hitEntityUUIDs = new HashSet<>();
         HashMap<DamageType, Double> radiant = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "radiantdamage"), .35);
         HashMap<DamageType, Double> totalDamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .15);
 
         totalDamage.remove("radiantdamage");
         totalDamage.putAll(radiant);
-
         EnergyManager.useEnergy(user, 25);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1.5, hotbarSlot);
         user.playSound(user, Sound.ITEM_TRIDENT_RIPTIDE_1, 1f, 1f);

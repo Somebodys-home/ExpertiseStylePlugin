@@ -24,7 +24,6 @@ import java.util.*;
 public class MarauderAbilityEffects {
     private static ExpertiseStylePlugin expertiseStylePlugin;
     private static ProfileManager profileManager;
-    private static Set<UUID> hitEntityUUIDs = new HashSet<>();
 
     public MarauderAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;

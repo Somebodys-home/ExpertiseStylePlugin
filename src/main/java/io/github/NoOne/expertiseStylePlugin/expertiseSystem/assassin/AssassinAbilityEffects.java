@@ -23,7 +23,6 @@ import java.util.*;
 public class AssassinAbilityEffects {
     private static ExpertiseStylePlugin expertiseStylePlugin;
     private static ProfileManager profileManager;
-    private static Set<UUID> hitEntityUUIDs = new HashSet<>();
 
     public AssassinAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
@@ -33,6 +32,7 @@ public class AssassinAbilityEffects {
     public static void slashAndDash(Player user, int hotbarSlot) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
+        HashSet<UUID> hitEntityUUIDs = new HashSet<>();
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
                 profileManager.getPlayerProfile(user.getUniqueId()).getStats()), 1.5);
 

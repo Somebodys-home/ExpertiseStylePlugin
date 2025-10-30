@@ -21,7 +21,6 @@ import java.util.*;
 public class MartialArtistAbilityEffects {
     private static ExpertiseStylePlugin expertiseStylePlugin;
     private static ProfileManager profileManager;
-    private static Set<UUID> hitEntityUUIDs = new HashSet<>();
 
     public MartialArtistAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
@@ -32,9 +31,11 @@ public class MartialArtistAbilityEffects {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
         user.setMetadata("falling", new FixedMetadataValue(expertiseStylePlugin, true));
 
+        HashSet<UUID> hitEntityUUIDs = new HashSet<>();
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
                 profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .25);
         final boolean[] comboBroken = {false};
+
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 2, hotbarSlot);
         EnergyManager.useEnergy(user, 10);
 
@@ -645,6 +646,7 @@ public class MartialArtistAbilityEffects {
     private static void dashUntilCollision(Player dasher, double velocity, int fallbackTicks, BukkitRunnable onFinish) {
         Vector dashDirection = dasher.getLocation().getDirection().normalize();
         Vector dash = dashDirection.clone().multiply(velocity).setY(0);
+        HashSet<UUID> hitEntityUUIDs = new HashSet<>();
 
         dasher.setVelocity(dash);
         dasher.getAttribute(Attribute.STEP_HEIGHT).setBaseValue(1);
