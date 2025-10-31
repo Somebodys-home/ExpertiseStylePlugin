@@ -68,6 +68,7 @@ public class ExpertiseMenu extends Menu {
             case 32 -> new HallowedMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 33 -> new AnnulledMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 44 -> {
+//                new ChangeAbilityLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
                 CooldownManager.resetAllCooldowns(player);
                 player.getInventory().setItem(0, AbilityItemTemplate.emptyStyleAbilityItem());
                 player.getInventory().setItem(1, ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem());

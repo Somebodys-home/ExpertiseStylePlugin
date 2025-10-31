@@ -86,6 +86,7 @@ public class PrimordialAbilityEffects {
     }
 
     public static void pumpkinBomb(Player user, int hotbarSlot) {
+        // damages
         HashSet<UUID> hitEntityUUIDs = new HashSet<>();
         HashMap<DamageType, Double> earth = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "earthdamage"), 1.5);
         HashMap<DamageType, Double> fire = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "firedamage"), 1.5);
@@ -96,6 +97,7 @@ public class PrimordialAbilityEffects {
         totalDamage.putAll(earth);
         totalDamage.putAll(fire);
 
+        // blocks
         BlockFace face = yawToFace(user.getLocation().getYaw());
         Directional data = (Directional) Bukkit.createBlockData(Material.JACK_O_LANTERN);
         data.setFacing(face);
@@ -116,19 +118,57 @@ public class PrimordialAbilityEffects {
 
         new BukkitRunnable() {
             boolean kaboom = false;
+            int candyTimer = 0;
 
             @Override
             public void run() {
                 Location pumpkinBombLocation = pumpkinBomb.getLocation();
                 Collection<Entity> nearbyEntities = user.getWorld().getNearbyEntities(pumpkinBombLocation, 1, 1, 1);
-                Particle.DustOptions stem = new Particle.DustOptions(Color.fromRGB(98, 143, 64), 2F);
+                Particle.DustOptions yellow = new Particle.DustOptions(Color.fromRGB(255, 244, 110), 2F);
 
                 nearbyEntities.remove(pumpkinBomb);
                 nearbyEntities.remove(user);
-                user.getWorld().spawnParticle(Particle.DUST, pumpkinBombLocation.add(0, 1, 0), 1, 0, 0, 0, stem);
+                user.getWorld().spawnParticle(Particle.DUST, pumpkinBombLocation, 1, 0, 0, 0, yellow);
+
+                // candy
+                if (candyTimer == 5) {
+                    candyTimer = 0;
+
+                    Material candyMaterial = null;
+
+                    switch ((int) (Math.random() * (8 - 1 + 1) + 1)) {
+                        case 1 -> candyMaterial = Material.PINK_CONCRETE_POWDER;
+                        case 2 -> candyMaterial = Material.LIME_CONCRETE_POWDER;
+                        case 3 -> candyMaterial = Material.LIGHT_BLUE_CONCRETE_POWDER;
+                        case 4 -> candyMaterial = Material.WHITE_CONCRETE_POWDER;
+                        case 5 -> candyMaterial = Material.RED_CONCRETE_POWDER;
+                        case 6 -> candyMaterial = Material.ORANGE_CONCRETE_POWDER;
+                        case 7 -> candyMaterial = Material.PURPLE_CONCRETE_POWDER;
+                        case 8 -> candyMaterial = Material.YELLOW_CONCRETE_POWDER;
+                    }
+
+                    FallingBlock candy = user.getWorld().spawnFallingBlock(pumpkinBombLocation.add(0, 1.5, 0), Bukkit.createBlockData(candyMaterial));
+                    double randomX = (Math.random() - 0.5) * 0.5;
+                    double randomZ = (Math.random() - 0.5) * 0.5;
+
+                    candy.setMetadata("pumpkin_candy", new FixedMetadataValue(expertiseStylePlugin, true));
+                    candy.setVelocity(new Vector(randomX, .75, randomZ));
+                    candy.setCancelDrop(true);
+                }
 
                 // trigger
-                if (!nearbyEntities.isEmpty() || (!pumpkinBomb.isValid() || pumpkinBomb.isDead())) kaboom = true;
+                boolean triggered = false;
+
+                for (Entity entity : nearbyEntities) {
+                    if (!entity.hasMetadata("pumpkin_candy")) {
+                        triggered = true;
+                        break;
+                    }
+                }
+
+                if (triggered || !pumpkinBomb.isValid() || pumpkinBomb.isDead()) {
+                    kaboom = true;
+                }
 
                 // explosion
                 if (kaboom) {
@@ -186,6 +226,7 @@ public class PrimordialAbilityEffects {
                     cancel();
                 }
 
+                candyTimer++;
             }
         }.runTaskTimer(expertiseStylePlugin, 0L, 1L);
 

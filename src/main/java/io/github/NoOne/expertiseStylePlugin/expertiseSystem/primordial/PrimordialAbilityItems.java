@@ -9,6 +9,8 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.List;
 
+import static io.github.NoOne.nMLItems.ItemType.*;
+
 public class PrimordialAbilityItems extends AbilityItemTemplate {
     public PrimordialAbilityItems() {
         super(ExpertiseStylePlugin.getInstance());
@@ -49,7 +51,7 @@ public class PrimordialAbilityItems extends AbilityItemTemplate {
                 30,
                 List.of("§f§n50%§r§f Weapon Damage \uD83D\uDDE1", "§c§n1.5x§r§c Fire Damage 🔥", "§2§n1.5x§r§2 Earth Damage 🪨"),
                 null,
-                List.of(),
+                List.of(WAND, STAFF, CATALYST),
                 skills);
     }
 }
