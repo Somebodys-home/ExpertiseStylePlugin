@@ -2,67 +2,165 @@ package io.github.NoOne.expertiseStylePlugin.expertiseSystem.expertiseMenus;
 
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemTemplate;
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.SaveAbilitiesSystem.SelectedAbilities;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.CooldownManager;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.saveAbilitiesSystem.SelectedAbilities;
+import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemTemplate;
 import io.github.NoOne.menuSystem.Menu;
 import io.github.NoOne.menuSystem.PlayerMenuUtility;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.*;
+
 public class ChangeAbilityLoadoutMenu extends Menu {
+    private final ExpertiseStylePlugin expertiseStylePlugin;
+    private final SelectedAbilities selectedAbilities;
+    private final Player player;
     private final ItemStack expertise1;
     private final ItemStack expertise2;
     private final ItemStack expertise3;
-    private SelectedAbilities selectedAbilities;
+    private final ItemStack backout;
+    private final ItemStack info;
+    private ItemStack leftClickItem1;
+    private ItemStack leftClickItem2;
+    private int leftClickHotbarSlot1;
+    private int leftClickHotbarSlot2;
+    private int leftClicks = 0;
 
     public ChangeAbilityLoadoutMenu(ExpertiseStylePlugin expertiseStylePlugin, PlayerMenuUtility playerMenuUtility) {
         super(playerMenuUtility);
+        player = playerMenuUtility.getOwner();
+        this.expertiseStylePlugin = expertiseStylePlugin;
         this.expertise1 = playerMenuUtility.getOwner().getInventory().getItem(1);
         this.expertise2 = playerMenuUtility.getOwner().getInventory().getItem(2);
         this.expertise3 = playerMenuUtility.getOwner().getInventory().getItem(3);
         selectedAbilities = expertiseStylePlugin.getSelectedManager().getPlayerProfile(playerMenuUtility.getOwner().getUniqueId()).getSelectedAbilities();
+
+        backout = new ItemStack(Material.BARRIER);
+        ItemMeta backoutItemMeta = backout.getItemMeta();
+        backoutItemMeta.setDisplayName("§4§l<= Go back");
+        backout.setItemMeta(backoutItemMeta);
+
+        info = new ItemStack(Material.BOOK);
+        ItemMeta infoMeta = info.getItemMeta();
+        List<String> infoLore = new ArrayList<>();
+        infoMeta.setDisplayName("§e- Left click two abilities to swap their places");
+        infoLore.add("§e- Right click an ability to remove it");
+        infoLore.add("§e- Shift right click this item to clear all expertise abilities");
+        infoMeta.setLore(infoLore);
+        info.setItemMeta(infoMeta);
     }
 
     @Override
     public String getMenuName() {
-        return ChatColor.translateAlternateColorCodes('&', "&6&lYou sure?");
+        return "§d§lYour Expertise Abilities";
     }
 
     @Override
     public int getSlots() {
-        return 9 * 3;
+        return 9 * 4;
     }
 
     @Override
     public void handleMenu(InventoryClickEvent event) {
         event.setCancelled(true);
 
-        Player player = (Player) event.getWhoClicked();
-        String[] playersAbilities = selectedAbilities.getSelectedAbilitiesArray();
         int slot = event.getSlot();
+        ItemStack clickedItem = inventory.getItem(slot);
 
-        switch (slot) {
-            case 11 -> {
-                if (expertise1.isSimilar(AbilityItemTemplate.cooldownItem())) {
-                    player.sendMessage("§c⚠ §nWait for this ability to go off cooldown.§r§c ⚠");
-                    return;
-                }
+        if (slot == 35) { // closing menu
+            new ExpertiseMenu(expertiseStylePlugin, playerMenuUtility).open();
+        } else if (slot == 22) { // resetting abilities
+            if (event.getClick() == ClickType.SHIFT_RIGHT) {
+                CooldownManager.resetAllCooldowns(player);
+                player.getInventory().setItem(0, AbilityItemTemplate.emptyStyleAbilityItem());
+                player.getInventory().setItem(1, ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem());
+                player.getInventory().setItem(2, ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem());
+                player.getInventory().setItem(3, ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem());
+                selectedAbilities.clearSelectedAbilities();
+
+                new ChangeAbilityLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
             }
-            case 13 -> {
-                if (expertise2.isSimilar(AbilityItemTemplate.cooldownItem())) {
-                    player.sendMessage("§c⚠ §nWait for this ability to go off cooldown.§r§c ⚠");
-                    return;
+        } else if (slot == 11 || slot == 13 || slot == 15) { // the other two things
+            switch (event.getClick()) {
+                case LEFT -> {
+                    leftClicks++;
+
+                    if (leftClicks == 1) {
+                        if (clickedItem.getItemMeta().getDisplayName().equals(expertise1.getItemMeta().getDisplayName())) {
+                            leftClickItem1 = expertise1;
+                            leftClickHotbarSlot1 = 1;
+                        }
+                        if (clickedItem.getItemMeta().getDisplayName().equals(expertise2.getItemMeta().getDisplayName())) {
+                            leftClickItem1 = expertise2;
+                            leftClickHotbarSlot1 = 2;
+                        }
+                        if (clickedItem.getItemMeta().getDisplayName().equals(expertise3.getItemMeta().getDisplayName())) {
+                            leftClickItem1 = expertise3;
+                            leftClickHotbarSlot1 = 3;
+                        }
+
+                        player.sendMessage(clickedItem.getItemMeta().getDisplayName()+"");
+                        player.playSound(player, Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 1f, 1f);
+                    }
+
+                    if (leftClicks == 2) {
+                        if (clickedItem.getItemMeta().getDisplayName().equals(expertise1.getItemMeta().getDisplayName())) {
+                            leftClickItem2 = expertise1;
+                            leftClickHotbarSlot2 = 1;
+                        }
+                        if (clickedItem.getItemMeta().getDisplayName().equals(expertise2.getItemMeta().getDisplayName())) {
+                            leftClickItem2 = expertise2;
+                            leftClickHotbarSlot2 = 2;
+                        }
+                        if (clickedItem.getItemMeta().getDisplayName().equals(expertise3.getItemMeta().getDisplayName())) {
+                            leftClickItem2 = expertise3;
+                            leftClickHotbarSlot2 = 3;
+                        }
+
+                        player.sendMessage(leftClickHotbarSlot2+"");
+                        player.getInventory().setItem(leftClickHotbarSlot2, leftClickItem1);
+                        player.getInventory().setItem(leftClickHotbarSlot1, leftClickItem2);
+                        player.playSound(player, Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 2f, 1f);
+
+                        new ChangeAbilityLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
+                    }
                 }
-            }
-            case 15 -> {
-                if (expertise3.isSimilar(AbilityItemTemplate.cooldownItem())) {
-                    player.sendMessage("§c⚠ §nWait for this ability to go off cooldown.§r§c ⚠");
-                    return;
+                case RIGHT -> {
+                    switch (slot) {
+                        case 11 -> {
+                            player.getInventory().setItem(1, ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem());
+                            selectedAbilities.setExpertise1(ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem().getItemMeta().getDisplayName());
+                            CooldownManager.resetCooldown(player, 1);
+                            selectedAbilities.resetSelectedAbilities(player.getInventory());
+
+                            new ChangeAbilityLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
+                        }
+                        case 13 -> {
+                            player.getInventory().setItem(2, ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem());
+                            selectedAbilities.setExpertise2(ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem().getItemMeta().getDisplayName());
+                            CooldownManager.resetCooldown(player, 2);
+                            selectedAbilities.resetSelectedAbilities(player.getInventory());
+
+                            new ChangeAbilityLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
+                        }
+                        case 15 -> {
+                            player.getInventory().setItem(3, ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem());
+                            selectedAbilities.setExpertise3(ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem().getItemMeta().getDisplayName());
+                            CooldownManager.resetCooldown(player, 3);
+                            selectedAbilities.resetSelectedAbilities(player.getInventory());
+
+                            new ChangeAbilityLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
+                        }
+                    }
                 }
-            }
+            }    
         }
     }
 
@@ -76,15 +174,21 @@ public class ChangeAbilityLoadoutMenu extends Menu {
         inventory.setItem(11, expertise1);
         inventory.setItem(13, expertise2);
         inventory.setItem(15, expertise3);
+        inventory.setItem(22, info);
+        inventory.setItem(35, backout);
+    }
 
-        // Backout button
-        ItemStack nvm = new ItemStack(Material.RED_DYE);
-        ItemMeta meta = nvm.getItemMeta();
-        assert meta != null;
+    private int getInventorySlot(Player player, ItemStack targetItem) {
+        PlayerInventory inventory = player.getInventory();
+        ItemStack[] contents = inventory.getContents();
 
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4&l<= Go back"));
-        nvm.setItemMeta(meta);
+        for (int i = 0; i < contents.length; i++) {
+            ItemStack currentItem = contents[i];
 
-        inventory.setItem(22, nvm);
+
+            if (currentItem != null && currentItem.isSimilar(targetItem)) return i;
+        }
+
+        return -1;
     }
 }

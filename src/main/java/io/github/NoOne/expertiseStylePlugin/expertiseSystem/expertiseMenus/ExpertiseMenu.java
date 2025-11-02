@@ -1,8 +1,5 @@
 package io.github.NoOne.expertiseStylePlugin.expertiseSystem.expertiseMenus;
 
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemTemplate;
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.CooldownSystem.CooldownManager;
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.SaveAbilitiesSystem.SelectedAbilities;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.annulled.AnnulledMenu;
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.assassin.AssassinMenu;
@@ -14,33 +11,39 @@ import io.github.NoOne.expertiseStylePlugin.expertiseSystem.martialArtist.Martia
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.primordial.PrimordialMenu;
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.shieldHero.ShieldHeroMenu;
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.soldier.SoldierMenu;
-import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemTemplate;
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.sorcerer.SorcererMenu;
 import io.github.NoOne.menuSystem.Menu;
 import io.github.NoOne.menuSystem.PlayerMenuUtility;
 import io.github.NoOne.nMLSkills.skillSystem.Skills;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class ExpertiseMenu extends Menu {
     private ExpertiseStylePlugin expertiseStylePlugin;
     private Player player;
-    private SelectedAbilities selectedAbilities;
     private Skills skills;
     private ExpertiseMenuItems expertiseMenuItems;
+    private final ItemStack changeLoadout;
 
     public ExpertiseMenu(ExpertiseStylePlugin expertiseStylePlugin, PlayerMenuUtility playerMenuUtility) {
         super(playerMenuUtility);
         this.expertiseStylePlugin = expertiseStylePlugin;
         player = playerMenuUtility.getOwner();
-        selectedAbilities = expertiseStylePlugin.getSelectedManager().getPlayerProfile(player.getUniqueId()).getSelectedAbilities();
         skills = expertiseStylePlugin.getSkillSetManager().getSkillSet(player.getUniqueId()).getSkills();
         expertiseMenuItems = new ExpertiseMenuItems(skills);
+
+        changeLoadout = new ItemStack(Material.STRUCTURE_BLOCK);
+        ItemMeta meta = changeLoadout.getItemMeta();
+        meta.setDisplayName("§7§lChange Ability Loadout");
+        changeLoadout.setItemMeta(meta);
     }
 
     @Override
     public String getMenuName() {
-        return "§6§lCHOOSE YOUR EXPERTISE!";
+        return "§d§lCHOOSE YOUR EXPERTISE!";
     }
 
     @Override
@@ -52,10 +55,7 @@ public class ExpertiseMenu extends Menu {
     public void handleMenu(InventoryClickEvent event) {
         event.setCancelled(true);
 
-        Player player = (Player) event.getWhoClicked();
-        int slot = event.getSlot();
-
-        switch (slot) {
+        switch (event.getSlot()) {
             case 10 -> new SoldierMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 11 -> new AssassinMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 12 -> new MarauderMenu(expertiseStylePlugin, playerMenuUtility).open();
@@ -67,15 +67,7 @@ public class ExpertiseMenu extends Menu {
             case 30 -> new PrimordialMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 32 -> new HallowedMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 33 -> new AnnulledMenu(expertiseStylePlugin, playerMenuUtility).open();
-            case 44 -> {
-//                new ChangeAbilityLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
-                CooldownManager.resetAllCooldowns(player);
-                player.getInventory().setItem(0, AbilityItemTemplate.emptyStyleAbilityItem());
-                player.getInventory().setItem(1, ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem());
-                player.getInventory().setItem(2, ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem());
-                player.getInventory().setItem(3, ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem());
-                selectedAbilities.resetSelectedAbilities();
-            }
+            case 44 -> new ChangeAbilityLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
         }
     }
 
@@ -97,6 +89,6 @@ public class ExpertiseMenu extends Menu {
         inventory.setItem(30, expertiseMenuItems.primordial());
         inventory.setItem(32, expertiseMenuItems.hallowed());
         inventory.setItem(33, expertiseMenuItems.annulled());
-        inventory.setItem(44, expertiseMenuItems.resetAbilities());
+        inventory.setItem(44, changeLoadout);
     }
 }

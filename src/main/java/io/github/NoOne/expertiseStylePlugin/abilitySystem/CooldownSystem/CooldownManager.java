@@ -1,4 +1,4 @@
-package io.github.NoOne.expertiseStylePlugin.abilitySystem.CooldownSystem;
+package io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem;
 
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemTemplate;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
@@ -99,6 +99,19 @@ public class CooldownManager {
         putOnCooldown(player, 1, cooldown);
         putOnCooldown(player, 2, cooldown);
         putOnCooldown(player, 3, cooldown);
+    }
+
+    public static void resetCooldown(Player player, int hotbarSlot) {
+        HashSet<CooldownInstance> cooldowns = ongoingCooldowns.get(player.getUniqueId());
+
+        if (cooldowns != null) {
+            for (CooldownInstance cooldownInstance : cooldowns) {
+                if (cooldownInstance.getHotbarSlot() == hotbarSlot) {
+                    player.getInventory().setItem(cooldownInstance.getHotbarSlot(), cooldownInstance.getOriginalItem());
+                    cooldowns.remove(cooldownInstance);
+                }
+            }
+        }
     }
 
     public static void resetAllCooldowns(Player player) {

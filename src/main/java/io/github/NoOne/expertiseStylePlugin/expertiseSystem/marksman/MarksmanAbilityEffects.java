@@ -3,7 +3,7 @@ package io.github.NoOne.expertiseStylePlugin.expertiseSystem.marksman;
 import io.github.NoOne.damagePlugin.customDamage.DamageConverter;
 import io.github.NoOne.damagePlugin.customDamage.DamageType;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemTemplate;
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.CooldownSystem.CooldownManager;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.CooldownManager;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;

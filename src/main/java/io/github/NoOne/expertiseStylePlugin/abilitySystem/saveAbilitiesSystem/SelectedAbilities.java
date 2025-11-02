@@ -1,6 +1,6 @@
-package io.github.NoOne.expertiseStylePlugin.abilitySystem.SaveAbilitiesSystem;
+package io.github.NoOne.expertiseStylePlugin.abilitySystem.saveAbilitiesSystem;
 
-import org.bukkit.ChatColor;
+import org.bukkit.inventory.PlayerInventory;
 
 public class SelectedAbilities {
     private String style;
@@ -19,11 +19,18 @@ public class SelectedAbilities {
         return new String[]{style, expertise3, expertise1, expertise2};
     }
 
-    public void resetSelectedAbilities() {
-        style = ChatColor.AQUA + "Empty Style Ability";
-        expertise1 = ChatColor.LIGHT_PURPLE + "Empty Expertise Ability";
-        expertise2 = ChatColor.LIGHT_PURPLE + "Empty Expertise Ability";
-        expertise3 = ChatColor.LIGHT_PURPLE + "Empty Expertise Ability";
+    public void clearSelectedAbilities() {
+        style = "§bEmpty Style Ability";
+        expertise1 = "§dEmpty Expertise Ability";
+        expertise2 = "§dEmpty Expertise Ability";
+        expertise3 = "§dEmpty Expertise Ability";
+    }
+
+    public void resetSelectedAbilities(PlayerInventory playerInventory) {
+        style = playerInventory.getItem(0).getItemMeta().getDisplayName();
+        expertise1 = playerInventory.getItem(1).getItemMeta().getDisplayName();
+        expertise2 = playerInventory.getItem(2).getItemMeta().getDisplayName();
+        expertise3 = playerInventory.getItem(3).getItemMeta().getDisplayName();
     }
 
     public String getStyle() {

@@ -2,10 +2,10 @@ package io.github.NoOne.expertiseStylePlugin;
 
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemTemplate;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityListener;
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.CooldownSystem.CooldownManager;
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.SaveAbilitiesSystem.SelectedConfig;
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.SaveAbilitiesSystem.SelectedListener;
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.SaveAbilitiesSystem.SelectedManager;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.CooldownManager;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.saveAbilitiesSystem.SelectedConfig;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.saveAbilitiesSystem.SelectedListener;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.saveAbilitiesSystem.SelectedManager;
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.annulled.AnnulledAbilityEffects;
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.annulled.AnnulledListener;
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.assassin.AssassinAbilityEffects;

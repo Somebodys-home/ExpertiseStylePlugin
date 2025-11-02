@@ -2,7 +2,7 @@ package io.github.NoOne.expertiseStylePlugin.abilitySystem;
 
 import io.github.NoOne.damagePlugin.customDamage.CustomDamageEvent;
 import io.github.NoOne.damagePlugin.customDamage.DamageType;
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.CooldownSystem.CooldownManager;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.CooldownManager;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemTemplate;
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseManager;

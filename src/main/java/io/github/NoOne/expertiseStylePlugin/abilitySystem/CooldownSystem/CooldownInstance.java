@@ -1,4 +1,4 @@
-package io.github.NoOne.expertiseStylePlugin.abilitySystem.CooldownSystem;
+package io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem;
 
 import org.bukkit.inventory.ItemStack;
 

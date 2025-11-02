@@ -1,4 +1,4 @@
-package io.github.NoOne.expertiseStylePlugin.abilitySystem.SaveAbilitiesSystem;
+package io.github.NoOne.expertiseStylePlugin.abilitySystem.saveAbilitiesSystem;
 
 public class AbilityProfile {
     private SelectedAbilities selectedAbilities;

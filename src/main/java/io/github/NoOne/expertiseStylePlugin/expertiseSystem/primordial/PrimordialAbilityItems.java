@@ -49,7 +49,7 @@ public class PrimordialAbilityItems extends AbilityItemTemplate {
                 0,
                 15,
                 30,
-                List.of("§f§n50%§r§f Weapon Damage \uD83D\uDDE1", "§c§n1.5x§r§c Fire Damage 🔥", "§2§n1.5x§r§2 Earth Damage 🪨"),
+                List.of("§f§n100%§r§f Weapon Damage \uD83D\uDDE1", "§c§n1.5x§r§c Fire Damage 🔥", "§2§n1.5x§r§2 Earth Damage 🪨"),
                 null,
                 List.of(WAND, STAFF, CATALYST),
                 skills);

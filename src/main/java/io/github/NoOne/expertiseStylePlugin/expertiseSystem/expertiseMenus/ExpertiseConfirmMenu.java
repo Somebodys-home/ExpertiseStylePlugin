@@ -1,7 +1,7 @@
 package io.github.NoOne.expertiseStylePlugin.expertiseSystem.expertiseMenus;
 
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemTemplate;
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.SaveAbilitiesSystem.SelectedAbilities;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.saveAbilitiesSystem.SelectedAbilities;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.menuSystem.Menu;
 import io.github.NoOne.menuSystem.PlayerMenuUtility;
@@ -99,7 +99,7 @@ public class ExpertiseConfirmMenu extends Menu {
         ItemMeta meta = nvm.getItemMeta();
         assert meta != null;
 
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4&l<= Go back"));
+        meta.setDisplayName("§4§l<= Go back");
         nvm.setItemMeta(meta);
 
         inventory.setItem(22, nvm);

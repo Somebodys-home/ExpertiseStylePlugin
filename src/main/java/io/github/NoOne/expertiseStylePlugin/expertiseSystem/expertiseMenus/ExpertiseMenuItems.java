@@ -24,6 +24,7 @@ public class ExpertiseMenuItems {
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setDisplayName("§fLv. " + skills.getSoldierLevel() +  " §c§lSoldier");
         lore.add("§8" + skills.getCombatExp() + " / " + skills.getExp2LvlUpCombat() + " exp (" + percent + "%)");
+        lore.add("");
         lore.add("§7Me when military proletarianism is kinda based actually");
         lore.add("");
         lore.add("§bCLICK TO SELECT!");
@@ -41,6 +42,7 @@ public class ExpertiseMenuItems {
 
         meta.setDisplayName("§fLv. " + skills.getAssassinLevel() +  " §0§lAssassin");
         lore.add("§8" + skills.getAssassinExp() + " / " + skills.getExp2LvlUpAssassin() + " exp (" + percent + "%)");
+        lore.add("");
         lore.add("§7\"Hey what do you got there?\"");
         lore.add( "§7\"A knife!\"");
         lore.add("§7\"NO!\"");
@@ -61,6 +63,7 @@ public class ExpertiseMenuItems {
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setDisplayName("§fLv. " + skills.getMarauderLevel() +  " §4§lMarauder");
         lore.add("§8" + skills.getMarauderExp() + " / " + skills.getExp2LvlUpMarauder() + " exp (" + percent + "%)");
+        lore.add("");
         lore.add("§7Reject modernity, EMBRACE BARBARITY!");
         lore.add("");
         lore.add("§bCLICK TO SELECT!");
@@ -79,6 +82,7 @@ public class ExpertiseMenuItems {
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.setDisplayName("§fLv. " + skills.getCavalierLevel() +  " §1§lCavalier");
         lore.add("§8" + skills.getCavalierExp() + " / " + skills.getExp2LvlUpCavalier() + " exp (" + percent + "%)");
+        lore.add("");
         lore.add("§7Unfortunately, this has nothing to do with horses.");
         lore.add("");
         lore.add("§bCLICK TO SELECT!");
@@ -96,6 +100,7 @@ public class ExpertiseMenuItems {
 
         meta.setDisplayName("§fLv. " + skills.getMartialArtistLevel() +  " §4§lMartial Artist");
         lore.add("§8" + skills.getMartialArtistExp() + " / " + skills.getExp2LvlUpCombat() + " exp (" + percent + "%)");
+        lore.add("");
         lore.add("§7Beating up homeless people in the back alley of an Arby's™ pro max");
         lore.add("");
         lore.add("§bCLICK TO SELECT!");
@@ -113,6 +118,7 @@ public class ExpertiseMenuItems {
 
         meta.setDisplayName("§fLv. " + skills.getShieldHeroLevel() +  " §3§lShield Hero");
         lore.add("§8" + skills.getShieldHeroExp() + " / " + skills.getExp2LvlUpShieldHero() + " exp (" + percent + "%)");
+        lore.add("");
         lore.add("§7Don't worry, you won't be hate crimed...hopefully.");
         lore.add("");
         lore.add("§bCLICK TO SELECT!");
@@ -130,6 +136,7 @@ public class ExpertiseMenuItems {
 
         meta.setDisplayName("§fLv. " + skills.getMarksmanLevel() +  " §a§lMarksman");
         lore.add("§8" + skills.getMarksmanExp() + " / " + skills.getExp2LvlUpMarksman() + " exp (" + percent + "%)");
+        lore.add("");
         lore.add("§7This is the closest you're getting to a gun.");
         lore.add("");
         lore.add("§bCLICK TO SELECT!");
@@ -147,6 +154,7 @@ public class ExpertiseMenuItems {
 
         meta.setDisplayName("§fLv. " + skills.getSorcererLevel() +  " §6§lSorcerer");
         lore.add("§8" + skills.getSorcererExp() + " / " + skills.getExp2LvlUpSorcerer() + " exp (" + percent + "%)");
+        lore.add("");
         lore.add("§7There's no I in team, but there's 6 Is in");
         lore.add("§7§o\"F§kuck§r§7§o it, I don't care how big the room is, I cast fireball.\"");
         lore.add("");
@@ -165,6 +173,7 @@ public class ExpertiseMenuItems {
 
         meta.setDisplayName("§fLv. " + skills.getPrimordialLevel() +  " §2§lPrimordial");
         lore.add("§8" + skills.getPrimordialExp() + " / " + skills.getExp2LvlUpPrimordial() + " exp (" + percent + "%)");
+        lore.add("");
         lore.add("§7F§kuck§r§7in hippie.");
         lore.add("");
         lore.add("§bCLICK TO SELECT!");
@@ -182,6 +191,7 @@ public class ExpertiseMenuItems {
 
         meta.setDisplayName("§fLv. " + skills.getHallowedLevel() +  " §f§lHallowed");
         lore.add("§8" + skills.getHallowedExp() + " / " + skills.getExp2LvlUpHallowed() + " exp (" + percent + "%)");
+        lore.add("");
         lore.add("§7Please just be normal.");
         lore.add("");
         lore.add("§bCLICK TO SELECT!");
@@ -199,6 +209,7 @@ public class ExpertiseMenuItems {
 
         meta.setDisplayName("§fLv. " + skills.getAnnulledLevel() +  " §5§lAnnulled");
         lore.add("§8" + skills.getAnnulledExp() + " / " + skills.getExp2LvlUpAnnulled() + " exp (" + percent + "%)");
+        lore.add("");
         lore.add("§7Welcome home.");
         lore.add("");
         lore.add("§bCLICK TO SELECT!");
@@ -206,15 +217,5 @@ public class ExpertiseMenuItems {
         annulled.setItemMeta(meta);
 
         return annulled;
-    }
-
-    public ItemStack resetAbilities() {
-        ItemStack reset = new ItemStack(Material.BARRIER);
-        ItemMeta meta = reset.getItemMeta();
-
-        meta.setDisplayName("§4§lReset Abilities");
-        reset.setItemMeta(meta);
-
-        return reset;
     }
 }

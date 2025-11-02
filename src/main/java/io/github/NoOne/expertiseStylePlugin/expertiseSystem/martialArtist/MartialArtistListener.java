@@ -1,7 +1,7 @@
 package io.github.NoOne.expertiseStylePlugin.expertiseSystem.martialArtist;
 
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.UseAbilityEvent;
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.SaveAbilitiesSystem.SelectedManager;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.saveAbilitiesSystem.SelectedManager;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

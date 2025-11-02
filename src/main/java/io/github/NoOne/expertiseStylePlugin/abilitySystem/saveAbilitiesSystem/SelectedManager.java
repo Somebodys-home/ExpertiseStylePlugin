@@ -1,4 +1,4 @@
-package io.github.NoOne.expertiseStylePlugin.abilitySystem.SaveAbilitiesSystem;
+package io.github.NoOne.expertiseStylePlugin.abilitySystem.saveAbilitiesSystem;
 
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import org.bukkit.configuration.file.FileConfiguration;

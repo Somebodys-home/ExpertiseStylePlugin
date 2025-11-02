@@ -1,14 +1,13 @@
 package io.github.NoOne.expertiseStylePlugin.expertiseSystem.sorcerer;
 
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemTemplate;
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.SaveAbilitiesSystem.SelectedAbilities;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.saveAbilitiesSystem.SelectedAbilities;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.expertiseMenus.ExpertiseConfirmMenu;
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.expertiseMenus.ExpertiseMenu;
 import io.github.NoOne.menuSystem.Menu;
 import io.github.NoOne.menuSystem.PlayerMenuUtility;
 import io.github.NoOne.nMLSkills.skillSystem.Skills;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -77,7 +76,7 @@ public class SorcererMenu extends Menu {
         ItemMeta meta = nvm.getItemMeta();
         assert meta != null;
 
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4&l<= Go back"));
+        meta.setDisplayName("§4§l<= Go back");
         nvm.setItemMeta(meta);
 
         inventory.setItem(35, nvm);

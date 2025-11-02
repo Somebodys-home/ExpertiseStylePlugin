@@ -26,7 +26,7 @@ public class SorcererAbilityItems extends AbilityItemTemplate {
                 "Single",
                 16,
                 0,
-                5,
+                8,
                 20,
                 List.of("§f§n50%" + "§r§f" + " Weapon Damage \uD83D\uDDE1 §7§o(per missile)"),
                 null,
