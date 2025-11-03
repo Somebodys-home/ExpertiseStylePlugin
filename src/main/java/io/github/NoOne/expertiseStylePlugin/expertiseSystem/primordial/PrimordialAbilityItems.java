@@ -1,8 +1,8 @@
 package io.github.NoOne.expertiseStylePlugin.expertiseSystem.primordial;
 
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemTemplate;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemManager;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemTemplate;
+import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemCreator;
 import io.github.NoOne.nMLSkills.skillSystem.Skills;
 import org.bukkit.inventory.ItemStack;
 
@@ -11,18 +11,19 @@ import java.util.List;
 
 import static io.github.NoOne.nMLItems.ItemType.*;
 
-public class PrimordialAbilityItems extends AbilityItemTemplate {
+public class PrimordialAbilityItems extends AbilityItemManager {
     public PrimordialAbilityItems() {
         super(ExpertiseStylePlugin.getInstance());
     }
 
     public static ItemStack chuckRock(Skills skills) {
-        return ExpertiseAbilityItemTemplate.makeExpertiseAbilityItem(
+        return ExpertiseAbilityItemCreator.makeExpertiseAbilityItem(
                 "Chuck Rock",
                 new HashMap<>() {{
                     put("primordial", 1);
                 }},
-                "Pick up and chuck a rock. It's not magical or anything, you just find a rock and throw it.",
+                "Pick up and chuck a rock. It's not magical or anything, you just find a rock and throw it.", 
+                null,
                 false,
                 "Single",
                 20,
@@ -31,18 +32,18 @@ public class PrimordialAbilityItems extends AbilityItemTemplate {
                 10,
                 List.of("§4§n1.5x§r§4 Physical Damage ⚔"),
                 null,
-                List.of(),
-                skills);
+                List.of(), skills);
     }
 
     public static ItemStack pumpkinBomb(Skills skills) {
-        return ExpertiseAbilityItemTemplate.makeExpertiseAbilityItem(
+        return ExpertiseAbilityItemCreator.makeExpertiseAbilityItem(
                 "Pumpkin Bomb",
                 new HashMap<>() {{
                     put("primordial", 15);
                     put("annulled", 5);
                 }},
-                "Summon and throw a pumpkin that explodes on contact. Spooky!",
+                "Summon and throw a pumpkin that explodes on contact. Spooky!", 
+                null,
                 false,
                 "Area",
                 20,
@@ -51,7 +52,6 @@ public class PrimordialAbilityItems extends AbilityItemTemplate {
                 30,
                 List.of("§f§n100%§r§f Weapon Damage \uD83D\uDDE1", "§c§n1.5x§r§c Fire Damage 🔥", "§2§n1.5x§r§2 Earth Damage 🪨"),
                 null,
-                List.of(WAND, STAFF, CATALYST),
-                skills);
+                List.of(WAND, STAFF, CATALYST), skills);
     }
 }

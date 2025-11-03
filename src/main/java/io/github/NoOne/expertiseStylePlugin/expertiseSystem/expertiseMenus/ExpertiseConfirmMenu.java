@@ -1,6 +1,6 @@
 package io.github.NoOne.expertiseStylePlugin.expertiseSystem.expertiseMenus;
 
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemTemplate;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemManager;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.saveAbilitiesSystem.SelectedAbilities;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.menuSystem.Menu;
@@ -50,7 +50,7 @@ public class ExpertiseConfirmMenu extends Menu {
 
         switch (slot) {
             case 11 -> {
-                if (expertise1.isSimilar(AbilityItemTemplate.cooldownItem())) {
+                if (expertise1.isSimilar(AbilityItemManager.cooldownItem())) {
                     player.sendMessage("§c⚠ §nWait for this ability to go off cooldown.§r§c ⚠");
                     return;
                 }
@@ -59,7 +59,7 @@ public class ExpertiseConfirmMenu extends Menu {
                 selectedAbilities.setExpertise1(selected.getItemMeta().getDisplayName());
             }
             case 13 -> {
-                if (expertise2.isSimilar(AbilityItemTemplate.cooldownItem())) {
+                if (expertise2.isSimilar(AbilityItemManager.cooldownItem())) {
                     player.sendMessage("§c⚠ §nWait for this ability to go off cooldown.§r§c ⚠");
                     return;
                 }
@@ -68,7 +68,7 @@ public class ExpertiseConfirmMenu extends Menu {
                 selectedAbilities.setExpertise2(selected.getItemMeta().getDisplayName());
             }
             case 15 -> {
-                if (expertise3.isSimilar(AbilityItemTemplate.cooldownItem())) {
+                if (expertise3.isSimilar(AbilityItemManager.cooldownItem())) {
                     player.sendMessage("§c⚠ §nWait for this ability to go off cooldown.§r§c ⚠");
                     return;
                 }

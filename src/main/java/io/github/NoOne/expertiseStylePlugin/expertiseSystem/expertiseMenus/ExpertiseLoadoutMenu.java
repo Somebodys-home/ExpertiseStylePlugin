@@ -1,10 +1,9 @@
 package io.github.NoOne.expertiseStylePlugin.expertiseSystem.expertiseMenus;
 
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemTemplate;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.CooldownManager;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.saveAbilitiesSystem.SelectedAbilities;
-import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemTemplate;
+import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemCreator;
 import io.github.NoOne.menuSystem.Menu;
 import io.github.NoOne.menuSystem.PlayerMenuUtility;
 import org.bukkit.Material;
@@ -18,7 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 
-public class ChangeAbilityLoadoutMenu extends Menu {
+public class ExpertiseLoadoutMenu extends Menu {
     private final ExpertiseStylePlugin expertiseStylePlugin;
     private final SelectedAbilities selectedAbilities;
     private final Player player;
@@ -33,7 +32,7 @@ public class ChangeAbilityLoadoutMenu extends Menu {
     private int leftClickHotbarSlot2;
     private int leftClicks = 0;
 
-    public ChangeAbilityLoadoutMenu(ExpertiseStylePlugin expertiseStylePlugin, PlayerMenuUtility playerMenuUtility) {
+    public ExpertiseLoadoutMenu(ExpertiseStylePlugin expertiseStylePlugin, PlayerMenuUtility playerMenuUtility) {
         super(playerMenuUtility);
         player = playerMenuUtility.getOwner();
         this.expertiseStylePlugin = expertiseStylePlugin;
@@ -79,13 +78,12 @@ public class ChangeAbilityLoadoutMenu extends Menu {
         } else if (slot == 22) { // resetting abilities
             if (event.getClick() == ClickType.SHIFT_RIGHT) {
                 CooldownManager.resetAllCooldowns(player);
-                player.getInventory().setItem(0, AbilityItemTemplate.emptyStyleAbilityItem());
-                player.getInventory().setItem(1, ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem());
-                player.getInventory().setItem(2, ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem());
-                player.getInventory().setItem(3, ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem());
+                player.getInventory().setItem(1, ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem());
+                player.getInventory().setItem(2, ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem());
+                player.getInventory().setItem(3, ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem());
                 selectedAbilities.clearSelectedAbilities();
 
-                new ChangeAbilityLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
+                new ExpertiseLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
             }
         } else if (slot == 11 || slot == 13 || slot == 15) { // the other two things
             switch (event.getClick()) {
@@ -106,7 +104,6 @@ public class ChangeAbilityLoadoutMenu extends Menu {
                             leftClickHotbarSlot1 = 3;
                         }
 
-                        player.sendMessage(clickedItem.getItemMeta().getDisplayName()+"");
                         player.playSound(player, Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 1f, 1f);
                     }
 
@@ -124,39 +121,38 @@ public class ChangeAbilityLoadoutMenu extends Menu {
                             leftClickHotbarSlot2 = 3;
                         }
 
-                        player.sendMessage(leftClickHotbarSlot2+"");
                         player.getInventory().setItem(leftClickHotbarSlot2, leftClickItem1);
                         player.getInventory().setItem(leftClickHotbarSlot1, leftClickItem2);
-                        player.playSound(player, Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 2f, 1f);
+                        player.playSound(player, Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 2f, 2f);
 
-                        new ChangeAbilityLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
+                        new ExpertiseLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
                     }
                 }
                 case RIGHT -> {
                     switch (slot) {
                         case 11 -> {
-                            player.getInventory().setItem(1, ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem());
-                            selectedAbilities.setExpertise1(ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem().getItemMeta().getDisplayName());
+                            player.getInventory().setItem(1, ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem());
+                            selectedAbilities.setExpertise1(ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem().getItemMeta().getDisplayName());
                             CooldownManager.resetCooldown(player, 1);
                             selectedAbilities.resetSelectedAbilities(player.getInventory());
 
-                            new ChangeAbilityLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
+                            new ExpertiseLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
                         }
                         case 13 -> {
-                            player.getInventory().setItem(2, ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem());
-                            selectedAbilities.setExpertise2(ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem().getItemMeta().getDisplayName());
+                            player.getInventory().setItem(2, ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem());
+                            selectedAbilities.setExpertise2(ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem().getItemMeta().getDisplayName());
                             CooldownManager.resetCooldown(player, 2);
                             selectedAbilities.resetSelectedAbilities(player.getInventory());
 
-                            new ChangeAbilityLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
+                            new ExpertiseLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
                         }
                         case 15 -> {
-                            player.getInventory().setItem(3, ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem());
-                            selectedAbilities.setExpertise3(ExpertiseAbilityItemTemplate.emptyExpertiseAbilityItem().getItemMeta().getDisplayName());
+                            player.getInventory().setItem(3, ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem());
+                            selectedAbilities.setExpertise3(ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem().getItemMeta().getDisplayName());
                             CooldownManager.resetCooldown(player, 3);
                             selectedAbilities.resetSelectedAbilities(player.getInventory());
 
-                            new ChangeAbilityLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
+                            new ExpertiseLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
                         }
                     }
                 }

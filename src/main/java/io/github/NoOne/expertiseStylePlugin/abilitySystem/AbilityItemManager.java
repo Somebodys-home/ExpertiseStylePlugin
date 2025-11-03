@@ -4,6 +4,7 @@ import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLSkills.skillSystem.Skills;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -13,7 +14,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AbilityItemTemplate {
+public class AbilityItemManager {
     private static ExpertiseStylePlugin expertiseStylePlugin;
     private static NamespacedKey abilityKey;
     private static NamespacedKey cooldownKey;
@@ -22,7 +23,10 @@ public class AbilityItemTemplate {
     private static NamespacedKey energyKey;
     private static NamespacedKey unusableKey;
 
-    public AbilityItemTemplate(ExpertiseStylePlugin expertiseStylePlugin) {
+    /// prerequisite keys
+    private static NamespacedKey groundedKey;
+
+    public AbilityItemManager(ExpertiseStylePlugin expertiseStylePlugin) {
         this.expertiseStylePlugin = expertiseStylePlugin;
         abilityKey = new NamespacedKey(expertiseStylePlugin, "ability");
         cooldownKey = new NamespacedKey(expertiseStylePlugin, "cooldown");
@@ -30,6 +34,7 @@ public class AbilityItemTemplate {
         originalItemKey = new NamespacedKey(expertiseStylePlugin, "originalItem");
         energyKey = new NamespacedKey(expertiseStylePlugin, "energy");
         unusableKey = new NamespacedKey(expertiseStylePlugin, "unusable");
+        groundedKey = new NamespacedKey(expertiseStylePlugin, "grounded");
     }
 
     public static ItemStack emptyStyleAbilityItem() {
@@ -81,7 +86,7 @@ public class AbilityItemTemplate {
         }
     }
 
-    public static boolean meetsRequirement(Skills skills, String skill, int levelRequirement) {
+    public static boolean meetsSkillRequirement(Skills skills, String skill, int levelRequirement) {
         int playerSkillLevel = 0;
 
         switch (skill.toLowerCase().replaceAll(" ", "")) {
@@ -101,62 +106,34 @@ public class AbilityItemTemplate {
         return playerSkillLevel >= levelRequirement;
     }
 
-    public static boolean meetsRequirements(ItemStack item, Skills skills) {
-        PersistentDataContainer pdc = item.getItemMeta().getPersistentDataContainer();
+    public static boolean meetsPrerequisites(Player player, ItemStack item) {
+        PersistentDataContainer persistentDataContainer = item.getItemMeta().getPersistentDataContainer();
+        ArrayList<NamespacedKey> prerequisiteKeys = new ArrayList<>();
+        boolean met = false;
 
-        if (pdc.has(new NamespacedKey(expertiseStylePlugin, "soldier"))) {
-            if (skills.getSoldierLevel() < pdc.get(new NamespacedKey(expertiseStylePlugin, "soldier"), PersistentDataType.INTEGER)) return false;
-        }
-        if (pdc.has(new NamespacedKey(expertiseStylePlugin, "assassin"))) {
-            if (skills.getSoldierLevel() < pdc.get(new NamespacedKey(expertiseStylePlugin, "assassin"), PersistentDataType.INTEGER)) return false;
-        }
-        if (pdc.has(new NamespacedKey(expertiseStylePlugin, "marauder"))) {
-            if (skills.getSoldierLevel() < pdc.get(new NamespacedKey(expertiseStylePlugin, "marauder"), PersistentDataType.INTEGER)) return false;
-        }
-        if (pdc.has(new NamespacedKey(expertiseStylePlugin, "cavalier"))) {
-            if (skills.getSoldierLevel() < pdc.get(new NamespacedKey(expertiseStylePlugin, "cavalier"), PersistentDataType.INTEGER)) return false;
-        }
-        if (pdc.has(new NamespacedKey(expertiseStylePlugin, "martialartist"))) {
-            if (skills.getSoldierLevel() < pdc.get(new NamespacedKey(expertiseStylePlugin, "martialartist"), PersistentDataType.INTEGER)) return false;
-        }
-        if (pdc.has(new NamespacedKey(expertiseStylePlugin, "shieldhero"))) {
-            if (skills.getSoldierLevel() < pdc.get(new NamespacedKey(expertiseStylePlugin, "shieldhero"), PersistentDataType.INTEGER)) return false;
-        }
-        if (pdc.has(new NamespacedKey(expertiseStylePlugin, "marksman"))) {
-            if (skills.getSoldierLevel() < pdc.get(new NamespacedKey(expertiseStylePlugin, "marksman"), PersistentDataType.INTEGER)) return false;
-        }
-        if (pdc.has(new NamespacedKey(expertiseStylePlugin, "sorcerer"))) {
-            if (skills.getSoldierLevel() < pdc.get(new NamespacedKey(expertiseStylePlugin, "sorcerer"), PersistentDataType.INTEGER)) return false;
-        }
-        if (pdc.has(new NamespacedKey(expertiseStylePlugin, "primordial"))) {
-            if (skills.getSoldierLevel() < pdc.get(new NamespacedKey(expertiseStylePlugin, "primordial"), PersistentDataType.INTEGER)) return false;
-        }
-        if (pdc.has(new NamespacedKey(expertiseStylePlugin, "hallowed"))) {
-            if (skills.getSoldierLevel() < pdc.get(new NamespacedKey(expertiseStylePlugin, "hallowed"), PersistentDataType.INTEGER)) return false;
-        }
-        if (pdc.has(new NamespacedKey(expertiseStylePlugin, "annulled"))) {
-            if (skills.getSoldierLevel() < pdc.get(new NamespacedKey(expertiseStylePlugin, "annulled"), PersistentDataType.INTEGER)) return false;
+        if (persistentDataContainer.has(groundedKey)) {
+            prerequisiteKeys.add(groundedKey);
         }
 
-        return true;
+        for (NamespacedKey namespacedKey : prerequisiteKeys) {
+            if (namespacedKey == groundedKey) {
+                met = player.isOnGround();
+            }
+
+            if (!met) break;
+        }
+
+        return met;
     }
 
     public static boolean isAnAbility(ItemStack item) {
-        if (item != null && item.hasItemMeta()) {
-            PersistentDataContainer pdc = item.getItemMeta().getPersistentDataContainer();
-
-            return pdc.has(abilityKey);
-        }
+        if (item != null && item.hasItemMeta()) return item.getItemMeta().getPersistentDataContainer().has(abilityKey);
 
         return false;
     }
 
     public static boolean isToggleable(ItemStack item) {
-        if (item != null && item.hasItemMeta()) {
-            PersistentDataContainer pdc = item.getItemMeta().getPersistentDataContainer();
-
-            return pdc.has(toggleKey);
-        }
+        if (item != null && item.hasItemMeta()) return item.getItemMeta().getPersistentDataContainer().has(toggleKey);
 
         return false;
     }
@@ -228,5 +205,9 @@ public class AbilityItemTemplate {
 
     public static NamespacedKey getUnusableKey() {
         return unusableKey;
+    }
+
+    public static NamespacedKey getGroundedKey() {
+        return groundedKey;
     }
 }

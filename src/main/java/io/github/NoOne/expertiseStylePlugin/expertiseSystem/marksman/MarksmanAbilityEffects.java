@@ -2,7 +2,7 @@ package io.github.NoOne.expertiseStylePlugin.expertiseSystem.marksman;
 
 import io.github.NoOne.damagePlugin.customDamage.DamageConverter;
 import io.github.NoOne.damagePlugin.customDamage.DamageType;
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemTemplate;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemManager;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.CooldownManager;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
@@ -38,7 +38,7 @@ public class MarksmanAbilityEffects {
 
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
                 profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .5);
-        boolean toggle = AbilityItemTemplate.getToggleState(abilityItem);
+        boolean toggle = AbilityItemManager.getToggleState(abilityItem);
         final int[] preparedArrows = {0};
 
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, .5, hotbarSlot);
@@ -56,11 +56,11 @@ public class MarksmanAbilityEffects {
 
                 // fire arrows at 10
                 if (preparedArrows[0] == 10) {
-                    AbilityItemTemplate.toggleAbility(abilityItem, toggle);
-                    CooldownManager.putOnCooldown(user, hotbarSlot, AbilityItemTemplate.getCooldown(abilityItem));
+                    AbilityItemManager.toggleAbility(abilityItem, toggle);
+                    CooldownManager.putOnCooldown(user, hotbarSlot, AbilityItemManager.getCooldown(abilityItem));
                     ongoingEffects.get(user.getUniqueId()).get("rapidShot").cancel();
                     ongoingEffects.get(user.getUniqueId()).remove("rapidShot");
-                    AbilityItemTemplate.toggleAbility(abilityItem, false);
+                    AbilityItemManager.toggleAbility(abilityItem, false);
 
                     new BukkitRunnable() {
                         int arrows = user.getMetadata("rapid shot arrows").getFirst().asInt();

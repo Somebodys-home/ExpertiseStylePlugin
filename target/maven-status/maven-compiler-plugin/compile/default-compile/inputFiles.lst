@@ -1,5 +1,6 @@
-C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\NoOne\expertiseStylePlugin\abilitySystem\AbilityItemTemplate.java
+C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\NoOne\expertiseStylePlugin\abilitySystem\AbilityItemManager.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\NoOne\expertiseStylePlugin\abilitySystem\AbilityListener.java
+C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\NoOne\expertiseStylePlugin\abilitySystem\AbilityPrerequisite.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\NoOne\expertiseStylePlugin\abilitySystem\cooldownSystem\CooldownInstance.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\NoOne\expertiseStylePlugin\abilitySystem\cooldownSystem\CooldownManager.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\NoOne\expertiseStylePlugin\abilitySystem\saveAbilitiesSystem\AbilityProfile.java
@@ -22,10 +23,10 @@ C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\m
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\NoOne\expertiseStylePlugin\expertiseSystem\cavalier\CavalierAbilityItems.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\NoOne\expertiseStylePlugin\expertiseSystem\cavalier\CavalierListener.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\NoOne\expertiseStylePlugin\expertiseSystem\cavalier\CavalierMenu.java
-C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\NoOne\expertiseStylePlugin\expertiseSystem\ExpertiseAbilityItemTemplate.java
+C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\NoOne\expertiseStylePlugin\expertiseSystem\ExpertiseAbilityItemCreator.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\NoOne\expertiseStylePlugin\expertiseSystem\ExpertiseManager.java
-C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\NoOne\expertiseStylePlugin\expertiseSystem\expertiseMenus\ChangeAbilityLoadoutMenu.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\NoOne\expertiseStylePlugin\expertiseSystem\expertiseMenus\ExpertiseConfirmMenu.java
+C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\NoOne\expertiseStylePlugin\expertiseSystem\expertiseMenus\ExpertiseLoadoutMenu.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\NoOne\expertiseStylePlugin\expertiseSystem\expertiseMenus\ExpertiseMenu.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\NoOne\expertiseStylePlugin\expertiseSystem\expertiseMenus\ExpertiseMenuItems.java
 C:\Users\hypix\OneDrive\Desktop\No Man's Land\plugins\ExpertiseStylePlugin\src\main\java\io\github\NoOne\expertiseStylePlugin\expertiseSystem\hallowed\HallowedAbilityEffects.java

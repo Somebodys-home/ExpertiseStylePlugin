@@ -67,7 +67,7 @@ public class ExpertiseMenu extends Menu {
             case 30 -> new PrimordialMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 32 -> new HallowedMenu(expertiseStylePlugin, playerMenuUtility).open();
             case 33 -> new AnnulledMenu(expertiseStylePlugin, playerMenuUtility).open();
-            case 44 -> new ChangeAbilityLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
+            case 44 -> new ExpertiseLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
         }
     }
 

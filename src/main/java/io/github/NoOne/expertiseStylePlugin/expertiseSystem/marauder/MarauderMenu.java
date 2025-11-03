@@ -1,6 +1,6 @@
 package io.github.NoOne.expertiseStylePlugin.expertiseSystem.marauder;
 
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemTemplate;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemManager;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.saveAbilitiesSystem.SelectedAbilities;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.expertiseMenus.ExpertiseConfirmMenu;
@@ -52,7 +52,7 @@ public class MarauderMenu extends Menu {
                 playerMenuUtility.getOwner().playSound(playerMenuUtility.getOwner(), Sound.BLOCK_NOTE_BLOCK_BASS, 2f, .5f);
                 return;
             }
-            if (selected.getItemMeta().getPersistentDataContainer().has(AbilityItemTemplate.getUnusableKey())) {
+            if (selected.getItemMeta().getPersistentDataContainer().has(AbilityItemManager.getUnusableKey())) {
                 playerMenuUtility.getOwner().sendMessage("§c⚠ §nYou are too inexperienced for this ability!§r§c ⚠");
                 playerMenuUtility.getOwner().playSound(playerMenuUtility.getOwner(), Sound.BLOCK_NOTE_BLOCK_BASS, 2f, .5f);
                 return;

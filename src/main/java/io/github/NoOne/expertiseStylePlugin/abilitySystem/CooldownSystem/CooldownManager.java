@@ -1,6 +1,6 @@
 package io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem;
 
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemTemplate;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemManager;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -40,7 +40,7 @@ public class CooldownManager {
                             it.remove();
                         } else {
                             // Still on cooldown: show cooldown item
-                            player.getInventory().setItem(ci.getHotbarSlot(), AbilityItemTemplate.cooldownItem());
+                            player.getInventory().setItem(ci.getHotbarSlot(), AbilityItemManager.cooldownItem());
                         }
                     }
                 }
@@ -73,7 +73,7 @@ public class CooldownManager {
                     .add(new CooldownInstance(hotbarSlot, cooldown, originalItem));
 
             // immediately swap the item out
-            player.getInventory().setItem(hotbarSlot, AbilityItemTemplate.cooldownItem());
+            player.getInventory().setItem(hotbarSlot, AbilityItemManager.cooldownItem());
         }
     }
 

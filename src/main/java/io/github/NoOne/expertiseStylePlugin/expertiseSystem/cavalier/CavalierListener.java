@@ -1,5 +1,6 @@
 package io.github.NoOne.expertiseStylePlugin.expertiseSystem.cavalier;
 
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemManager;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.UseAbilityEvent;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.saveAbilitiesSystem.SelectedManager;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;

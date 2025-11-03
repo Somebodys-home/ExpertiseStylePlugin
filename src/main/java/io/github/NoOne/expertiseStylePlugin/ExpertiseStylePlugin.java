@@ -1,6 +1,6 @@
 package io.github.NoOne.expertiseStylePlugin;
 
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemTemplate;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemManager;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityListener;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.CooldownManager;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.saveAbilitiesSystem.SelectedConfig;
@@ -13,7 +13,7 @@ import io.github.NoOne.expertiseStylePlugin.expertiseSystem.assassin.AssassinLis
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.cavalier.CavalierAbilityEffects;
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.cavalier.CavalierListener;
 import io.github.NoOne.expertiseStylePlugin.commands.ExpertiseCommand;
-import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemTemplate;
+import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemCreator;
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseManager;
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.hallowed.HallowedAbilityEffects;
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.hallowed.HallowedListener;
@@ -66,8 +66,8 @@ public final class ExpertiseStylePlugin extends JavaPlugin {
         cooldownManager = new CooldownManager(this);
         cooldownManager.start();
 
-        new AbilityItemTemplate(this);
-        new ExpertiseAbilityItemTemplate(this);
+        new AbilityItemManager(this);
+        new ExpertiseAbilityItemCreator(this);
         new ExpertiseManager(this);
         new SoldierAbilityEffects(this);
         new AssassinAbilityEffects(this);

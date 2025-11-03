@@ -1,7 +1,8 @@
 package io.github.NoOne.expertiseStylePlugin.expertiseSystem;
 
-import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemTemplate;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemManager;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityPrerequisite;
 import io.github.NoOne.nMLItems.ItemType;
 import io.github.NoOne.nMLSkills.skillSystem.Skills;
 import org.bukkit.Material;
@@ -16,11 +17,11 @@ import java.util.*;
 
 import static io.github.NoOne.nMLItems.ItemType.*;
 
-public class ExpertiseAbilityItemTemplate extends AbilityItemTemplate {
+public class ExpertiseAbilityItemCreator extends AbilityItemManager {
     private static ExpertiseStylePlugin expertiseStylePlugin;
     private static NamespacedKey expertiseKey;
 
-    public ExpertiseAbilityItemTemplate(ExpertiseStylePlugin expertiseStylePlugin) {
+    public ExpertiseAbilityItemCreator(ExpertiseStylePlugin expertiseStylePlugin) {
         super(expertiseStylePlugin);
         this.expertiseStylePlugin = expertiseStylePlugin;
         expertiseKey = new NamespacedKey(expertiseStylePlugin, "expertise");
@@ -32,7 +33,7 @@ public class ExpertiseAbilityItemTemplate extends AbilityItemTemplate {
         List<String> lore = new ArrayList<>();
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
 
-        pdc.set(AbilityItemTemplate.getAbilityKey(), PersistentDataType.INTEGER, 1);
+        pdc.set(AbilityItemManager.getAbilityKey(), PersistentDataType.INTEGER, 1);
         meta.setDisplayName("§dEmpty Expertise Ability");
         lore.add("§7An empty ability slot. Dunno why you'd put nothing here.");
         meta.setLore(lore);
@@ -41,9 +42,9 @@ public class ExpertiseAbilityItemTemplate extends AbilityItemTemplate {
         return expertise;
     }
 
-    public static ItemStack makeExpertiseAbilityItem(String name, Map<String, Integer> requirements, String description, boolean toggleable, String targeting,
+    public static ItemStack makeExpertiseAbilityItem(String name, Map<String, Integer> skillRequirements, String description, List<AbilityPrerequisite> prerequisites, boolean toggleable, String targeting,
                                                      int range, int duration, int cooldown, int cost, List<String> damage, List<String> effects, List<ItemType> weapons,
-                                                    Skills playerSkills) {
+                                                     Skills playerSkills) {
 
         ItemStack expertiseItem = new ItemStack(Material.BARRIER);
         String color = "";
@@ -53,16 +54,16 @@ public class ExpertiseAbilityItemTemplate extends AbilityItemTemplate {
 
         // setting keys
         pdc.set(expertiseKey, PersistentDataType.INTEGER, 1);
-        pdc.set(AbilityItemTemplate.getAbilityKey(), PersistentDataType.INTEGER, 1);
-        pdc.set(AbilityItemTemplate.getCooldownKey(), PersistentDataType.INTEGER, cooldown);
-        pdc.set(AbilityItemTemplate.getEnergyKey(), PersistentDataType.INTEGER, cost);
+        pdc.set(AbilityItemManager.getAbilityKey(), PersistentDataType.INTEGER, 1);
+        pdc.set(AbilityItemManager.getCooldownKey(), PersistentDataType.INTEGER, cooldown);
+        pdc.set(AbilityItemManager.getEnergyKey(), PersistentDataType.INTEGER, cost);
 
-        for (Map.Entry<String, Integer> entry : requirements.entrySet()) {
+        for (Map.Entry<String, Integer> entry : skillRequirements.entrySet()) {
             pdc.set(new NamespacedKey(expertiseStylePlugin, entry.getKey()), PersistentDataType.INTEGER, entry.getValue());
         }
 
-        // color and itemstack of ability
-        switch (requirements.entrySet().iterator().next().getKey()) {
+        // color and item of ability
+        switch (skillRequirements.entrySet().iterator().next().getKey()) {
             case "soldier" -> {
                 expertiseItem = new ItemStack(Material.DIAMOND_SWORD);
                 color = "§c";
@@ -114,8 +115,8 @@ public class ExpertiseAbilityItemTemplate extends AbilityItemTemplate {
 
         meta.setDisplayName(color + "§l" + name);
 
-        // requirements
-        for (Map.Entry<String, Integer> requirementEntry : requirements.entrySet()) {
+        // skill requirements
+        for (Map.Entry<String, Integer> requirementEntry : skillRequirements.entrySet()) {
             String string = requirementEntry.getKey();
 
             if (Objects.equals(string, "shieldhero")) string = "Shield Hero";
@@ -123,11 +124,11 @@ public class ExpertiseAbilityItemTemplate extends AbilityItemTemplate {
 
             String requirementString = "§8Lv. " + requirementEntry.getValue() + " " + string.substring(0, 1).toUpperCase() + string.substring(1);
 
-            if (AbilityItemTemplate.meetsRequirement(playerSkills, string, requirementEntry.getValue())) {
+            if (AbilityItemManager.meetsSkillRequirement(playerSkills, string, requirementEntry.getValue())) {
                 requirementString += " §a✔";
             } else {
                 requirementString += " §c✖";
-                pdc.set(AbilityItemTemplate.getUnusableKey(), PersistentDataType.BOOLEAN, true);
+                pdc.set(AbilityItemManager.getUnusableKey(), PersistentDataType.BOOLEAN, true);
             }
 
             lore.add(requirementString);
@@ -136,13 +137,30 @@ public class ExpertiseAbilityItemTemplate extends AbilityItemTemplate {
 
         // description
         for (String line : linebreak(description, 33)) lore.add("§7" + line);
+
         lore.add("");
 
-        // misc stats
+        // prerequisites
+        if (prerequisites != null) {
+            lore.add("§c§nPrerequisites:");
+
+            for (AbilityPrerequisite abilityPrerequisite : prerequisites) {
+                switch (abilityPrerequisite) {
+                    case GROUNDED -> {
+                        lore.add("§c- Grounded");
+                        pdc.set(AbilityItemManager.getGroundedKey(), PersistentDataType.BOOLEAN, true);
+                    }
+                }
+            }
+
+            lore.add("");
+        }
+
+        // info
         if (toggleable) {
             lore.add("§fTarget: §9" + targeting + ", Toggle");
-            pdc.set(AbilityItemTemplate.getToggleKey(), PersistentDataType.BOOLEAN, false);
-            pdc.set(AbilityItemTemplate.getOriginalItemKey(), PersistentDataType.STRING, expertiseItem.getType().toString());
+            pdc.set(AbilityItemManager.getToggleKey(), PersistentDataType.BOOLEAN, false);
+            pdc.set(AbilityItemManager.getOriginalItemKey(), PersistentDataType.STRING, expertiseItem.getType().toString());
         } else {
             lore.add("§fTarget: §9" + targeting);
         }
