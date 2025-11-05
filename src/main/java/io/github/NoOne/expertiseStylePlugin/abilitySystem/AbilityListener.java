@@ -50,7 +50,7 @@ public class AbilityListener implements Listener {
             if (abilityItem.isSimilar(AbilityItemManager.cooldownItem()) || abilityItem.isSimilar(AbilityItemManager.emptyStyleAbilityItem()) ||
                 abilityItem.isSimilar(ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem())) return;
 
-            if (!AbilityItemManager.meetsPrerequisites(player, abilityItem)) {
+            if (AbilityItemManager.hasPrerequisites(abilityItem) && !AbilityItemManager.meetsPrerequisites(player, abilityItem)) {
                 player.sendMessage("§c⚠ §nRequirements not met!§r§c ⚠");
                 return;
             }

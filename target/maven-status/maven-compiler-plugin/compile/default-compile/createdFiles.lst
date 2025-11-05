@@ -77,6 +77,7 @@ io\github\NoOne\expertiseStylePlugin\expertiseSystem\shieldHero\ShieldHeroAbilit
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\cavalier\CavalierMenu.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\hallowed\HallowedMenu.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\martialArtist\MartialArtistAbilityEffects$9$1$1.class
+io\github\NoOne\expertiseStylePlugin\expertiseSystem\sorcerer\SorcererAbilityItems$2.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\martialArtist\MartialArtistAbilityEffects$1.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\marksman\MarksmanAbilityItems.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\martialArtist\MartialArtistAbilityEffects$8$1.class
@@ -105,6 +106,7 @@ io\github\NoOne\expertiseStylePlugin\expertiseSystem\annulled\AnnulledListener.c
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\shieldHero\ShieldHeroAbilityItems$1.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\martialArtist\MartialArtistAbilityEffects$5$1.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\assassin\AssassinMenu.class
+io\github\NoOne\expertiseStylePlugin\expertiseSystem\sorcerer\SorcererAbilityEffects$2.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\expertiseMenus\ExpertiseLoadoutMenu.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\martialArtist\MartialArtistAbilityEffects$9$1.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\primordial\PrimordialAbilityItems$1.class
@@ -124,6 +126,7 @@ io\github\NoOne\expertiseStylePlugin\expertiseSystem\martialArtist\MartialArtist
 io\github\NoOne\expertiseStylePlugin\abilitySystem\AbilityItemManager.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\shieldHero\ShieldHeroAbilityItems.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\hallowed\HallowedAbilityEffects$1$1.class
+io\github\NoOne\expertiseStylePlugin\expertiseSystem\sorcerer\SorcererAbilityEffects$3.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\martialArtist\MartialArtistAbilityEffects$8$1$1.class
 io\github\NoOne\expertiseStylePlugin\abilitySystem\saveAbilitiesSystem\SelectedListener.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\martialArtist\MartialArtistAbilityEffects$2.class

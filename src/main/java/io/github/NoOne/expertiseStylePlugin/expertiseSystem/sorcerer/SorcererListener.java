@@ -29,6 +29,7 @@ public class SorcererListener implements Listener {
             if (Arrays.asList(selectedAbilities).contains(abilityName)) {
                 switch (abilityName) {
                     case "§6§lMagic Missile EX" -> SorcererAbilityEffects.magicMissileEX(player, hotbarSlot);
+                    case "§6§lDragon's Breath" -> SorcererAbilityEffects.dragonsBreath(player, hotbarSlot);
                 }
             }
         }

@@ -1,6 +1,7 @@
 package io.github.NoOne.expertiseStylePlugin.expertiseSystem.expertiseMenus;
 
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemManager;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.CooldownManager;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.saveAbilitiesSystem.SelectedAbilities;
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemCreator;
@@ -78,6 +79,7 @@ public class ExpertiseLoadoutMenu extends Menu {
         } else if (slot == 22) { // resetting abilities
             if (event.getClick() == ClickType.SHIFT_RIGHT) {
                 CooldownManager.resetAllCooldowns(player);
+                player.getInventory().setItem(0, AbilityItemManager.emptyStyleAbilityItem());
                 player.getInventory().setItem(1, ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem());
                 player.getInventory().setItem(2, ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem());
                 player.getInventory().setItem(3, ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem());

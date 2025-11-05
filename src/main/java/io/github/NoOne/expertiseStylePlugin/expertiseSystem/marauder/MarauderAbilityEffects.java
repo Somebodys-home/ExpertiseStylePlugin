@@ -45,6 +45,7 @@ public class MarauderAbilityEffects {
 
             @Override
             public void run() {
+                tornadoTicks--;
 
                 // tiny dash
                 Vector knockback = user.getLocation().getDirection().multiply(.5);
@@ -82,16 +83,12 @@ public class MarauderAbilityEffects {
 
                 if (tornadoTicks % 3 == 0) user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, .5f);
 
-                if (tornadoTicks % 5 == 0) {
-                    for (Entity entity : user.getWorld().getNearbyEntities(user.getLocation(), 2.25, 2, 2.25)) {
-                        if (entity instanceof LivingEntity livingEntity && !entity.equals(user)) {
-                            Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
-                            livingEntity.setNoDamageTicks(5);
-                        }
+                for (Entity entity : user.getWorld().getNearbyEntities(user.getLocation(), 2.25, 2, 2.25)) {
+                    if (entity instanceof LivingEntity livingEntity && !entity.equals(user)) {
+                        Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats, 5));
                     }
                 }
 
-                tornadoTicks--;
                 if (tornadoTicks == 0) {
                     this.cancel();
                     user.removeMetadata("using ability", expertiseStylePlugin);

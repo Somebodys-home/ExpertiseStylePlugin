@@ -70,6 +70,7 @@ public class SorcererMenu extends Menu {
     @Override
     public void setMenuItems() {
         inventory.setItem(10, SorcererAbilityItems.magicMissileEX(skills));
+        inventory.setItem(11, SorcererAbilityItems.dragonsBreath(skills));
 
         // Backout button
         ItemStack nvm = new ItemStack(Material.BARRIER);

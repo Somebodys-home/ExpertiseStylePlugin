@@ -28,9 +28,28 @@ public class SorcererAbilityItems extends AbilityItemManager {
                 16,
                 0,
                 8,
-                20,
+                15,
                 List.of("§f§n50%" + "§r§f" + " Weapon Damage \uD83D\uDDE1 §7§o(per missile)"),
                 null,
                 List.of(WAND, STAFF, CATALYST), skills);
+    }
+
+    public static ItemStack dragonsBreath(Skills skills) {
+        return ExpertiseAbilityItemCreator.makeExpertiseAbilityItem(
+                "Dragon's Breath",
+                new HashMap<>() {{
+                    put("sorcerer", 15);
+                }},
+                "Spew a cone of flames, kinda like you ate some really spicy curry",
+                null,
+                false,
+                "Area",
+                12,
+                5,
+                20,
+                25,
+                List.of("§c§n.25x§r§c Fire Damage 🔥 §7§o(every .25s)"),
+                null,
+                List.of(WAND, STAFF), skills);
     }
 }

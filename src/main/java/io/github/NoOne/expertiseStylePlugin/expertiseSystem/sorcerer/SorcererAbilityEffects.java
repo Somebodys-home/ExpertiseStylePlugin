@@ -7,14 +7,13 @@ import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.Cooldow
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
@@ -36,7 +35,7 @@ public class SorcererAbilityEffects {
         HashMap<DamageType, Double> damage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
                 profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .5);
 
-        EnergyManager.useEnergy(user, 20);
+        EnergyManager.useEnergy(user, 15);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 2.5, hotbarSlot);
 
         new BukkitRunnable() {
@@ -164,5 +163,114 @@ public class SorcererAbilityEffects {
                 if (missiles == 5) cancel();
             }
         }.runTaskTimer(expertiseStylePlugin, 0L, 5L);
+    }
+
+    public static void dragonsBreath(Player user, int hotbarSlot) {
+        user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
+
+        HashMap<DamageType, Double> fire = DamageConverter.multiplyDamageMap(
+                DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "firedamage"), .25);
+        int chargeUpTime = 40;
+        HashSet<UUID> hitEntityUUIDs = new HashSet<>();
+
+        CooldownManager.putAllOtherAbilitiesOnCooldown(user, 6, hotbarSlot);
+        EnergyManager.useEnergy(user, 25);
+        user.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, chargeUpTime, 10, false, false, false));
+        user.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, chargeUpTime, 255, false, false, false));
+
+        /// charge up
+        new BukkitRunnable() {
+            int timer = chargeUpTime;
+
+            @Override
+            public void run() {
+                timer--;
+
+                Location userLocation = user.getLocation().add(0, 1.65, 0);
+                Vector forward = userLocation.getDirection().normalize();
+                Location baseLocation = userLocation.clone().add(forward.clone().multiply(1.5));
+                int particleCount = 5;
+                double radius = Math.max((double) timer / 40, .3);
+                Vector right = forward.clone().crossProduct(new Vector(0, 1, 0)).normalize(); // orthogonal basis vector
+                Vector up = right.clone().crossProduct(forward).normalize(); // orthogonal basis vector
+
+                for (int i = 0; i < particleCount; i++) {
+                    double angle = 2 * Math.PI * i / particleCount + ((chargeUpTime - timer) * .02);
+
+                    Vector offset = up.clone().multiply(Math.cos(angle)).add(right.clone().multiply(Math.sin(angle))).multiply(radius);
+                    Location particleLocation = baseLocation.clone().add(offset);
+
+                    user.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, particleLocation, 0);
+                }
+
+                if (timer != 0 && timer % 13 == 0) user.playSound(user, Sound.ITEM_FLINTANDSTEEL_USE, 2f, 1f);
+                if (timer == 0) {
+                    cancel();
+                    user.playSound(user, Sound.ITEM_ELYTRA_FLYING, 2f, .5f);
+                }
+            }
+        }.runTaskTimer(expertiseStylePlugin, 0L, 1L);
+
+
+        /// dragon's breath
+        new BukkitRunnable() {
+            int timer = 0;
+
+            @Override
+            public void run() {
+                timer++;
+
+                /// flamethrower
+                Location userLocation = user.getLocation().add(0, 1.65, 0);
+                Vector forward = userLocation.getDirection().normalize();
+                Location baseLocation = userLocation.clone().add(forward.clone().multiply(1.3));
+                Vector playerDirection = user.getLocation().getDirection();
+                Vector particleVector = playerDirection.clone();
+
+                playerDirection.multiply(5); // length
+                particleVector.divide(new Vector(3, 3, 3)); // Divide it by 2 to shorten length
+
+                Location particleLocation = particleVector.toLocation(user.getWorld()).add(baseLocation);
+
+                for (int i = 0; i < 12; i++) { // Amount of fire
+                    Vector particlePath = playerDirection.clone();
+
+                    particlePath.add(new Vector(Math.random() - Math.random(), Math.random() - Math.random(), Math.random() - Math.random()));
+
+                    Location offsetLocation = particlePath.toLocation(user.getWorld());
+
+                    user.getWorld().spawnParticle(Particle.FLAME, particleLocation, 0, offsetLocation.getX() * 1.5, offsetLocation.getY() * 1.5, offsetLocation.getZ() * 1.5, 0.1);
+                }
+
+                // damage
+                Location eyeLoc = user.getEyeLocation();
+                Vector direction = eyeLoc.getDirection().normalize();
+
+                for (double d = 0; d <= 12; d += .5) {
+                    Location checkLoc = eyeLoc.clone().add(direction.clone().multiply(d));
+                    Collection<Entity> nearby = checkLoc.getWorld().getNearbyEntities(checkLoc, 1, 1, 1);
+
+                    for (Entity entity : nearby) {
+                        if (entity instanceof LivingEntity livingEntity && entity != user) {
+                            hitEntityUUIDs.add(livingEntity.getUniqueId());
+                        }
+                    }
+                }
+
+                for (UUID uuid : hitEntityUUIDs) {
+                    LivingEntity livingEntity = (LivingEntity) Bukkit.getEntity(uuid);
+                    Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, fire, 5));
+                }
+
+                hitEntityUUIDs.clear();
+
+                if (timer == 80) {
+                    user.removeMetadata("using ability", expertiseStylePlugin);
+                    user.stopSound(Sound.ITEM_ELYTRA_FLYING);
+                    user.playSound(user, Sound.BLOCK_FIRE_EXTINGUISH, .5f, 1f);
+                    cancel();
+                }
+            }
+        }.runTaskTimer(expertiseStylePlugin, chargeUpTime, 1);
     }
 }

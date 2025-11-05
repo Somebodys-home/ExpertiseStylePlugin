@@ -150,20 +150,17 @@ public class HallowedAbilityEffects {
                 }
 
                 // damage
-                if (!hitPlayer && ticks % 5 == 0) {
-                    for (Entity entity : user.getWorld().getNearbyEntities(center, 4, .5, 4)) {
-                        if (entity instanceof LivingEntity livingEntity && entity != user) {
-                            hitEntityUUIDs.add(livingEntity.getUniqueId());
-                        }
+                for (Entity entity : user.getWorld().getNearbyEntities(center, 4, .5, 4)) {
+                    if (entity instanceof LivingEntity livingEntity && entity != user) {
+                        hitEntityUUIDs.add(livingEntity.getUniqueId());
                     }
-
-                    for (UUID uuid : hitEntityUUIDs) {
-                        Bukkit.getPluginManager().callEvent(new CustomDamageEvent((LivingEntity) Bukkit.getEntity(uuid), user, totalDamage));
-                        ((LivingEntity) Bukkit.getEntity(uuid)).setNoDamageTicks(5);
-                    }
-
-                    hitEntityUUIDs.clear();
                 }
+
+                for (UUID uuid : hitEntityUUIDs) {
+                    Bukkit.getPluginManager().callEvent(new CustomDamageEvent((LivingEntity) Bukkit.getEntity(uuid), user, totalDamage, 5));
+                }
+
+                hitEntityUUIDs.clear();
             }
         }.runTaskTimer(expertiseStylePlugin, 0L, 1L);
     }

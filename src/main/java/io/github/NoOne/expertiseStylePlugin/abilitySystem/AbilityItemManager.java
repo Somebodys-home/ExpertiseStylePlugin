@@ -106,6 +106,21 @@ public class AbilityItemManager {
         return playerSkillLevel >= levelRequirement;
     }
 
+    public static boolean hasPrerequisites(ItemStack item) {
+        PersistentDataContainer persistentDataContainer = item.getItemMeta().getPersistentDataContainer();
+        boolean has = false;
+
+        for (NamespacedKey namespacedKey : persistentDataContainer.getKeys()) {
+            if (namespacedKey == groundedKey) {
+                has = true;
+            }
+
+            if (has) break;
+        }
+
+        return has;
+    }
+
     public static boolean meetsPrerequisites(Player player, ItemStack item) {
         PersistentDataContainer persistentDataContainer = item.getItemMeta().getPersistentDataContainer();
         ArrayList<NamespacedKey> prerequisiteKeys = new ArrayList<>();
