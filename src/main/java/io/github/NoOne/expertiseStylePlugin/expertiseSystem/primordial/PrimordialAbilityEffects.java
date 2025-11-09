@@ -3,6 +3,7 @@ package io.github.NoOne.expertiseStylePlugin.expertiseSystem.primordial;
 import io.github.NoOne.damagePlugin.customDamage.CustomDamageEvent;
 import io.github.NoOne.damagePlugin.customDamage.DamageConverter;
 import io.github.NoOne.damagePlugin.customDamage.DamageType;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityEffects;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.CooldownManager;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
@@ -245,7 +246,7 @@ public class PrimordialAbilityEffects {
         totalDamage.remove("airdamage");
         totalDamage.putAll(airDamage);
 
-        EnergyManager.useEnergy(user, 1);
+        EnergyManager.useEnergy(user, 15);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 2, hotbarSlot);
         user.playSound(user, Sound.ENTITY_BREEZE_JUMP, 1f, 1f);
 
@@ -267,19 +268,7 @@ public class PrimordialAbilityEffects {
                 Vector forward = userLocation.getDirection().normalize().multiply(2.25);
                 Location center = userLocation.clone().add(forward);
 
-                for (double i = 0; i <= Math.PI; i += Math.PI / particleCircles) { // vertical circles
-                    double radius = Math.sin(i) / 1.5;
-                    double y = Math.cos(i) / 1.5;
-
-                    for (double a = 0; a < Math.PI * 2; a+= Math.PI / particleCircles) { // horizontal circles
-                        double x = Math.cos(a) * radius;
-                        double z = Math.sin(a) * radius;
-                        Location particleLocation = center.clone().add(x, y, z);
-
-                        user.getWorld().spawnParticle(Particle.DUST, particleLocation, 1, 0, 0, 0, air);
-                        particleLocation.subtract(x, y, z); // reset location
-                    }
-                }
+                AbilityEffects.dustSphere(air, center, .75, particleCircles);
 
                 /// air ball
                 if (timer == 20) {
@@ -305,19 +294,7 @@ public class PrimordialAbilityEffects {
 
                              center.add(velocity);
 
-                            for (double i = 0; i <= Math.PI; i += Math.PI / particleCircles) { // vertical circles
-                                double radius = Math.sin(i) / 1.5;
-                                double y = Math.cos(i) / 1.5;
-
-                                for (double a = 0; a < Math.PI * 2; a+= Math.PI / particleCircles) { // horizontal circles
-                                    double x = Math.cos(a) * radius;
-                                    double z = Math.sin(a) * radius;
-                                    Location particleLocation = center.clone().add(x, y, z);
-
-                                    user.getWorld().spawnParticle(Particle.DUST, particleLocation, 1, 0, 0, 0, air);
-                                    particleLocation.subtract(x, y, z); // reset location
-                                }
-                            }
+                            AbilityEffects.dustSphere(air, center, .75, particleCircles);
 
                             // triggering air ball
                             Collection<Entity> triggeringEntities = user.getWorld().getNearbyEntities(center, 1, 1, 1);
@@ -329,22 +306,8 @@ public class PrimordialAbilityEffects {
 
                                 user.getWorld().playSound(center, Sound.ENTITY_BREEZE_WIND_BURST, 2f, 1f);
                                 user.getWorld().playSound(center, Sound.ENTITY_GENERIC_EXPLODE, .5f, 1f);
-
-                                for (double i = 0; i <= Math.PI; i += Math.PI / 45) { // vertical circles
-                                    double radius = Math.sin(i) * 6;
-                                    double y = Math.cos(i) * 6;
-
-                                    for (double a = 0; a < Math.PI * 2; a+= Math.PI / 45) { // horizontal circles
-                                        double x = Math.cos(a) * radius;
-                                        double z = Math.sin(a) * radius;
-                                        Location particleLocation = center.clone().add(x, y, z);
-                                        Vector velocity = particleLocation.toVector().subtract(center.toVector()).normalize().multiply(.3);
-
-                                        user.getWorld().spawnParticle(Particle.SNOWFLAKE, particleLocation, 0, velocity.getX(), velocity.getY(), velocity.getZ());
-                                        user.getWorld().spawnParticle(Particle.DUST, particleLocation, 0, velocity.getX(), velocity.getY(), velocity.getZ(), 7, air);
-                                        particleLocation.subtract(x, y, z); // reset location
-                                    }
-                                }
+                                AbilityEffects.expandingParticleSphere(Particle.SNOWFLAKE, center, 6, 45, .3);
+                                AbilityEffects.dustSphere(air, center, 6, 45);
 
                                 // damage
                                 for (Entity entity : user.getWorld().getNearbyEntities(center, 6, 6, 6)) {

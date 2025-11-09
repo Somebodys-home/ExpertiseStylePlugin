@@ -85,6 +85,7 @@ io\github\NoOne\expertiseStylePlugin\expertiseSystem\marksman\MarksmanAbilityIte
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\martialArtist\MartialArtistAbilityEffects$8$1.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\hallowed\HallowedListener.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\soldier\SoldierAbilityItems.class
+io\github\NoOne\expertiseStylePlugin\abilitySystem\AbilityEffects.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\primordial\PrimordialAbilityItems.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\assassin\AssassinListener.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\martialArtist\MartialArtistAbilityEffects$4.class

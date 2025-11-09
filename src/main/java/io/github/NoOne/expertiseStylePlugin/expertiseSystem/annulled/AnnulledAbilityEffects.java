@@ -3,6 +3,7 @@ package io.github.NoOne.expertiseStylePlugin.expertiseSystem.annulled;
 import io.github.NoOne.damagePlugin.customDamage.CustomDamageEvent;
 import io.github.NoOne.damagePlugin.customDamage.DamageConverter;
 import io.github.NoOne.damagePlugin.customDamage.DamageType;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityEffects;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.CooldownManager;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
@@ -30,6 +31,7 @@ public class AnnulledAbilityEffects {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
         HashSet<UUID> hitEntityUUIDs = new HashSet<>();
+        Particle.DustOptions blackHole = new Particle.DustOptions(Color.fromRGB(0, 0, 0), 1F);
         HashMap<DamageType, Double> darkDamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(
                 profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "necroticdamage"), 5) ;
 
@@ -48,27 +50,14 @@ public class AnnulledAbilityEffects {
 
                 center.add(velocity);
 
-                // tiny black hole
-                for (double i = 0; i <= Math.PI; i += Math.PI / 5) { // vertical circles
-                    double radius = Math.sin(i) / 2; // .5 block
-                    double y = Math.cos(i) / 2; // .5 block
+                /// tiny black hole
+                AbilityEffects.dustSphere(blackHole, center, .5, 7);
 
-                    for (double a = 0; a < Math.PI * 2; a+= Math.PI / 5) { // horizontal circles
-                        double x = Math.cos(a) * radius;
-                        double z = Math.sin(a) * radius;
-                        Location particleLocation = center.clone().add(x, y, z);
-                        Particle.DustOptions black = new Particle.DustOptions(Color.fromRGB(0, 0, 0), 1.0F);
-
-                        user.getWorld().spawnParticle(Particle.DUST, particleLocation, 1, 0, 0, 0, black);
-                        particleLocation.subtract(x, y, z); // reset location
-                    }
-                }
-
-                // triggering big black hole
+                /// triggering big black hole
                 Collection<Entity> triggeringEntities = user.getWorld().getNearbyEntities(center, .5, .5, .5);
                 triggeringEntities.remove(user);
 
-                // big / collapsing black hole
+                /// big / collapsing black hole
                 if (duration == 100 || !center.getBlock().isPassable() || !triggeringEntities.isEmpty()) {
                     cancel();
                     user.playSound(user, Sound.ITEM_ELYTRA_FLYING, 2f, 1f);
@@ -85,6 +74,7 @@ public class AnnulledAbilityEffects {
                         public void run() {
                             duration++;
 
+                            // size changing
                             if (duration < 100 && size < 8) {
                                 size = Math.min(8, size + 2.5);
                             } else if (duration == 100) {
@@ -100,7 +90,6 @@ public class AnnulledAbilityEffects {
 
                             particleStep = Math.PI / (size * 2);
 
-                            // big black hole
                             for (double i = 0; i <= Math.PI; i += particleStep) {
                                 for (double a = 0; a < Math.PI * 2; a+= particleStep) {
                                     double x = Math.cos(a) * Math.sin(i) * size;
@@ -141,15 +130,15 @@ public class AnnulledAbilityEffects {
                                         Location particleLocation = center.clone().add(x, y, z);
                                         Vector velocity = particleLocation.toVector().subtract(center.toVector()).normalize().multiply(0.3);
 
-                                        if (Math.random() < .3) { // random chance to spawn explosion for every expanding particle
+                                        if (Math.random() < .004) { // random chance to spawn explosion for every expanding particle
                                             double finalA = a;
                                             double finalI = i;
                                             new BukkitRunnable() {
                                                 @Override
                                                 public void run() {
-                                                    double explosionX = Math.cos(finalA) * explosionRadius;
-                                                    double explosionY = Math.cos(finalI) * explosionRadius;
-                                                    double explosionZ = Math.sin(finalA) * explosionRadius;
+                                                    double explosionX = Math.cos(finalA) * explosionRadius * 1.15;
+                                                    double explosionY = Math.cos(finalI) * explosionRadius * 1.15;
+                                                    double explosionZ = Math.sin(finalA) * explosionRadius * 1.15;
                                                     Location explosionLocation = center.clone().add(explosionX, explosionY, explosionZ);
 
                                                     user.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, explosionLocation, 1);

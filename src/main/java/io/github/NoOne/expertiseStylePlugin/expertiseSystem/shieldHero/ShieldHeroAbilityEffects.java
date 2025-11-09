@@ -1,5 +1,6 @@
 package io.github.NoOne.expertiseStylePlugin.expertiseSystem.shieldHero;
 
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityEffects;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.CooldownManager;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
@@ -12,7 +13,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 public class ShieldHeroAbilityEffects {
     private static ExpertiseStylePlugin expertiseStylePlugin;
@@ -40,7 +40,7 @@ public class ShieldHeroAbilityEffects {
             public void run() {
                 timer++;
 
-                // particles
+                /// charge up
                 double radius = 5 * (1 - (timer / 30.0));
                 int particleCount = 75;
                 Location base = user.getLocation().clone().add(0, 0.5, 0);
@@ -58,23 +58,9 @@ public class ShieldHeroAbilityEffects {
                     user.playSound(user, Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 1f, 1f);
                 }
 
+                /// explosion
                 if (timer == 30) {
-                    // particle sphere
-                    for (double i = 0; i <= Math.PI; i += Math.PI / 30) { // vertical circles
-                        double rad = Math.sin(i);
-                        double y = Math.cos(i);
-
-                        for (double a = 0; a < Math.PI * 2; a+= Math.PI / 30) { // horizontal circles
-                            double x = Math.cos(a) * rad;
-                            double z = Math.sin(a) * rad;
-                            Location particleLocation = user.getLocation().add(x, y, z);
-                            Vector velocity = particleLocation.toVector().subtract(user.getLocation().toVector()).normalize().multiply(0.3);
-
-                            user.getWorld().spawnParticle(Particle.END_ROD, particleLocation,0, velocity.getX(), velocity.getY(), velocity.getZ(), 3);
-                            particleLocation.subtract(x, y, z); // reset location
-                        }
-                    }
-
+                    AbilityEffects.expandingParticleSphere(Particle.END_ROD, user.getLocation(), 4, 30, .3);
                     user.playSound(user, Sound.ITEM_TOTEM_USE, 1f, 1f);
                     guardingSystem.fullyRegenerateGuard(user);
                     user.removeMetadata("using ability", expertiseStylePlugin);
