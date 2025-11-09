@@ -233,6 +233,168 @@ public class PrimordialAbilityEffects {
         user.removeMetadata("using ability", expertiseStylePlugin);
     }
 
+    public static void airBall(Player user, int hotbarSlot) {
+        user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
+        user.setMetadata("falling", new FixedMetadataValue(expertiseStylePlugin, true));
+
+        HashSet<UUID> hitEntityUUIDs = new HashSet<>();
+        Particle.DustOptions air = new Particle.DustOptions(Color.fromRGB(255, 255, 255), 1.0F);
+        HashMap<DamageType, Double> airDamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "airdamage"), 2.5);
+        HashMap<DamageType, Double> totalDamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .5);
+
+        totalDamage.remove("airdamage");
+        totalDamage.putAll(airDamage);
+
+        EnergyManager.useEnergy(user, 1);
+        CooldownManager.putAllOtherAbilitiesOnCooldown(user, 2, hotbarSlot);
+        user.playSound(user, Sound.ENTITY_BREEZE_JUMP, 1f, 1f);
+
+        /// jump
+        Vector jump = user.getLocation().getDirection().multiply(3);
+        jump.setY(1.15);
+        user.setVelocity(jump);
+
+        /// charge air ball
+        new BukkitRunnable() {
+            int timer = 0;
+
+            @Override
+            public void run() {
+                timer++;
+
+                int particleCircles = 6;
+                Location userLocation = user.getLocation().clone().add(0, 1, 0);
+                Vector forward = userLocation.getDirection().normalize().multiply(2.25);
+                Location center = userLocation.clone().add(forward);
+
+                for (double i = 0; i <= Math.PI; i += Math.PI / particleCircles) { // vertical circles
+                    double radius = Math.sin(i) / 1.5;
+                    double y = Math.cos(i) / 1.5;
+
+                    for (double a = 0; a < Math.PI * 2; a+= Math.PI / particleCircles) { // horizontal circles
+                        double x = Math.cos(a) * radius;
+                        double z = Math.sin(a) * radius;
+                        Location particleLocation = center.clone().add(x, y, z);
+
+                        user.getWorld().spawnParticle(Particle.DUST, particleLocation, 1, 0, 0, 0, air);
+                        particleLocation.subtract(x, y, z); // reset location
+                    }
+                }
+
+                /// air ball
+                if (timer == 20) {
+                    cancel();
+                    user.playSound(user, Sound.ENTITY_BREEZE_SHOOT, 1f, 1f);
+
+                    // recoil
+                    Vector recoil = user.getLocation().getDirection().normalize().multiply(-1.25);
+
+                    recoil.setY(recoil.getY() * .55);
+                    jump.multiply(.3);
+                    jump.setY(0);
+                    user.setVelocity(jump.add(recoil));
+                    user.removeMetadata("using ability", expertiseStylePlugin);
+
+                    new BukkitRunnable() {
+                        int duration = 0;
+                        Vector velocity = user.getLocation().getDirection().normalize().multiply(.33);
+
+                        @Override
+                        public void run() {
+                            duration++;
+
+                             center.add(velocity);
+
+                            for (double i = 0; i <= Math.PI; i += Math.PI / particleCircles) { // vertical circles
+                                double radius = Math.sin(i) / 1.5;
+                                double y = Math.cos(i) / 1.5;
+
+                                for (double a = 0; a < Math.PI * 2; a+= Math.PI / particleCircles) { // horizontal circles
+                                    double x = Math.cos(a) * radius;
+                                    double z = Math.sin(a) * radius;
+                                    Location particleLocation = center.clone().add(x, y, z);
+
+                                    user.getWorld().spawnParticle(Particle.DUST, particleLocation, 1, 0, 0, 0, air);
+                                    particleLocation.subtract(x, y, z); // reset location
+                                }
+                            }
+
+                            // triggering air ball
+                            Collection<Entity> triggeringEntities = user.getWorld().getNearbyEntities(center, 1, 1, 1);
+                            triggeringEntities.remove(user);
+
+                            /// explosion
+                            if (duration == 20 || !center.getBlock().isPassable() || !triggeringEntities.isEmpty()) {
+                                cancel();
+
+                                user.getWorld().playSound(center, Sound.ENTITY_BREEZE_WIND_BURST, 2f, 1f);
+                                user.getWorld().playSound(center, Sound.ENTITY_GENERIC_EXPLODE, .5f, 1f);
+
+                                for (double i = 0; i <= Math.PI; i += Math.PI / 45) { // vertical circles
+                                    double radius = Math.sin(i) * 6;
+                                    double y = Math.cos(i) * 6;
+
+                                    for (double a = 0; a < Math.PI * 2; a+= Math.PI / 45) { // horizontal circles
+                                        double x = Math.cos(a) * radius;
+                                        double z = Math.sin(a) * radius;
+                                        Location particleLocation = center.clone().add(x, y, z);
+                                        Vector velocity = particleLocation.toVector().subtract(center.toVector()).normalize().multiply(.3);
+
+                                        user.getWorld().spawnParticle(Particle.SNOWFLAKE, particleLocation, 0, velocity.getX(), velocity.getY(), velocity.getZ());
+                                        user.getWorld().spawnParticle(Particle.DUST, particleLocation, 0, velocity.getX(), velocity.getY(), velocity.getZ(), 7, air);
+                                        particleLocation.subtract(x, y, z); // reset location
+                                    }
+                                }
+
+                                // damage
+                                for (Entity entity : user.getWorld().getNearbyEntities(center, 6, 6, 6)) {
+                                    if (entity instanceof LivingEntity livingEntity && entity != user) {
+                                        hitEntityUUIDs.add(livingEntity.getUniqueId());
+                                    }
+                                }
+
+                                if (!hitEntityUUIDs.isEmpty()) {
+                                    user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
+
+                                    for (UUID uuid : hitEntityUUIDs) {
+                                        LivingEntity livingEntity = (LivingEntity) Bukkit.getEntity(uuid);
+                                        Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, totalDamage));
+
+                                        // knockback
+                                        Vector direction = livingEntity.getLocation().toVector().subtract(center.toVector()).normalize();
+                                        Vector knockback = direction.multiply(1.5);
+                                        knockback.setY(.5);
+                                        livingEntity.setVelocity(knockback);
+                                    }
+
+                                    user.removeMetadata("using ability", expertiseStylePlugin);
+                                }
+
+                            }
+                        }
+                    }.runTaskTimer(expertiseStylePlugin, 0L, 1L);
+                }
+            }
+        }.runTaskTimer(expertiseStylePlugin, 0L, 1L);
+
+        /// landing
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (user.isOnGround()) {
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            user.removeMetadata("falling", expertiseStylePlugin);
+                        }
+                    }.runTaskLater(expertiseStylePlugin, 1L);
+
+                    cancel();
+                }
+            }
+        }.runTaskTimer(expertiseStylePlugin, 5L, 1L);
+    }
+
     private static BlockFace yawToFace(float yaw) {
         yaw = (yaw % 360 + 360) % 360;
         if (yaw < 45 || yaw >= 315) return BlockFace.NORTH;

@@ -19,7 +19,7 @@ public class AnnulledAbilityItems extends AbilityItemManager {
         return ExpertiseAbilityItemCreator.makeExpertiseAbilityItem(
                 "Black Hole",
                 new HashMap<>() {{
-                    put("annulled", 30);
+                    put("annulled", 50);
                 }},
                 "...it's a black hole. It pulls in and spaghettifies things; I don't need to spell this out for you.",
                 null,
@@ -29,7 +29,7 @@ public class AnnulledAbilityItems extends AbilityItemManager {
                 8,
                 30,
                 50,
-                List.of("§5§n3x" + "§r§5" + " Dark Damage 🌀"),
+                List.of("§5§n5x" + "§r§5" + " Dark Damage 🌀"),
                 null,
                 List.of(WAND, STAFF, CATALYST), skills);
     }

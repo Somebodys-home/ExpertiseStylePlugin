@@ -53,6 +53,8 @@ io\github\NoOne\expertiseStylePlugin\expertiseSystem\martialArtist\MartialArtist
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\expertiseMenus\ExpertiseLoadoutMenu$1.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\cavalier\CavalierAbilityEffects$2.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\marksman\MarksmanAbilityEffects$3.class
+io\github\NoOne\expertiseStylePlugin\expertiseSystem\primordial\PrimordialAbilityEffects$3$1.class
+io\github\NoOne\expertiseStylePlugin\expertiseSystem\primordial\PrimordialAbilityItems$3.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\expertiseMenus\ExpertiseMenu.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\marksman\MarksmanAbilityEffects$4$1.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\expertiseMenus\ExpertiseConfirmMenu.class
@@ -105,7 +107,9 @@ io\github\NoOne\expertiseStylePlugin\expertiseSystem\cavalier\CavalierAbilityEff
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\annulled\AnnulledListener.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\shieldHero\ShieldHeroAbilityItems$1.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\martialArtist\MartialArtistAbilityEffects$5$1.class
+io\github\NoOne\expertiseStylePlugin\expertiseSystem\primordial\PrimordialAbilityEffects$3.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\assassin\AssassinMenu.class
+io\github\NoOne\expertiseStylePlugin\expertiseSystem\primordial\PrimordialAbilityEffects$4$1.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\sorcerer\SorcererAbilityEffects$2.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\expertiseMenus\ExpertiseLoadoutMenu.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\martialArtist\MartialArtistAbilityEffects$9$1.class
@@ -124,6 +128,7 @@ io\github\NoOne\expertiseStylePlugin\expertiseSystem\martialArtist\MartialArtist
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\assassin\AssassinAbilityEffects.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\martialArtist\MartialArtistAbilityEffects$10$1.class
 io\github\NoOne\expertiseStylePlugin\abilitySystem\AbilityItemManager.class
+io\github\NoOne\expertiseStylePlugin\expertiseSystem\primordial\PrimordialAbilityEffects$4.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\shieldHero\ShieldHeroAbilityItems.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\hallowed\HallowedAbilityEffects$1$1.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\sorcerer\SorcererAbilityEffects$3.class

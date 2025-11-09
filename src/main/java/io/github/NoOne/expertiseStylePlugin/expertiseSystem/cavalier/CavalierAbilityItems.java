@@ -29,9 +29,9 @@ public class CavalierAbilityItems extends AbilityItemManager {
                 "Area",
                 16,
                 0,
-                10,
+                15,
                 30,
-                List.of("§f§n200%" + "§r§f" + " Weapon Damage \uD83D\uDDE1"),
+                List.of("§f§n250%" + "§r§f" + " Weapon Damage \uD83D\uDDE1"),
                 null,
                 List.of(SPEAR, HAMMER), skills);
     }

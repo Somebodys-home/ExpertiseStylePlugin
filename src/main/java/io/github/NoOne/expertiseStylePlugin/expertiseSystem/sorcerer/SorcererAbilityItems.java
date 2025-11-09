@@ -38,7 +38,7 @@ public class SorcererAbilityItems extends AbilityItemManager {
         return ExpertiseAbilityItemCreator.makeExpertiseAbilityItem(
                 "Dragon's Breath",
                 new HashMap<>() {{
-                    put("sorcerer", 15);
+                    put("sorcerer", 25);
                 }},
                 "Spew a cone of flames, kinda like you ate some really spicy curry",
                 null,
@@ -48,7 +48,7 @@ public class SorcererAbilityItems extends AbilityItemManager {
                 5,
                 20,
                 25,
-                List.of("§c§n.25x§r§c Fire Damage 🔥 §7§o(every .25s)"),
+                List.of("§c§n1x§r§c Fire Damage 🔥 §7§o(every 1s)"),
                 null,
                 List.of(WAND, STAFF), skills);
     }

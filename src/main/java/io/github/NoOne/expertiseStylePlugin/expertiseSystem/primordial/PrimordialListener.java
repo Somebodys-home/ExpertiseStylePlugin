@@ -30,6 +30,7 @@ public class PrimordialListener implements Listener {
                 switch (abilityName) {
                     case "§2§lChuck Rock" -> PrimordialAbilityEffects.chuckRock(player, hotbarSlot);
                     case "§2§lPumpkin Bomb" -> PrimordialAbilityEffects.pumpkinBomb(player, hotbarSlot);
+                    case "§2§lAir Ball" -> PrimordialAbilityEffects.airBall(player, hotbarSlot);
                 }
             }
         }

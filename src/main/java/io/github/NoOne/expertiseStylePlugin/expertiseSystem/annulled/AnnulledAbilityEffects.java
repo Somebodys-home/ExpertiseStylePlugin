@@ -31,7 +31,7 @@ public class AnnulledAbilityEffects {
 
         HashSet<UUID> hitEntityUUIDs = new HashSet<>();
         HashMap<DamageType, Double> darkDamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(
-                profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "necroticdamage"), 3) ;
+                profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "necroticdamage"), 5) ;
 
         EnergyManager.useEnergy(user, 50);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1.5, hotbarSlot);

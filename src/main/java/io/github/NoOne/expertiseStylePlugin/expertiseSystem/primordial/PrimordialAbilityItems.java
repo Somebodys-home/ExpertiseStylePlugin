@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.List;
 
+import static io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityPrerequisite.GROUNDED;
 import static io.github.NoOne.nMLItems.ItemType.*;
 
 public class PrimordialAbilityItems extends AbilityItemManager {
@@ -53,5 +54,24 @@ public class PrimordialAbilityItems extends AbilityItemManager {
                 List.of("§f§n100%§r§f Weapon Damage \uD83D\uDDE1", "§c§n1.5x§r§c Fire Damage 🔥", "§2§n1.5x§r§2 Earth Damage 🪨"),
                 null,
                 List.of(WAND, STAFF, CATALYST), skills);
+    }
+
+    public static ItemStack airBall(Skills skills) {
+        return ExpertiseAbilityItemCreator.makeExpertiseAbilityItem(
+                "Air Ball",
+                new HashMap<>() {{
+                    put("primordial", 10);
+                }},
+                "Dunk on your enemies with a compressed ball of air. Kobe!",
+                List.of(GROUNDED),
+                false,
+                "Area",
+                15,
+                0,
+                10,
+                15,
+                List.of("§f§n50%§r§f Weapon Damage \uD83D\uDDE1", "§7§n2.5x§r§7 Air Damage ☁"),
+                null,
+                List.of(), skills);
     }
 }

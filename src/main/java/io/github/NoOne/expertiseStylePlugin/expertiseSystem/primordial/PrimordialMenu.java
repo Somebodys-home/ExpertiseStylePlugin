@@ -70,7 +70,8 @@ public class PrimordialMenu extends Menu {
     @Override
     public void setMenuItems() {
         inventory.setItem(10, PrimordialAbilityItems.chuckRock(skills));
-        inventory.setItem(11, PrimordialAbilityItems.pumpkinBomb(skills));
+        inventory.setItem(11, PrimordialAbilityItems.airBall(skills));
+        inventory.setItem(12, PrimordialAbilityItems.pumpkinBomb(skills));
 
         // Backout button
         ItemStack nvm = new ItemStack(Material.BARRIER);
