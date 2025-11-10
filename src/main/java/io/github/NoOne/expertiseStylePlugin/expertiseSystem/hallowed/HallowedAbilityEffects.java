@@ -3,6 +3,7 @@ package io.github.NoOne.expertiseStylePlugin.expertiseSystem.hallowed;
 import io.github.NoOne.damagePlugin.customDamage.CustomDamageEvent;
 import io.github.NoOne.damagePlugin.customDamage.DamageConverter;
 import io.github.NoOne.damagePlugin.customDamage.DamageType;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityEffects;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.CooldownManager;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
@@ -87,31 +88,10 @@ public class HallowedAbilityEffects {
                                 int particleCount = 100;
 
                                 if (timer != 40) {
-                                    for (int i = 0; i < particleCount; i++) {
-                                        double angle = 2 * Math.PI * i / particleCount;
-                                        double x = radius * Math.cos(angle);
-                                        double y = 2;
-                                        double z = radius * Math.sin(angle);
-                                        Location particleLocation = center.clone().add(x, y, z);
-
-                                        user.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, particleLocation, 1, 0, 0, 0, 0);
-                                    }
-                                }
-
-                                if (timer == 40) { // burst
+                                    AbilityEffects.verticalParticleCircle(Particle.ELECTRIC_SPARK, center.add(0, 2, 0), radius, particleCount);
+                                } else { // burst
                                     user.playSound(user, Sound.BLOCK_AMETHYST_BLOCK_RESONATE, 1f, 1f);
-
-                                    for (int i = 0; i < particleCount; i++) {
-                                        double angle = 2 * Math.PI * i / particleCount;
-                                        double x = radius * Math.cos(angle);
-                                        double y = 2;
-                                        double z = radius * Math.sin(angle);
-                                        Location particleLocation = center.clone().add(x, y, z);
-                                        Vector velocity = particleLocation.toVector().subtract(user.getLocation().toVector()).normalize().multiply(0.3);
-
-                                        user.getWorld().spawnParticle(Particle.END_ROD, particleLocation,0, velocity.getX(), 0, velocity.getZ(), 3);
-                                    }
-
+                                    AbilityEffects.expandingVerticalParticleCircle(Particle.END_ROD, center.add(0, 2, 0), radius, particleCount, .3);
                                     cancel();
                                 }
                             }
@@ -125,9 +105,9 @@ public class HallowedAbilityEffects {
                 // halo
                 Location playerCenter = user.getLocation().clone().add(0, 2, 0);
                 double distance = center.distance(playerCenter);
-
                 double shrinkStart = 12; // what distance from the player to start shrinking
                 double currentRadius;
+
                 if (progress <= 1 || distance > shrinkStart) {
                     currentRadius = 4; // outbound
                 } else {
@@ -135,19 +115,8 @@ public class HallowedAbilityEffects {
                     currentRadius = 4 - (3.5 * shrinkProgress); // 4 → 0.5
                 }
 
-                int particleCount = 100;
-                for (int i = 0; i < particleCount; i++) {
-                    double angle = 2 * Math.PI * i / particleCount;
-                    double x = currentRadius * Math.cos(angle);
-                    double z = currentRadius * Math.sin(angle);
-                    double x2 = (currentRadius - .1) * Math.cos(angle);
-                    double z2 = (currentRadius - .1) * Math.sin(angle);
-                    Location particleLocation = center.clone().add(x, 0, z);
-                    Location particleLocation2 = center.clone().add(x2, 0, z2);
-
-                    user.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, particleLocation2, 1, 0, 0, 0, 0);
-                    user.getWorld().spawnParticle(Particle.END_ROD, particleLocation, 5, 0, 0, 0, 0);
-                }
+                AbilityEffects.verticalParticleCircle(Particle.END_ROD, center, currentRadius, 100);
+                AbilityEffects.verticalParticleCircle(Particle.ELECTRIC_SPARK, center, currentRadius - .1, 120);
 
                 // damage
                 for (Entity entity : user.getWorld().getNearbyEntities(center, 4, .5, 4)) {

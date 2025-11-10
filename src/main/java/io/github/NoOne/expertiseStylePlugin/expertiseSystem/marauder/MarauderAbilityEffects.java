@@ -3,6 +3,7 @@ package io.github.NoOne.expertiseStylePlugin.expertiseSystem.marauder;
 import io.github.NoOne.damagePlugin.customDamage.CustomDamageEvent;
 import io.github.NoOne.damagePlugin.customDamage.DamageConverter;
 import io.github.NoOne.damagePlugin.customDamage.DamageType;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityEffects;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.CooldownManager;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
@@ -54,31 +55,9 @@ public class MarauderAbilityEffects {
 
                 // particles
                 if (tornadoTicks % 2 == 0) {
-                    double radius = 1;
-                    double radius2 = 1.5;
-                    double raidus3 = 2;
-                    int biggestParticleCount = 8;
-
-                    for (int i = 0; i < biggestParticleCount; i++) {
-                        double angle = 2 * Math.PI * i / biggestParticleCount;
-                        double x2 = radius2 * Math.cos(angle);
-                        double z2 = radius2 * Math.sin(angle);
-                        double x3 = raidus3 * Math.cos(angle);
-                        double z3 = raidus3 * Math.sin(angle);
-
-                        if (i % (biggestParticleCount / 4) == 0) {
-                            double x = radius * Math.cos(angle);
-                            double z = radius * Math.sin(angle);
-
-                            Location particleLocation = user.getLocation().clone().add(x, 0.5, z);
-                            user.getWorld().spawnParticle(Particle.SWEEP_ATTACK, particleLocation, 1, 0, 0, 0, 0);
-                        }
-
-                        Location particleLocation2 = user.getLocation().clone().add(x2, 1.25, z2);
-                        Location particleLocation3 = user.getLocation().clone().add(x3, 2, z3);
-                        user.getWorld().spawnParticle(Particle.SWEEP_ATTACK, particleLocation2, 1, 0, 0, 0, 0);
-                        user.getWorld().spawnParticle(Particle.SWEEP_ATTACK, particleLocation3, 1, 0, 0, 0, 0);
-                    }
+                    AbilityEffects.verticalParticleCircle(Particle.SWEEP_ATTACK, user.getLocation().clone().add(new Vector(0, .5, 0)), 1, 4);
+                    AbilityEffects.verticalParticleCircle(Particle.SWEEP_ATTACK, user.getLocation().clone().add(new Vector(0, 1.25, 0)), 1.5, 6);
+                    AbilityEffects.verticalParticleCircle(Particle.SWEEP_ATTACK, user.getLocation().clone().add(new Vector(0, 2, 0)), 2, 8);
                 }
 
                 if (tornadoTicks % 3 == 0) user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, .5f);

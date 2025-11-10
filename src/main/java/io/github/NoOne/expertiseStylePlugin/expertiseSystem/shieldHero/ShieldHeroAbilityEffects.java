@@ -28,7 +28,6 @@ public class ShieldHeroAbilityEffects {
 
         EnergyManager.useEnergy(user, 20);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 2, hotbarSlot);
-
         user.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 30, 10, false, false, false));
         user.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 30, 255, false, false, false));
         user.playSound(user, Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 1f, 1f);
@@ -43,16 +42,9 @@ public class ShieldHeroAbilityEffects {
                 /// charge up
                 double radius = 5 * (1 - (timer / 30.0));
                 int particleCount = 75;
-                Location base = user.getLocation().clone().add(0, 0.5, 0);
+                Location center = user.getLocation().clone().add(0, 0.15, 0);
 
-                for (int i = 0; i < particleCount; i++) {
-                    double angle = 2 * Math.PI * i / particleCount;
-                    double x = Math.cos(angle) * radius;
-                    double z = Math.sin(angle) * radius;
-
-                    Location particleLocation = base.clone().add(x, 0, z);
-                    user.getWorld().spawnParticle(Particle.END_ROD, particleLocation, 1, 0, 0, 0, 0);
-                }
+                AbilityEffects.verticalParticleCircle(Particle.END_ROD, center, radius, particleCount);
 
                 if (timer % 10 == 0 && timer != 30) {
                     user.playSound(user, Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 1f, 1f);
