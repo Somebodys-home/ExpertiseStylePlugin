@@ -9,7 +9,6 @@ import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
@@ -55,9 +54,9 @@ public class MarauderAbilityEffects {
 
                 // particles
                 if (tornadoTicks % 2 == 0) {
-                    AbilityEffects.verticalParticleCircle(Particle.SWEEP_ATTACK, user.getLocation().clone().add(new Vector(0, .5, 0)), 1, 4);
-                    AbilityEffects.verticalParticleCircle(Particle.SWEEP_ATTACK, user.getLocation().clone().add(new Vector(0, 1.25, 0)), 1.5, 6);
-                    AbilityEffects.verticalParticleCircle(Particle.SWEEP_ATTACK, user.getLocation().clone().add(new Vector(0, 2, 0)), 2, 8);
+                    AbilityEffects.horizontalParticleCircle(Particle.SWEEP_ATTACK, user.getLocation().clone().add(new Vector(0, .5, 0)), 1, 4);
+                    AbilityEffects.horizontalParticleCircle(Particle.SWEEP_ATTACK, user.getLocation().clone().add(new Vector(0, 1.25, 0)), 1.5, 6);
+                    AbilityEffects.horizontalParticleCircle(Particle.SWEEP_ATTACK, user.getLocation().clone().add(new Vector(0, 2, 0)), 2, 8);
                 }
 
                 if (tornadoTicks % 3 == 0) user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, .5f);

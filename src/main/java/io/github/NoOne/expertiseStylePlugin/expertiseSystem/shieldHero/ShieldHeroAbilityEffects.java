@@ -44,7 +44,7 @@ public class ShieldHeroAbilityEffects {
                 int particleCount = 75;
                 Location center = user.getLocation().clone().add(0, 0.15, 0);
 
-                AbilityEffects.verticalParticleCircle(Particle.END_ROD, center, radius, particleCount);
+                AbilityEffects.horizontalParticleCircle(Particle.END_ROD, center, radius, particleCount);
 
                 if (timer % 10 == 0 && timer != 30) {
                     user.playSound(user, Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 1f, 1f);

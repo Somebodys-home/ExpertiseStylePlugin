@@ -88,10 +88,10 @@ public class HallowedAbilityEffects {
                                 int particleCount = 100;
 
                                 if (timer != 40) {
-                                    AbilityEffects.verticalParticleCircle(Particle.ELECTRIC_SPARK, center.add(0, 2, 0), radius, particleCount);
+                                    AbilityEffects.horizontalParticleCircle(Particle.ELECTRIC_SPARK, center.add(0, 2, 0), radius, particleCount);
                                 } else { // burst
                                     user.playSound(user, Sound.BLOCK_AMETHYST_BLOCK_RESONATE, 1f, 1f);
-                                    AbilityEffects.expandingVerticalParticleCircle(Particle.END_ROD, center.add(0, 2, 0), radius, particleCount, .3);
+                                    AbilityEffects.expandingHorizontalParticleCircle(Particle.END_ROD, center.add(0, 2, 0), radius, particleCount, .3);
                                     cancel();
                                 }
                             }
@@ -115,8 +115,8 @@ public class HallowedAbilityEffects {
                     currentRadius = 4 - (3.5 * shrinkProgress); // 4 → 0.5
                 }
 
-                AbilityEffects.verticalParticleCircle(Particle.END_ROD, center, currentRadius, 100);
-                AbilityEffects.verticalParticleCircle(Particle.ELECTRIC_SPARK, center, currentRadius - .1, 120);
+                AbilityEffects.horizontalParticleCircle(Particle.END_ROD, center, currentRadius, 100);
+                AbilityEffects.horizontalParticleCircle(Particle.ELECTRIC_SPARK, center, currentRadius - .1, 120);
 
                 // damage
                 for (Entity entity : user.getWorld().getNearbyEntities(center, 4, .5, 4)) {

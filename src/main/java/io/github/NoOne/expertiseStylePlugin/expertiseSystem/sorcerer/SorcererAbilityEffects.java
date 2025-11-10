@@ -3,6 +3,7 @@ package io.github.NoOne.expertiseStylePlugin.expertiseSystem.sorcerer;
 import io.github.NoOne.damagePlugin.customDamage.CustomDamageEvent;
 import io.github.NoOne.damagePlugin.customDamage.DamageConverter;
 import io.github.NoOne.damagePlugin.customDamage.DamageType;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityEffects;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.CooldownManager;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
@@ -173,7 +174,7 @@ public class SorcererAbilityEffects {
         int chargeUpTime = 40;
         HashSet<UUID> hitEntityUUIDs = new HashSet<>();
 
-        CooldownManager.putAllOtherAbilitiesOnCooldown(user, 6, hotbarSlot);
+        CooldownManager.putAllOtherAbilitiesOnCooldown(user, 8, hotbarSlot);
         EnergyManager.useEnergy(user, 25);
         user.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, chargeUpTime, 10, false, false, false));
         user.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, chargeUpTime, 255, false, false, false));
@@ -188,7 +189,7 @@ public class SorcererAbilityEffects {
 
                 Location userLocation = user.getLocation().add(0, 1.65, 0);
                 Vector forward = userLocation.getDirection().normalize();
-                Location baseLocation = userLocation.clone().add(forward.clone().multiply(1.5));
+                Location center = userLocation.clone().add(forward.clone().multiply(1.5));
                 int particleCount = 5;
                 double radius = Math.max((double) timer / 40, .3);
                 Vector right = forward.clone().crossProduct(new Vector(0, 1, 0)).normalize(); // orthogonal basis vector
@@ -198,7 +199,7 @@ public class SorcererAbilityEffects {
                     double angle = 2 * Math.PI * i / particleCount + ((chargeUpTime - timer) * .02);
 
                     Vector offset = up.clone().multiply(Math.cos(angle)).add(right.clone().multiply(Math.sin(angle))).multiply(radius);
-                    Location particleLocation = baseLocation.clone().add(offset);
+                    Location particleLocation = center.clone().add(offset);
 
                     user.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, particleLocation, 0);
                 }
@@ -268,6 +269,24 @@ public class SorcererAbilityEffects {
                     user.removeMetadata("using ability", expertiseStylePlugin);
                     user.stopSound(Sound.ITEM_ELYTRA_FLYING);
                     user.playSound(user, Sound.BLOCK_FIRE_EXTINGUISH, .5f, 1f);
+
+                    userLocation = user.getLocation().add(0, 1.65, 0);
+                    forward = userLocation.getDirection().normalize();
+                    Location center = userLocation.clone().add(forward.clone().multiply(1.5));
+                    Vector right = forward.clone().crossProduct(new Vector(0, 1, 0)).normalize(); // orthogonal basis vector
+                    Vector up = right.clone().crossProduct(forward).normalize(); // orthogonal basis vector
+                    int particleCount = 20;
+
+                    for (int i = 0; i < particleCount; i++) {
+                        double angle = 2 * Math.PI * i / particleCount + ((chargeUpTime - timer) * .02);
+
+                        Vector offset = up.clone().multiply(Math.cos(angle)).add(right.clone().multiply(Math.sin(angle))).multiply(.1);
+                        particleLocation = center.clone().add(offset);
+                        Vector velocity = offset.clone().multiply(.65);
+
+                        user.getWorld().spawnParticle(Particle.FLAME, particleLocation, 0, velocity.getX(), velocity.getY(), velocity.getZ());
+                    }
+
                     cancel();
                 }
             }

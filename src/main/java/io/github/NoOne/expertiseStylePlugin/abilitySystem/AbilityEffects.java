@@ -54,7 +54,7 @@ public class AbilityEffects {
         }
     }
 
-    public static void verticalParticleCircle(Particle particle, Location center, double radius, int particleCount) {
+    public static void horizontalParticleCircle(Particle particle, Location center, double radius, int particleCount) {
         for (int i = 0; i < particleCount; i++) {
             double angle = 2 * Math.PI * i / particleCount;
             double x = Math.cos(angle) * radius;
@@ -65,7 +65,7 @@ public class AbilityEffects {
         }
     }
 
-    public static void expandingVerticalParticleCircle(Particle particle, Location center, double radius, int particleCount, double speed) {
+    public static void expandingHorizontalParticleCircle(Particle particle, Location center, double radius, int particleCount, double speed) {
         for (int i = 0; i < particleCount; i++) {
             double angle = 2 * Math.PI * i / particleCount;
             double x = radius * Math.cos(angle);
