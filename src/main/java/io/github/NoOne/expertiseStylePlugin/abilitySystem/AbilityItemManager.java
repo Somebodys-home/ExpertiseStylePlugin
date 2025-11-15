@@ -13,6 +13,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class AbilityItemManager {
     private static ExpertiseStylePlugin expertiseStylePlugin;
@@ -107,18 +108,9 @@ public class AbilityItemManager {
     }
 
     public static boolean hasPrerequisites(ItemStack item) {
-        PersistentDataContainer persistentDataContainer = item.getItemMeta().getPersistentDataContainer();
-        boolean has = false;
+        Set<NamespacedKey> keys = item.getItemMeta().getPersistentDataContainer().getKeys();
 
-        for (NamespacedKey namespacedKey : persistentDataContainer.getKeys()) {
-            if (namespacedKey == groundedKey) {
-                has = true;
-            }
-
-            if (has) break;
-        }
-
-        return has;
+        return keys.contains(groundedKey);
     }
 
     public static boolean meetsPrerequisites(Player player, ItemStack item) {

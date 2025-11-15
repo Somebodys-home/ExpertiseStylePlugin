@@ -47,7 +47,8 @@ public class AbilityListener implements Listener {
         if (AbilityItemManager.isAnAbility(abilityItem)) { // if it's an ability item
             event.setCancelled(true);
 
-            if (abilityItem.isSimilar(AbilityItemManager.cooldownItem()) || abilityItem.isSimilar(AbilityItemManager.emptyStyleAbilityItem()) ||
+            if (abilityItem.isSimilar(AbilityItemManager.cooldownItem()) ||
+                abilityItem.isSimilar(AbilityItemManager.emptyStyleAbilityItem()) ||
                 abilityItem.isSimilar(ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem())) return;
 
             if (AbilityItemManager.hasPrerequisites(abilityItem) && !AbilityItemManager.meetsPrerequisites(player, abilityItem)) {

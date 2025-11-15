@@ -169,10 +169,8 @@ public class SorcererAbilityEffects {
     public static void dragonsBreath(Player user, int hotbarSlot) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
-        HashMap<DamageType, Double> fire = DamageConverter.multiplyDamageMap(
-                DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "firedamage"), .25);
+        HashMap<DamageType, Double> fire = DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "firedamage");
         int chargeUpTime = 40;
-        HashSet<UUID> hitEntityUUIDs = new HashSet<>();
 
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 8, hotbarSlot);
         EnergyManager.useEnergy(user, 25);
@@ -244,26 +242,18 @@ public class SorcererAbilityEffects {
                 }
 
                 // damage
-                Location eyeLoc = user.getEyeLocation();
-                Vector direction = eyeLoc.getDirection().normalize();
+                Vector direction = user.getEyeLocation().getDirection().normalize();
 
                 for (double d = 0; d <= 12; d += .5) {
-                    Location checkLoc = eyeLoc.clone().add(direction.clone().multiply(d));
+                    Location checkLoc = user.getEyeLocation().add(direction.clone().multiply(d));
                     Collection<Entity> nearby = checkLoc.getWorld().getNearbyEntities(checkLoc, 1, 1, 1);
 
                     for (Entity entity : nearby) {
                         if (entity instanceof LivingEntity livingEntity && entity != user) {
-                            hitEntityUUIDs.add(livingEntity.getUniqueId());
+                            Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, fire, 5));
                         }
                     }
                 }
-
-                for (UUID uuid : hitEntityUUIDs) {
-                    LivingEntity livingEntity = (LivingEntity) Bukkit.getEntity(uuid);
-                    Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, fire, 5));
-                }
-
-                hitEntityUUIDs.clear();
 
                 if (timer == 80) {
                     user.removeMetadata("using ability", expertiseStylePlugin);

@@ -4,7 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.util.Vector;
 
-public class AbilityEffects {
+public class AbilityEffects { 
     public static void particleSphere(Particle particle, Location center, double radius, int particleCircles) {
         for (double i = 0; i <= Math.PI; i += Math.PI / particleCircles) { // vertical circles
             double r = Math.sin(i) / radius;
