@@ -25,7 +25,7 @@ public class HallowedMenu extends Menu {
     public HallowedMenu(ExpertiseStylePlugin expertiseStylePlugin, PlayerMenuUtility playerMenuUtility) {
         super(playerMenuUtility);
         this.expertiseStylePlugin = expertiseStylePlugin;
-        selectedAbilities = expertiseStylePlugin.getSelectedManager().getPlayerProfile(playerMenuUtility.getOwner().getUniqueId()).getSelectedAbilities();
+        selectedAbilities = expertiseStylePlugin.getSelectedManager().getAbilityProfile(playerMenuUtility.getOwner().getUniqueId());
         skills = expertiseStylePlugin.getSkillSetManager().getSkillSet(playerMenuUtility.getOwner().getUniqueId()).getSkills();
     }
 

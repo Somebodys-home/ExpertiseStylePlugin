@@ -16,7 +16,7 @@ public class SelectedListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        AbilityProfile abilityProfile = selectedManager.getPlayerProfile(player.getUniqueId());
+        SelectedAbilities abilityProfile = selectedManager.getAbilityProfile(player.getUniqueId());
 
         if (abilityProfile == null) {
             selectedManager.createnewProfile(player);

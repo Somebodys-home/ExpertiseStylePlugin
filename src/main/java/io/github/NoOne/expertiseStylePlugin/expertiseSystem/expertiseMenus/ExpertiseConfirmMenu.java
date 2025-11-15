@@ -3,6 +3,7 @@ package io.github.NoOne.expertiseStylePlugin.expertiseSystem.expertiseMenus;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemManager;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.saveAbilitiesSystem.SelectedAbilities;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.saveAbilitiesSystem.SelectedManager;
 import io.github.NoOne.menuSystem.Menu;
 import io.github.NoOne.menuSystem.PlayerMenuUtility;
 import org.bukkit.ChatColor;
@@ -19,6 +20,7 @@ public class ExpertiseConfirmMenu extends Menu {
     private final ItemStack selected;
     private final Menu previous;
     private SelectedAbilities selectedAbilities;
+    private SelectedManager selectedManager;
 
     public ExpertiseConfirmMenu(ExpertiseStylePlugin expertiseStylePlugin, PlayerMenuUtility playerMenuUtility, ItemStack selected, Menu previous) {
         super(playerMenuUtility);
@@ -27,7 +29,8 @@ public class ExpertiseConfirmMenu extends Menu {
         this.expertise3 = playerMenuUtility.getOwner().getInventory().getItem(3);
         this.selected = selected;
         this.previous = previous;
-        selectedAbilities = expertiseStylePlugin.getSelectedManager().getPlayerProfile(playerMenuUtility.getOwner().getUniqueId()).getSelectedAbilities();
+        selectedManager = expertiseStylePlugin.getSelectedManager();
+        selectedAbilities = selectedManager.getAbilityProfile(playerMenuUtility.getOwner().getUniqueId());
     }
 
     @Override
@@ -45,7 +48,6 @@ public class ExpertiseConfirmMenu extends Menu {
         event.setCancelled(true);
 
         Player player = (Player) event.getWhoClicked();
-        String[] playersAbilities = selectedAbilities.getSelectedAbilitiesArray();
         int slot = event.getSlot();
 
         switch (slot) {
@@ -57,6 +59,7 @@ public class ExpertiseConfirmMenu extends Menu {
 
                 player.getInventory().setItem(1, selected);
                 selectedAbilities.setExpertise1(selected.getItemMeta().getDisplayName());
+
             }
             case 13 -> {
                 if (expertise2.isSimilar(AbilityItemManager.cooldownItem())) {
@@ -79,6 +82,7 @@ public class ExpertiseConfirmMenu extends Menu {
             case 22 -> previous.open();
         }
 
+        selectedManager.addAbilityProfile(player.getUniqueId(), selectedAbilities);
         previous.open();
     }
 

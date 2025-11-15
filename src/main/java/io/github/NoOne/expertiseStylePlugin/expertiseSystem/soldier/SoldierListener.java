@@ -23,7 +23,7 @@ public class SoldierListener implements Listener {
             Player player = event.getPlayer();
             int hotbarSlot = event.getHotbarSlot();
             ItemStack ability = event.getAbility();
-            String[] selectedAbilities = selectedManager.getPlayerProfile(event.getPlayer().getUniqueId()).getSelectedAbilities().getSelectedAbilitiesArray();
+            String[] selectedAbilities = selectedManager.getAbilityProfile(event.getPlayer().getUniqueId()).getSelectedAbilitiesArray();
             String abilityName = event.getAbility().getItemMeta().getDisplayName();
 
             if (Arrays.asList(selectedAbilities).contains(abilityName)) {

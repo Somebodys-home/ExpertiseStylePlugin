@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class SelectedManager {
-    private static Map<UUID, AbilityProfile> profileMap = new HashMap<>(); // hashmap of all the profiles of all the players online atm
+    private static Map<UUID, SelectedAbilities> profileMap = new HashMap<>(); // hashmap of all the profiles of all the players online atm
     private FileConfiguration config;
     private SelectedConfig profileConfig;
 
@@ -24,14 +24,16 @@ public class SelectedManager {
                 player.getInventory().getItem(2).getItemMeta().getDisplayName(),
                 player.getInventory().getItem(3).getItemMeta().getDisplayName());
 
-        AbilityProfile abilityProfile = new AbilityProfile(selectedAbilities);
-
-        profileMap.put(player.getUniqueId(), abilityProfile);
+        profileMap.put(player.getUniqueId(), selectedAbilities);
 
     }
 
-    public AbilityProfile getPlayerProfile(UUID uuid) {
+    public SelectedAbilities getAbilityProfile(UUID uuid) {
         return profileMap.get(uuid);
+    }
+
+    public void addAbilityProfile(UUID uuid, SelectedAbilities abilityProfile) {
+        profileMap.put(uuid, abilityProfile);
     }
 
     public void loadProfilesFromConfig() {
@@ -43,17 +45,15 @@ public class SelectedManager {
             String expertise3 = config.getString(id + ".abilities.expertise3");
 
             SelectedAbilities selectedAbilities = new SelectedAbilities(style1, expertise1, expertise2, expertise3);
-            AbilityProfile abilityProfile = new AbilityProfile(selectedAbilities);
 
-            profileMap.put(uuid, abilityProfile);
+            profileMap.put(uuid, selectedAbilities);
         }
     }
 
     public void saveProfilesToConfig() {
         for (UUID uuid : profileMap.keySet()) {
             String id = uuid.toString();
-            AbilityProfile abilityProfile = profileMap.get(uuid);
-            SelectedAbilities selectedAbilities = abilityProfile.getSelectedAbilities();
+            SelectedAbilities selectedAbilities = profileMap.get(uuid);
 
             config.set(id + ".abilities.style", selectedAbilities.getStyle());
             config.set(id + ".abilities.expertise1", selectedAbilities.getExpertise1());
@@ -64,8 +64,7 @@ public class SelectedManager {
 
     public void saveAProfileToConfig(Player player) {
         String id = player.getUniqueId().toString();
-        AbilityProfile abilityProfile = profileMap.get(player.getUniqueId());
-        SelectedAbilities selectedAbilities = abilityProfile.getSelectedAbilities();
+        SelectedAbilities selectedAbilities = profileMap.get(player.getUniqueId());
 
         config.set(id + ".abilities.style", selectedAbilities.getStyle());
         config.set(id + ".abilities.expertise1", selectedAbilities.getExpertise1());

@@ -40,7 +40,7 @@ public class ExpertiseLoadoutMenu extends Menu {
         this.expertise1 = playerMenuUtility.getOwner().getInventory().getItem(1);
         this.expertise2 = playerMenuUtility.getOwner().getInventory().getItem(2);
         this.expertise3 = playerMenuUtility.getOwner().getInventory().getItem(3);
-        selectedAbilities = expertiseStylePlugin.getSelectedManager().getPlayerProfile(playerMenuUtility.getOwner().getUniqueId()).getSelectedAbilities();
+        selectedAbilities = expertiseStylePlugin.getSelectedManager().getAbilityProfile(playerMenuUtility.getOwner().getUniqueId());
 
         backout = new ItemStack(Material.BARRIER);
         ItemMeta backoutItemMeta = backout.getItemMeta();
