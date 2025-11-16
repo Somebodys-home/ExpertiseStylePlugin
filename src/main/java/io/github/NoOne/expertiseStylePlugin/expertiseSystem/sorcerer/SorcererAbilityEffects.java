@@ -34,7 +34,7 @@ public class SorcererAbilityEffects {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
         HashMap<DamageType, Double> damage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
-                profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .5);
+                profileManager.getPlayerStats(user.getUniqueId())), .5);
 
         EnergyManager.useEnergy(user, 15);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 2.5, hotbarSlot);
@@ -169,7 +169,7 @@ public class SorcererAbilityEffects {
     public static void dragonsBreath(Player user, int hotbarSlot) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
-        HashMap<DamageType, Double> fire = DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "firedamage");
+        HashMap<DamageType, Double> fire = DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerStats(user.getUniqueId()), "firedamage");
         int chargeUpTime = 40;
 
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 8, hotbarSlot);

@@ -33,7 +33,7 @@ public class MartialArtistAbilityEffects {
 
         HashSet<UUID> hitEntityUUIDs = new HashSet<>();
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
-                profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .25);
+                profileManager.getPlayerStats(user.getUniqueId())), .25);
         final boolean[] comboBroken = {false};
 
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 2, hotbarSlot);
@@ -554,7 +554,7 @@ public class MartialArtistAbilityEffects {
         // uppercut 10
         new BukkitRunnable() {
             HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
-                    profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .75);
+                    profileManager.getPlayerStats(user.getUniqueId())), .75);
 
             @Override
             public void run() {

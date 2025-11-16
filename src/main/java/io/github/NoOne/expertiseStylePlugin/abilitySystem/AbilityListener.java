@@ -39,7 +39,7 @@ public class AbilityListener implements Listener {
     public void onUseAbility(PlayerItemHeldEvent event) {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
-        double currentEnergy = profileManager.getPlayerProfile(uuid).getStats().getCurrentEnergy();
+        double currentEnergy = profileManager.getPlayerStats(uuid).getCurrentEnergy();
         int newSlot = event.getNewSlot();
         ItemStack abilityItem = player.getInventory().getItem(newSlot);
         ItemStack weapon = player.getInventory().getItem(event.getPreviousSlot());

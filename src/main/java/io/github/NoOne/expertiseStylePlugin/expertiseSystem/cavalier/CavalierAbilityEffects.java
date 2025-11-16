@@ -35,7 +35,7 @@ public class CavalierAbilityEffects {
 
         HashSet<UUID> hitEntityUUIDs = new HashSet<>();
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
-                profileManager.getPlayerProfile(user.getUniqueId()).getStats()), 2.5);
+                profileManager.getPlayerStats(user.getUniqueId())), 2.5);
 
         EnergyManager.useEnergy(user, 30);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 4, hotbarSlot);

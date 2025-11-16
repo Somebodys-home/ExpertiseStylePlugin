@@ -31,8 +31,8 @@ public class HallowedAbilityEffects {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
         HashSet<UUID> hitEntityUUIDs = new HashSet<>();
-        HashMap<DamageType, Double> radiant = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "radiantdamage"), .35);
-        HashMap<DamageType, Double> totalDamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .15);
+        HashMap<DamageType, Double> radiant = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerStats(user.getUniqueId()), "radiantdamage"), .35);
+        HashMap<DamageType, Double> totalDamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(profileManager.getPlayerStats(user.getUniqueId())), .15);
 
         totalDamage.remove("radiantdamage");
         totalDamage.putAll(radiant);

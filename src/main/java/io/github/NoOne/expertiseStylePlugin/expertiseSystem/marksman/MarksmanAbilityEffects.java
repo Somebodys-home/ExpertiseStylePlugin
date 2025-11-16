@@ -37,7 +37,7 @@ public class MarksmanAbilityEffects {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
-                profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .5);
+                profileManager.getPlayerStats(user.getUniqueId())), .5);
         boolean toggle = AbilityItemManager.getToggleState(abilityItem);
         final int[] preparedArrows = {0};
 
