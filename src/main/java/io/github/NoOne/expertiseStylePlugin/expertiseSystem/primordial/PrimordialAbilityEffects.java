@@ -33,7 +33,7 @@ public class PrimordialAbilityEffects {
 
         HashSet<UUID> hitEntityUUIDs = new HashSet<>();
         HashMap<DamageType, Double> physicalDamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(
-                                            profileManager.getPlayerStats(user.getUniqueId()), "physicaldamage"), 1.5);
+                                            profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "physicaldamage"), 1.5);
 
         FallingBlock stone = user.getWorld().spawnFallingBlock(user.getLocation().add(0, 1.5, 0), Bukkit.createBlockData(Material.STONE_BUTTON));
 
@@ -89,9 +89,9 @@ public class PrimordialAbilityEffects {
     public static void pumpkinBomb(Player user, int hotbarSlot) {
         // damages
         HashSet<UUID> hitEntityUUIDs = new HashSet<>();
-        HashMap<DamageType, Double> earth = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerStats(user.getUniqueId()), "earthdamage"), 1.5);
-        HashMap<DamageType, Double> fire = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerStats(user.getUniqueId()), "firedamage"), 1.5);
-        HashMap<DamageType, Double> totalDamage = DamageConverter.convertPlayerStats2Damage(profileManager.getPlayerStats(user.getUniqueId()));
+        HashMap<DamageType, Double> earth = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "earthdamage"), 1.5);
+        HashMap<DamageType, Double> fire = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "firedamage"), 1.5);
+        HashMap<DamageType, Double> totalDamage = DamageConverter.convertPlayerStats2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats());
 
         totalDamage.remove("earthdamage");
         totalDamage.remove("firedamage");
@@ -240,8 +240,8 @@ public class PrimordialAbilityEffects {
 
         HashSet<UUID> hitEntityUUIDs = new HashSet<>();
         Particle.DustOptions air = new Particle.DustOptions(Color.fromRGB(255, 255, 255), 1.0F);
-        HashMap<DamageType, Double> airDamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerStats(user.getUniqueId()), "airdamage"), 2.5);
-        HashMap<DamageType, Double> totalDamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(profileManager.getPlayerStats(user.getUniqueId())), .5);
+        HashMap<DamageType, Double> airDamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "airdamage"), 2.5);
+        HashMap<DamageType, Double> totalDamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .5);
 
         totalDamage.remove("airdamage");
         totalDamage.putAll(airDamage);

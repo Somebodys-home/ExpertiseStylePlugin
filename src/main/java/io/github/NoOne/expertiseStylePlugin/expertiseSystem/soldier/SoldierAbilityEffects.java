@@ -33,7 +33,7 @@ public class SoldierAbilityEffects {
         HashSet<UUID> hitEntityUUIDs = new HashSet<>();
         Location location = user.getLocation();
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
-                profileManager.getPlayerStats(user.getUniqueId())), 1.2);
+                profileManager.getPlayerProfile(user.getUniqueId()).getStats()), 1.2);
 
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1, hotbarSlot);
         EnergyManager.useEnergy(user, 15);

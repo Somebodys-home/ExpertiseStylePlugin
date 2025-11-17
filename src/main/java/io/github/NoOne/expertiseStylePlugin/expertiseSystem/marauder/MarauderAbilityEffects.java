@@ -34,7 +34,7 @@ public class MarauderAbilityEffects {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
-                profileManager.getPlayerStats(user.getUniqueId())), .5);
+                profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .5);
 
         EnergyManager.useEnergy(user, 30);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 6, hotbarSlot);

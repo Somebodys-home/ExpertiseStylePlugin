@@ -34,7 +34,7 @@ public class AssassinAbilityEffects {
 
         HashSet<UUID> hitEntityUUIDs = new HashSet<>();
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
-                profileManager.getPlayerStats(user.getUniqueId())), 1.5);
+                profileManager.getPlayerProfile(user.getUniqueId()).getStats()), 1.5);
 
         EnergyManager.useEnergy(user, 20);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1, hotbarSlot);
