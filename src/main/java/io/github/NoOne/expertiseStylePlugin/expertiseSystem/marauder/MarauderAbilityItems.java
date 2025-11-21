@@ -8,6 +8,8 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.List;
+
+import static io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityPrerequisite.*;
 import static io.github.NoOne.nMLItems.ItemType.*;
 
 public class MarauderAbilityItems extends AbilityItemManager {
@@ -19,13 +21,13 @@ public class MarauderAbilityItems extends AbilityItemManager {
         return ExpertiseAbilityItemCreator.makeExpertiseAbilityItem(
                 "Blade Tornado",
                 new HashMap<>() {{
-                    put("marauder", 15);
+                    put("marauder", 20);
                 }},
                 "Hurl yourself forwards as a whirligig of anger issues, bad intentions, and BLADES!",
-                null,
+                List.of(GROUNDED),
                 false,
                 "Self",
-                5,
+                3,
                 5,
                 20,
                 30,

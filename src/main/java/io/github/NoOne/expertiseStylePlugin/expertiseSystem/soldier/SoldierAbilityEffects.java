@@ -30,7 +30,6 @@ public class SoldierAbilityEffects {
     public static void slash(Player user, int hotbarSlot) {
         user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
-        HashSet<UUID> hitEntityUUIDs = new HashSet<>();
         Location location = user.getLocation();
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
                 profileManager.getPlayerProfile(user.getUniqueId()).getStats()), 1.2);
@@ -48,18 +47,18 @@ public class SoldierAbilityEffects {
             user.getWorld().spawnParticle(Particle.SWEEP_ATTACK, particleLocation, 1);
 
             for (Entity entity : user.getWorld().getNearbyEntities(particleLocation, 1.5, 1.5, 1.5)) {
-                if (!entity.equals(user)) {
-                    hitEntityUUIDs.add(entity.getUniqueId());
+                if (!entity.equals(user) && entity instanceof LivingEntity livingEntity) {
+                    Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
                 }
             }
         }
 
-        for (UUID uuid : hitEntityUUIDs) {
-            if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
-                hitEntityUUIDs.remove(uuid);
-            }
-        }
+//        for (UUID uuid : hitEntityUUIDs) {
+//            if (Bukkit.getEntity(uuid)) {
+//                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
+//                hitEntityUUIDs.remove(uuid);
+//            }
+//        }
 
         user.removeMetadata("using ability", expertiseStylePlugin);
     }
