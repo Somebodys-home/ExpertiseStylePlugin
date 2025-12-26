@@ -8,6 +8,7 @@ import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.Cooldow
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
+import io.github.NoOne.nMLWeapons.AttackCooldownSystem;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -28,16 +29,16 @@ public class HallowedAbilityEffects {
     }
 
     public static void halo(Player user, int hotbarSlot) {
-        user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
-
         HashSet<UUID> hitEntityUUIDs = new HashSet<>();
         HashMap<DamageType, Double> radiant = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "radiantdamage"), .35);
         HashMap<DamageType, Double> totalDamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .15);
 
         totalDamage.remove("radiantdamage");
         totalDamage.putAll(radiant);
+
         EnergyManager.useEnergy(user, 25);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1.5, hotbarSlot);
+        AttackCooldownSystem.pauseAttackCooldown(user);
         user.playSound(user, Sound.ITEM_TRIDENT_RIPTIDE_1, 1f, 1f);
         user.playSound(user, Sound.ITEM_ELYTRA_FLYING, .5f, 1f);
 
@@ -69,7 +70,7 @@ public class HallowedAbilityEffects {
 
                     if (step.lengthSquared() > center.distanceSquared(playerCenter)) {
                         hitPlayer = true;
-                        user.removeMetadata("using ability", expertiseStylePlugin);
+                        AttackCooldownSystem.resumeAttackCooldown(user);
                         user.playSound(user, Sound.BLOCK_AMETHYST_BLOCK_PLACE, 1f, 1f);
                         user.stopSound(Sound.ITEM_ELYTRA_FLYING);
                         center = playerCenter.clone(); // snap to player

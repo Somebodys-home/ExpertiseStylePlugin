@@ -8,6 +8,7 @@ import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.Cooldow
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
+import io.github.NoOne.nMLWeapons.AttackCooldownSystem;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -31,13 +32,12 @@ public class SorcererAbilityEffects {
     }
 
     public static void magicMissileEX(Player user, int hotbarSlot) {
-        user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
-
         HashMap<DamageType, Double> damage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
                 profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .5);
 
         EnergyManager.useEnergy(user, 15);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 2.5, hotbarSlot);
+        AttackCooldownSystem.setOrPauseAttackCooldown(user, 2.5);
 
         new BukkitRunnable() {
             int missiles = 0;
@@ -109,9 +109,6 @@ public class SorcererAbilityEffects {
                     public void run() {
                         if (i > particleInstances) {
                             activeMissiles--;
-
-                            if (missiles == 5 && activeMissiles == 0) user.removeMetadata("using ability", expertiseStylePlugin);
-
                             user.playSound(user.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST, .8f, 1f);
                             user.getWorld().spawnParticle(Particle.EXPLOSION, end, 1, 0, 1, 0, 0);
                             cancel();
@@ -135,12 +132,11 @@ public class SorcererAbilityEffects {
                         double baseZ = start.getZ() + (end.getZ() - start.getZ()) * progress;
                         double curveOffset = curveDirection * curveAmount * Math.sin(progress * Math.PI);
                         double heightFactor = minHeight + (maxHeight - minHeight) * Math.sin(progress * Math.PI);
-
                         double finalX = baseX + finalCurveAxis.getX() * curveOffset;
                         double finalY = baseY + heightFactor * verticalCurveDirection;
                         double finalZ = baseZ + finalCurveAxis.getZ() * curveOffset;
-
                         int worldMinY = user.getWorld().getMinHeight();
+
                         if (Double.isNaN(finalY) || finalY < worldMinY + 0.1) finalY = worldMinY + 0.1;
 
                         Location particleLocation = new Location(user.getWorld(), finalX, finalY, finalZ);
@@ -167,12 +163,11 @@ public class SorcererAbilityEffects {
     }
 
     public static void dragonsBreath(Player user, int hotbarSlot) {
-        user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
-
         HashMap<DamageType, Double> fire = DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "firedamage");
         int chargeUpTime = 40;
 
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 8, hotbarSlot);
+        AttackCooldownSystem.setOrPauseAttackCooldown(user, 8);
         EnergyManager.useEnergy(user, 25);
         user.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, chargeUpTime, 10, false, false, false));
         user.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, chargeUpTime, 255, false, false, false));
@@ -189,7 +184,7 @@ public class SorcererAbilityEffects {
                 Vector forward = userLocation.getDirection().normalize();
                 Location center = userLocation.clone().add(forward.clone().multiply(1.5));
                 int particleCount = 5;
-                double radius = Math.max((double) timer / 40, .3);
+                double radius = Math.max((double) timer / 50, .1);
                 Vector right = forward.clone().crossProduct(new Vector(0, 1, 0)).normalize(); // orthogonal basis vector
                 Vector up = right.clone().crossProduct(forward).normalize(); // orthogonal basis vector
 

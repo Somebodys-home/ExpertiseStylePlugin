@@ -7,6 +7,7 @@ import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.Cooldow
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
+import io.github.NoOne.nMLWeapons.AttackCooldownSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -20,22 +21,19 @@ import org.bukkit.util.Vector;
 import java.util.*;
 
 public class SoldierAbilityEffects {
-    private static ExpertiseStylePlugin expertiseStylePlugin;
     private static ProfileManager profileManager;
     public SoldierAbilityEffects(ExpertiseStylePlugin expertiseStylePlugin) {
-        this.expertiseStylePlugin = expertiseStylePlugin;
         profileManager = expertiseStylePlugin.getProfileManager();
     }
 
     public static void slash(Player user, int hotbarSlot) {
-        user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
-
         Location location = user.getLocation();
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
                 profileManager.getPlayerProfile(user.getUniqueId()).getStats()), 1.2);
 
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1, hotbarSlot);
         EnergyManager.useEnergy(user, 15);
+        AttackCooldownSystem.setOrPauseAttackCooldown(user, 1);
         user.playSound(location, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
 
         for (double i = -Math.PI / 2; i <= Math.PI / 2; i += Math.PI / 10) {
@@ -52,14 +50,5 @@ public class SoldierAbilityEffects {
                 }
             }
         }
-
-//        for (UUID uuid : hitEntityUUIDs) {
-//            if (Bukkit.getEntity(uuid)) {
-//                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
-//                hitEntityUUIDs.remove(uuid);
-//            }
-//        }
-
-        user.removeMetadata("using ability", expertiseStylePlugin);
     }
 }

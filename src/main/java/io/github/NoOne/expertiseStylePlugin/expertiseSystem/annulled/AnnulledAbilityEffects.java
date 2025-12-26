@@ -8,6 +8,7 @@ import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.Cooldow
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
+import io.github.NoOne.nMLWeapons.AttackCooldownSystem;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -28,8 +29,6 @@ public class AnnulledAbilityEffects {
     }
 
     public static void blackHole(Player user, int hotbarSlot) {
-        user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
-
         HashSet<UUID> hitEntityUUIDs = new HashSet<>();
         Particle.DustOptions blackHole = new Particle.DustOptions(Color.fromRGB(0, 0, 0), 1F);
         HashMap<DamageType, Double> darkDamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(
@@ -37,6 +36,7 @@ public class AnnulledAbilityEffects {
 
         EnergyManager.useEnergy(user, 50);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1.5, hotbarSlot);
+        AttackCooldownSystem.pauseAttackCooldown(user);
         user.playSound(user, Sound.ENTITY_WITHER_SHOOT, 1f, 1f);
 
         new BukkitRunnable() {
@@ -62,7 +62,7 @@ public class AnnulledAbilityEffects {
                     cancel();
                     user.playSound(user, Sound.ITEM_ELYTRA_FLYING, 2f, 1f);
                     user.playSound(user, Sound.ENTITY_WITHER_DEATH, 1f, 1f);
-                    user.removeMetadata("using ability", expertiseStylePlugin);
+                    AttackCooldownSystem.resumeAttackCooldown(user);
 
                     new BukkitRunnable() {
                         int duration = 0;
@@ -159,15 +159,12 @@ public class AnnulledAbilityEffects {
                                 }
 
                                 if (!hitEntityUUIDs.isEmpty()) {
-                                    user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
-
                                     for (UUID uuid : hitEntityUUIDs) {
                                         Bukkit.getPluginManager().callEvent(new CustomDamageEvent((LivingEntity) Bukkit.getEntity(uuid), user, darkDamage));
                                         ((LivingEntity) Bukkit.getEntity(uuid)).setNoDamageTicks(5);
                                     }
                                 }
 
-                                user.removeMetadata("using ability", expertiseStylePlugin);
                                 hitEntityUUIDs.clear();
                             }
                         }

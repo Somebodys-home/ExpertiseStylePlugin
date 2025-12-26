@@ -141,5 +141,11 @@
             <version>8623857344</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.Somebodys-home</groupId>
+            <artifactId>NMLWeapons</artifactId>
+            <version>ec6c74fdff</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

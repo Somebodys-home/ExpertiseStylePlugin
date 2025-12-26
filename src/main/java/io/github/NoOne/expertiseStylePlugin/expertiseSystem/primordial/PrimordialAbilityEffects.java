@@ -8,6 +8,7 @@ import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.Cooldow
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
+import io.github.NoOne.nMLWeapons.AttackCooldownSystem;
 import org.bukkit.*;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
@@ -29,19 +30,18 @@ public class PrimordialAbilityEffects {
     }
 
     public static void chuckRock(Player user, int hotbarSlot) {
-        user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
-
         HashSet<UUID> hitEntityUUIDs = new HashSet<>();
         HashMap<DamageType, Double> physicalDamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(
                                             profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "physicaldamage"), 1.5);
 
-        FallingBlock stone = user.getWorld().spawnFallingBlock(user.getLocation().add(0, 1.5, 0), Bukkit.createBlockData(Material.STONE_BUTTON));
+        FallingBlock rock = user.getWorld().spawnFallingBlock(user.getLocation().add(0, 1.5, 0), Bukkit.createBlockData(Material.STONE_BUTTON));
 
         EnergyManager.useEnergy(user, 10);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1, hotbarSlot);
+        AttackCooldownSystem.setOrPauseAttackCooldown(user, 1);
 
-        stone.setCancelDrop(true);
-        stone.setVelocity(user.getLocation().getDirection().multiply(2).add(new Vector(0, .3, 0)));
+        rock.setCancelDrop(true);
+        rock.setVelocity(user.getLocation().getDirection().multiply(2).add(new Vector(0, .3, 0)));
         user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, .5f, 2f);
 
         // sweep particle
@@ -53,7 +53,7 @@ public class PrimordialAbilityEffects {
         new BukkitRunnable() {
             @Override
             public void run() {
-                Location stoneLocation = stone.getLocation();
+                Location stoneLocation = rock.getLocation();
 
                 for (Entity entity : user.getWorld().getNearbyEntities(stoneLocation, 1, 1, 1)) {
                     if (entity instanceof LivingEntity livingEntity && entity != user) {
@@ -75,15 +75,13 @@ public class PrimordialAbilityEffects {
                     cancel();
                 }
 
-                if (!stone.isValid() || stone.isDead()) {
+                if (!rock.isValid() || rock.isDead()) {
                     user.getWorld().spawnParticle(Particle.BLOCK, stoneLocation, 100, 0, 0 ,0, 0, Bukkit.createBlockData(Material.STONE));
                     user.playSound(stoneLocation, Sound.BLOCK_STONE_BREAK, 2f, 2f);
                     cancel();
                 }
             }
         }.runTaskTimer(expertiseStylePlugin, 0L, 1L);
-
-        user.removeMetadata("using ability", expertiseStylePlugin);
     }
 
     public static void pumpkinBomb(Player user, int hotbarSlot) {
@@ -211,8 +209,6 @@ public class PrimordialAbilityEffects {
                     }.runTaskTimer(expertiseStylePlugin,  6L, 2L);
 
                     // damage
-                    user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
-
                     for (Entity entity : user.getWorld().getNearbyEntities(pumpkinBombLocation, 4, 4, 4)) {
                         if (entity instanceof LivingEntity livingEntity && entity != user) {
                             hitEntityUUIDs.add(livingEntity.getUniqueId());
@@ -223,19 +219,15 @@ public class PrimordialAbilityEffects {
                         Bukkit.getPluginManager().callEvent(new CustomDamageEvent((LivingEntity) Bukkit.getEntity(uuid), user, totalDamage));
                     }
 
-                    user.removeMetadata("using ability", expertiseStylePlugin);
                     cancel();
                 }
 
                 candyTimer++;
             }
         }.runTaskTimer(expertiseStylePlugin, 0L, 1L);
-
-        user.removeMetadata("using ability", expertiseStylePlugin);
     }
 
     public static void airBall(Player user, int hotbarSlot) {
-        user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
         user.setMetadata("falling", new FixedMetadataValue(expertiseStylePlugin, true));
 
         HashSet<UUID> hitEntityUUIDs = new HashSet<>();
@@ -248,6 +240,7 @@ public class PrimordialAbilityEffects {
 
         EnergyManager.useEnergy(user, 15);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 2, hotbarSlot);
+        AttackCooldownSystem.setOrPauseAttackCooldown(user, 2);
         user.playSound(user, Sound.ENTITY_BREEZE_JUMP, 1f, 1f);
 
         /// jump
@@ -317,8 +310,6 @@ public class PrimordialAbilityEffects {
                                 }
 
                                 if (!hitEntityUUIDs.isEmpty()) {
-                                    user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
-
                                     for (UUID uuid : hitEntityUUIDs) {
                                         LivingEntity livingEntity = (LivingEntity) Bukkit.getEntity(uuid);
                                         Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, totalDamage));
@@ -329,8 +320,6 @@ public class PrimordialAbilityEffects {
                                         knockback.setY(.5);
                                         livingEntity.setVelocity(knockback);
                                     }
-
-                                    user.removeMetadata("using ability", expertiseStylePlugin);
                                 }
 
                             }

@@ -7,6 +7,7 @@ import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.Cooldow
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
+import io.github.NoOne.nMLWeapons.AttackCooldownSystem;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -34,8 +35,6 @@ public class MarksmanAbilityEffects {
     }
 
     public static void rapidShot(Player user, int hotbarSlot, ItemStack abilityItem) {
-        user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
-
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
                 profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .5);
         boolean toggle = AbilityItemManager.getToggleState(abilityItem);
@@ -43,6 +42,7 @@ public class MarksmanAbilityEffects {
 
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, .5, hotbarSlot);
         user.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 100, 2));
+        AttackCooldownSystem.pauseAttackCooldown(user);
 
         BukkitRunnable rapidShot = new BukkitRunnable() {
             @Override
@@ -75,8 +75,8 @@ public class MarksmanAbilityEffects {
                             user.removePotionEffect(PotionEffectType.SLOWNESS);
 
                             if (arrows == 0) {
+                                AttackCooldownSystem.resumeAttackCooldown(user);
                                 cancel();
-                                user.removeMetadata("using ability", expertiseStylePlugin);
                             }
                         }
                     }.runTaskTimer(expertiseStylePlugin, 10L, 5L);
@@ -113,7 +113,10 @@ public class MarksmanAbilityEffects {
                         user.getWorld().playSound(user, Sound.ENTITY_ARROW_SHOOT, 1f, 1f);
                         user.removePotionEffect(PotionEffectType.SLOWNESS);
 
-                        if (arrows == 0) cancel();
+                        if (arrows == 0) {
+                            AttackCooldownSystem.resumeAttackCooldown(user);
+                            cancel();
+                        }
                     }
                 }.runTaskTimer(expertiseStylePlugin, 0L, 5L);
 

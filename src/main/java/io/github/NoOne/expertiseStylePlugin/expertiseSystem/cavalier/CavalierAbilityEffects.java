@@ -7,6 +7,7 @@ import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.Cooldow
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
+import io.github.NoOne.nMLWeapons.AttackCooldownSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -30,7 +31,6 @@ public class CavalierAbilityEffects {
     }
 
     public static void seismicSlam(Player user, int hotbarSlot) {
-        user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
         user.setMetadata("falling", new FixedMetadataValue(expertiseStylePlugin, true));
 
         HashSet<UUID> hitEntityUUIDs = new HashSet<>();
@@ -39,6 +39,7 @@ public class CavalierAbilityEffects {
 
         EnergyManager.useEnergy(user, 30);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 4, hotbarSlot);
+        AttackCooldownSystem.setOrPauseAttackCooldown(user, 3);
 
         // jump
         Vector jump = user.getLocation().getDirection().multiply(.5);
@@ -90,7 +91,6 @@ public class CavalierAbilityEffects {
                             }
                         }
 
-                        user.removeMetadata("using ability", expertiseStylePlugin);
                         cancel();
                     }
                 }

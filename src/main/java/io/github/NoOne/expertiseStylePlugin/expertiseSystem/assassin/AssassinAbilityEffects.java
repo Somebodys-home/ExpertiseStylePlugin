@@ -7,6 +7,7 @@ import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.Cooldow
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
+import io.github.NoOne.nMLWeapons.AttackCooldownSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -30,15 +31,14 @@ public class AssassinAbilityEffects {
     }
 
     public static void slashAndDash(Player user, int hotbarSlot) {
-        user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
-
         HashSet<UUID> hitEntityUUIDs = new HashSet<>();
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
                 profileManager.getPlayerProfile(user.getUniqueId()).getStats()), 1.5);
 
         EnergyManager.useEnergy(user, 20);
-        CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1, hotbarSlot);
+        CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1.2, hotbarSlot);
         user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
+        AttackCooldownSystem.setOrPauseAttackCooldown(user, 1.2);
 
         // dash
         Vector knockback = user.getLocation().getDirection().multiply(4);
@@ -57,6 +57,7 @@ public class AssassinAbilityEffects {
 
                 particleLocation.add(direction);
                 user.getWorld().spawnParticle(Particle.SWEEP_ATTACK, particleLocation, 0, 0, 0, 0, 0);
+                dashTicks--;
 
                 for (Entity entity : user.getWorld().getNearbyEntities(user.getLocation(), 2, 1, 2)) {
                     if (entity instanceof LivingEntity livingEntity && !entity.equals(user)) {
@@ -67,10 +68,8 @@ public class AssassinAbilityEffects {
                     }
                 }
 
-                dashTicks--;
                 if (dashTicks == 0) {
                     this.cancel();
-                    user.removeMetadata("using ability", expertiseStylePlugin);
                 }
 
             }

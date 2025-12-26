@@ -8,6 +8,7 @@ import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.Cooldow
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
+import io.github.NoOne.nMLWeapons.AttackCooldownSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -31,13 +32,12 @@ public class MarauderAbilityEffects {
     }
 
     public static void bladeTornado(Player user, int hotbarSlot) {
-        user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
-
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
                 profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .5);
 
         EnergyManager.useEnergy(user, 30);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 6, hotbarSlot);
+        AttackCooldownSystem.setOrPauseAttackCooldown(user, 6);
         user.getAttribute(Attribute.STEP_HEIGHT).setBaseValue(1);
 
         new BukkitRunnable() {
@@ -69,7 +69,6 @@ public class MarauderAbilityEffects {
 
                 if (tornadoTicks == 0) {
                     this.cancel();
-                    user.removeMetadata("using ability", expertiseStylePlugin);
                     user.getAttribute(Attribute.STEP_HEIGHT).setBaseValue(.6);
                 }
             }
