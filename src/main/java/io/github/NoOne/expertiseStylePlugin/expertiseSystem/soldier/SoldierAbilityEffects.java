@@ -30,6 +30,7 @@ public class SoldierAbilityEffects {
         Location location = user.getLocation();
         HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
                 profileManager.getPlayerProfile(user.getUniqueId()).getStats()), 1.2);
+        Set<LivingEntity> hitEntities = new HashSet<>();
 
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1, hotbarSlot);
         EnergyManager.useEnergy(user, 15);
@@ -46,9 +47,13 @@ public class SoldierAbilityEffects {
 
             for (Entity entity : user.getWorld().getNearbyEntities(particleLocation, 1.5, 1.5, 1.5)) {
                 if (!entity.equals(user) && entity instanceof LivingEntity livingEntity) {
-                    Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
+                    hitEntities.add(livingEntity);
                 }
             }
+        }
+
+        for (LivingEntity livingEntity : hitEntities) {
+            Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
         }
     }
 }
