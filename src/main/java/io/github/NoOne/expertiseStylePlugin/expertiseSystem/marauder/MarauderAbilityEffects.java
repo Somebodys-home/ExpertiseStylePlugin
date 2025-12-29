@@ -63,7 +63,7 @@ public class MarauderAbilityEffects {
 
                 for (Entity entity : user.getWorld().getNearbyEntities(user.getLocation(), 2.25, 2, 2.25)) {
                     if (entity instanceof LivingEntity livingEntity && !entity.equals(user)) {
-                        Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats, 5));
+                        Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
                     }
                 }
 

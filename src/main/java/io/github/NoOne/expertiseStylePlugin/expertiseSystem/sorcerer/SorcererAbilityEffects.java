@@ -245,7 +245,7 @@ public class SorcererAbilityEffects {
 
                     for (Entity entity : nearby) {
                         if (entity instanceof LivingEntity livingEntity && entity != user) {
-                            Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, fire, 5));
+                            Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, fire));
                         }
                     }
                 }

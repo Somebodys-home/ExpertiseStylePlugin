@@ -127,7 +127,7 @@ public class HallowedAbilityEffects {
                 }
 
                 for (UUID uuid : hitEntityUUIDs) {
-                    Bukkit.getPluginManager().callEvent(new CustomDamageEvent((LivingEntity) Bukkit.getEntity(uuid), user, totalDamage, 5));
+                    Bukkit.getPluginManager().callEvent(new CustomDamageEvent((LivingEntity) Bukkit.getEntity(uuid), user, totalDamage));
                 }
 
                 hitEntityUUIDs.clear();
