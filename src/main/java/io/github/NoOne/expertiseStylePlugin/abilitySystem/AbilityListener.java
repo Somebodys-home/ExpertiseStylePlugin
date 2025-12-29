@@ -173,8 +173,8 @@ public class AbilityListener implements Listener {
 
     @EventHandler
     public void damageWithAbilityArrow(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Arrow arrow && arrow.getShooter() instanceof Player player && arrow.hasMetadata("ability arrow")) {
-            MetadataValue meta = arrow.getMetadata("ability arrow").get(0);
+        if (event.getDamager() instanceof Arrow arrow && arrow.getShooter() instanceof Player player && arrow.hasMetadata("ability_arrow")) {
+            MetadataValue meta = arrow.getMetadata("ability_arrow").get(0);
             HashMap<DamageType, Double> damageMap = (HashMap<DamageType, Double>) meta.value();
 
             event.setDamage(0);

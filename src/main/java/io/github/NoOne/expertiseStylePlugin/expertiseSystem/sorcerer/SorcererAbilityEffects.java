@@ -164,6 +164,7 @@ public class SorcererAbilityEffects {
 
     public static void dragonsBreath(Player user, int hotbarSlot) {
         HashMap<DamageType, Double> fire = DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "firedamage");
+        HashSet<LivingEntity> hitEntities = new HashSet<>();
         int chargeUpTime = 40;
 
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 8, hotbarSlot);
@@ -237,21 +238,29 @@ public class SorcererAbilityEffects {
                 }
 
                 // damage
-                Vector direction = user.getEyeLocation().getDirection().normalize();
+                if (timer % 5 == 0) {
+                    Vector direction = user.getEyeLocation().getDirection().normalize();
 
-                for (double d = 0; d <= 12; d += .5) {
-                    Location checkLoc = user.getEyeLocation().add(direction.clone().multiply(d));
-                    Collection<Entity> nearby = checkLoc.getWorld().getNearbyEntities(checkLoc, 1, 1, 1);
+                    for (double d = 0; d <= 12; d += .5) {
+                        Location checkLoc = user.getEyeLocation().add(direction.clone().multiply(d));
+                        Collection<Entity> nearby = checkLoc.getWorld().getNearbyEntities(checkLoc, 1, 1, 1);
 
-                    for (Entity entity : nearby) {
-                        if (entity instanceof LivingEntity livingEntity && entity != user) {
-                            Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, fire));
+                        for (Entity entity : nearby) {
+                            if (entity instanceof LivingEntity livingEntity && entity != user) {
+                                hitEntities.add(livingEntity);
+                            }
                         }
                     }
+
+                    for (LivingEntity livingEntity : hitEntities) {
+                        Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, fire));
+                    }
+
+                    hitEntities.clear();
                 }
 
+
                 if (timer == 80) {
-                    user.removeMetadata("using ability", expertiseStylePlugin);
                     user.stopSound(Sound.ITEM_ELYTRA_FLYING);
                     user.playSound(user, Sound.BLOCK_FIRE_EXTINGUISH, .5f, 1f);
 

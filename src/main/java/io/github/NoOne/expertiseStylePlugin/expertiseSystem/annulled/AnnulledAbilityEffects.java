@@ -8,12 +8,12 @@ import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.Cooldow
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
+import io.github.NoOne.nMLPlayerStats.statSystem.Stats;
 import io.github.NoOne.nMLWeapons.AttackCooldownSystem;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -29,11 +29,9 @@ public class AnnulledAbilityEffects {
     }
 
     public static void blackHole(Player user, int hotbarSlot) {
-        HashSet<UUID> hitEntityUUIDs = new HashSet<>();
+        Stats stats = profileManager.getPlayerProfile(user.getUniqueId()).getStats();
+        HashMap<DamageType, Double> necroticdamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(stats, "necroticdamage"), 5);
         Particle.DustOptions blackHole = new Particle.DustOptions(Color.fromRGB(0, 0, 0), 1F);
-        HashMap<DamageType, Double> darkDamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(
-                profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "necroticdamage"), 5) ;
-
         EnergyManager.useEnergy(user, 50);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1.5, hotbarSlot);
         AttackCooldownSystem.pauseAttackCooldown(user);
@@ -130,7 +128,7 @@ public class AnnulledAbilityEffects {
                                         Location particleLocation = center.clone().add(x, y, z);
                                         Vector velocity = particleLocation.toVector().subtract(center.toVector()).normalize().multiply(0.3);
 
-                                        if (Math.random() < .004) { // random chance to spawn explosion for every expanding particle
+                                        if (Math.random() < .004) { // random chance to spawn explosion particle for every expanding particle
                                             double finalA = a;
                                             double finalI = i;
                                             new BukkitRunnable() {
@@ -154,18 +152,9 @@ public class AnnulledAbilityEffects {
 
                                 for (Entity entity : user.getWorld().getNearbyEntities(center, explosionRadius, explosionRadius, explosionRadius)) {
                                     if (entity instanceof LivingEntity livingEntity && entity != user) {
-                                        hitEntityUUIDs.add(livingEntity.getUniqueId());
+                                        Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, necroticdamage));
                                     }
                                 }
-
-                                if (!hitEntityUUIDs.isEmpty()) {
-                                    for (UUID uuid : hitEntityUUIDs) {
-                                        Bukkit.getPluginManager().callEvent(new CustomDamageEvent((LivingEntity) Bukkit.getEntity(uuid), user, darkDamage));
-                                        ((LivingEntity) Bukkit.getEntity(uuid)).setNoDamageTicks(5);
-                                    }
-                                }
-
-                                hitEntityUUIDs.clear();
                             }
                         }
                     }.runTaskTimer(expertiseStylePlugin, 0L, 1L);

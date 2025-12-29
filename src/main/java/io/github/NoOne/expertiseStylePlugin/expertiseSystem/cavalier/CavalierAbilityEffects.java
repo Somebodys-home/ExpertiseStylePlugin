@@ -7,6 +7,7 @@ import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.Cooldow
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
+import io.github.NoOne.nMLPlayerStats.statSystem.Stats;
 import io.github.NoOne.nMLWeapons.AttackCooldownSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.Particle;
@@ -33,21 +34,20 @@ public class CavalierAbilityEffects {
     public static void seismicSlam(Player user, int hotbarSlot) {
         user.setMetadata("falling", new FixedMetadataValue(expertiseStylePlugin, true));
 
-        HashSet<UUID> hitEntityUUIDs = new HashSet<>();
-        HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
-                profileManager.getPlayerProfile(user.getUniqueId()).getStats()), 2.5);
+        Stats stats = profileManager.getPlayerProfile(user.getUniqueId()).getStats();
+        HashMap<DamageType, Double> damage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(stats), 2.5);
 
         EnergyManager.useEnergy(user, 30);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 4, hotbarSlot);
         AttackCooldownSystem.setOrPauseAttackCooldown(user, 3);
+        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 2f);
 
-        // jump
+        /// jump
         Vector jump = user.getLocation().getDirection().multiply(.5);
         jump.setY(1.5);
         user.setVelocity(jump);
-        user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 2f);
 
-        // trail particles
+        /// trail particles
         BukkitTask flyingParticles = new BukkitRunnable() {
             @Override
             public void run() {
@@ -55,7 +55,7 @@ public class CavalierAbilityEffects {
             }
         }.runTaskTimer(expertiseStylePlugin, 0L, 1L);
 
-        // slam
+        /// slam
         Bukkit.getScheduler().runTaskLater(expertiseStylePlugin, () -> {
             Vector slam = user.getLocation().getDirection().multiply(1.5);
             slam.setY(-2.2);
@@ -75,19 +75,12 @@ public class CavalierAbilityEffects {
                         user.playSound(user.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, .8f, 1f);
 
                         for (Entity entity : user.getWorld().getNearbyEntities(user.getLocation(), 4, 2, 4)) {
-                            if (!entity.equals(user)) {
-                                hitEntityUUIDs.add(entity.getUniqueId());
-                            }
-                        }
-
-                        for (UUID uuid : hitEntityUUIDs) {
-                            if (Bukkit.getEntity(uuid) instanceof LivingEntity livingEntity) {
-                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
-
-                                // knockback
+                            if (!entity.equals(user) && entity instanceof LivingEntity livingEntity) {
                                 Vector knockback = livingEntity.getLocation().toVector().subtract(user.getLocation().toVector()).normalize().multiply(1.2);
                                 knockback.setY(.75);
                                 livingEntity.setVelocity(knockback);
+
+                                Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damage));
                             }
                         }
 

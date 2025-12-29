@@ -7,6 +7,7 @@ import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.Cooldow
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
+import io.github.NoOne.nMLPlayerStats.statSystem.Stats;
 import io.github.NoOne.nMLWeapons.AttackCooldownSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -15,7 +16,6 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -31,22 +31,21 @@ public class AssassinAbilityEffects {
     }
 
     public static void slashAndDash(Player user, int hotbarSlot) {
-        HashSet<UUID> hitEntityUUIDs = new HashSet<>();
-        HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
-                profileManager.getPlayerProfile(user.getUniqueId()).getStats()), 1.5);
+        Stats stats = profileManager.getPlayerProfile(user.getUniqueId()).getStats();
+        HashMap<DamageType, Double> damage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(stats), 1.5);
 
         EnergyManager.useEnergy(user, 20);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1.2, hotbarSlot);
         user.playSound(user.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 1f);
         AttackCooldownSystem.setOrPauseAttackCooldown(user, 1.2);
 
-        // dash
+        /// dash
         Vector knockback = user.getLocation().getDirection().multiply(4);
         knockback.setY(-2);
         user.setVelocity(knockback);
         user.setInvulnerable(true);
 
-        // slash
+        /// slash
         new BukkitRunnable() {
             int dashTicks = 6;
 
@@ -61,10 +60,7 @@ public class AssassinAbilityEffects {
 
                 for (Entity entity : user.getWorld().getNearbyEntities(user.getLocation(), 2, 1, 2)) {
                     if (entity instanceof LivingEntity livingEntity && !entity.equals(user)) {
-                        if (!hitEntityUUIDs.contains(entity.getUniqueId())) {
-                            Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damageStats));
-                            hitEntityUUIDs.add(entity.getUniqueId());
-                        }
+                        Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damage));
                     }
                 }
 
@@ -74,8 +70,6 @@ public class AssassinAbilityEffects {
 
             }
         }.runTaskTimer(expertiseStylePlugin, 0L, 1L);
-
-        hitEntityUUIDs.clear();
 
         Bukkit.getScheduler().runTaskLater(expertiseStylePlugin, () -> {
             user.setInvulnerable(false);

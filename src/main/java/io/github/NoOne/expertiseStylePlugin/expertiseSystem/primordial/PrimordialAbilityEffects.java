@@ -62,7 +62,6 @@ public class PrimordialAbilityEffects {
                 }
 
                 if (!hitEntityUUIDs.isEmpty()) {
-                    user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
 
                     for (UUID uuid : hitEntityUUIDs) {
                         Bukkit.getPluginManager().callEvent(new CustomDamageEvent((LivingEntity) Bukkit.getEntity(uuid), user, physicalDamage));
@@ -71,7 +70,6 @@ public class PrimordialAbilityEffects {
 
                     user.getWorld().spawnParticle(Particle.BLOCK, stoneLocation, 100, 0, 0 ,0, 0, Bukkit.createBlockData(Material.STONE));
                     user.playSound(stoneLocation, Sound.BLOCK_STONE_BREAK, 2f, 2f);
-                    user.removeMetadata("using ability", expertiseStylePlugin);
                     cancel();
                 }
 
@@ -275,7 +273,6 @@ public class PrimordialAbilityEffects {
                     jump.multiply(.3);
                     jump.setY(0);
                     user.setVelocity(jump.add(recoil));
-                    user.removeMetadata("using ability", expertiseStylePlugin);
 
                     new BukkitRunnable() {
                         int duration = 0;

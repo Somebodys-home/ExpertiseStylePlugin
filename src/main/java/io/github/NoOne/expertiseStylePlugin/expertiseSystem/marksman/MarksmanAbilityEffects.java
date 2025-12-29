@@ -7,6 +7,7 @@ import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.Cooldow
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
+import io.github.NoOne.nMLPlayerStats.statSystem.Stats;
 import io.github.NoOne.nMLWeapons.AttackCooldownSystem;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -35,8 +36,8 @@ public class MarksmanAbilityEffects {
     }
 
     public static void rapidShot(Player user, int hotbarSlot, ItemStack abilityItem) {
-        HashMap<DamageType, Double> damageStats = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(
-                profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .5);
+        Stats stats = profileManager.getPlayerProfile(user.getUniqueId()).getStats();
+        HashMap<DamageType, Double> damage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(stats), .5);
         boolean toggle = AbilityItemManager.getToggleState(abilityItem);
         final int[] preparedArrows = {0};
 
@@ -50,7 +51,7 @@ public class MarksmanAbilityEffects {
                 // load arrows
                 preparedArrows[0]++;
                 user.sendTitle("§a" + preparedArrows[0] + " \uD83C\uDFF9", "", 5, 30, 5);
-                user.setMetadata("rapid shot arrows", new FixedMetadataValue(expertiseStylePlugin, preparedArrows[0]));
+                user.setMetadata("rapid_shot_arrows", new FixedMetadataValue(expertiseStylePlugin, preparedArrows[0]));
                 CooldownManager.putAllOtherAbilitiesOnCooldown(user, .75, hotbarSlot);
                 user.getWorld().playSound(user, Sound.ITEM_CROSSBOW_LOADING_END, 1f, 1f);
 
@@ -63,14 +64,14 @@ public class MarksmanAbilityEffects {
                     AbilityItemManager.toggleAbility(abilityItem, false);
 
                     new BukkitRunnable() {
-                        int arrows = user.getMetadata("rapid shot arrows").getFirst().asInt();
+                        int arrows = user.getMetadata("rapid_shot_arrows").getFirst().asInt();
 
                         @Override
                         public void run() {
                             arrows--;
 
                             user.sendTitle("§a" + arrows + " \uD83C\uDFF9", "", 2, 20, 5);
-                            shootArrow(user, 3.5, .5, damageStats);
+                            shootArrow(user, 3.5, .5, damage);
                             user.getWorld().playSound(user, Sound.ENTITY_ARROW_SHOOT, 1f, 1f);
                             user.removePotionEffect(PotionEffectType.SLOWNESS);
 
@@ -81,7 +82,7 @@ public class MarksmanAbilityEffects {
                         }
                     }.runTaskTimer(expertiseStylePlugin, 10L, 5L);
 
-                    user.removeMetadata("rapid shot arrows", expertiseStylePlugin);
+                    user.removeMetadata("rapid_shot_arrows", expertiseStylePlugin);
                     cancel();
                 }
             }
@@ -102,14 +103,14 @@ public class MarksmanAbilityEffects {
                 ongoingEffects.get(user.getUniqueId()).remove("rapidShot");
 
                 new BukkitRunnable() {
-                    int arrows = user.getMetadata("rapid shot arrows").getFirst().asInt();
+                    int arrows = user.getMetadata("rapid_shot_arrows").getFirst().asInt();
 
                     @Override
                     public void run() {
                         arrows--;
 
                         user.sendTitle("§a" + arrows + " \uD83C\uDFF9", "", 2, 20, 5);
-                        shootArrow(user, 3.5, .5, damageStats);
+                        shootArrow(user, 3.5, .5, damage);
                         user.getWorld().playSound(user, Sound.ENTITY_ARROW_SHOOT, 1f, 1f);
                         user.removePotionEffect(PotionEffectType.SLOWNESS);
 
@@ -120,7 +121,7 @@ public class MarksmanAbilityEffects {
                     }
                 }.runTaskTimer(expertiseStylePlugin, 0L, 5L);
 
-                user.removeMetadata("rapid shot arrows", expertiseStylePlugin);
+                user.removeMetadata("rapid_shot_arrows", expertiseStylePlugin);
             }
         }
     }
@@ -136,7 +137,7 @@ public class MarksmanAbilityEffects {
         arrow.setVelocity(shooter.getLocation().getDirection().multiply(speed).add(spreadVector)); // Speed multiplier
         arrow.setCritical(false);
         arrow.setPickupStatus(AbstractArrow.PickupStatus.DISALLOWED);
-        arrow.setMetadata("ability arrow", new FixedMetadataValue(expertiseStylePlugin, damageMap));
+        arrow.setMetadata("ability_arrow", new FixedMetadataValue(expertiseStylePlugin, damageMap));
 
         // trail particles
         new BukkitRunnable() {

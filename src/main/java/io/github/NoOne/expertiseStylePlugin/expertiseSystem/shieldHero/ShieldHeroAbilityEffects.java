@@ -5,6 +5,7 @@ import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.Cooldow
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLShields.GuardingSystem;
+import io.github.NoOne.nMLWeapons.AttackCooldownSystem;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -24,10 +25,9 @@ public class ShieldHeroAbilityEffects {
     }
 
     public static void secondWind(Player user, int hotbarSlot) {
-        user.setMetadata("using ability", new FixedMetadataValue(expertiseStylePlugin, true));
-
         EnergyManager.useEnergy(user, 20);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 2, hotbarSlot);
+        AttackCooldownSystem.setOrPauseAttackCooldown(user, 2);
         user.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 30, 10, false, false, false));
         user.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 30, 255, false, false, false));
         user.playSound(user, Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 1f, 1f);
@@ -55,7 +55,6 @@ public class ShieldHeroAbilityEffects {
                     AbilityEffects.expandingParticleSphere(Particle.END_ROD, user.getLocation(), 4, 30, .3);
                     user.playSound(user, Sound.ITEM_TOTEM_USE, 1f, 1f);
                     guardingSystem.fullyRegenerateGuard(user);
-                    user.removeMetadata("using ability", expertiseStylePlugin);
                     cancel();
                 }
             }

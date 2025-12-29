@@ -8,12 +8,12 @@ import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.Cooldow
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.nMLEnergySystem.EnergyManager;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
+import io.github.NoOne.nMLPlayerStats.statSystem.Stats;
 import io.github.NoOne.nMLWeapons.AttackCooldownSystem;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -29,12 +29,13 @@ public class HallowedAbilityEffects {
     }
 
     public static void halo(Player user, int hotbarSlot) {
-        HashSet<UUID> hitEntityUUIDs = new HashSet<>();
-        HashMap<DamageType, Double> radiant = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats(), "radiantdamage"), .35);
-        HashMap<DamageType, Double> totalDamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(profileManager.getPlayerProfile(user.getUniqueId()).getStats()), .15);
+        Stats stats = profileManager.getPlayerProfile(user.getUniqueId()).getStats();
+        HashMap<DamageType, Double> radiantDamage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStat2Damage(stats, "radiantdamage"), .35);
+        HashMap<DamageType, Double> damage = DamageConverter.multiplyDamageMap(DamageConverter.convertPlayerStats2Damage(stats), .15);
+        HashSet<LivingEntity> hitEntities = new HashSet<>();
 
-        totalDamage.remove("radiantdamage");
-        totalDamage.putAll(radiant);
+        damage.remove("radiantdamage");
+        damage.putAll(radiantDamage);
 
         EnergyManager.useEnergy(user, 25);
         CooldownManager.putAllOtherAbilitiesOnCooldown(user, 1.5, hotbarSlot);
@@ -120,17 +121,15 @@ public class HallowedAbilityEffects {
                 AbilityEffects.horizontalParticleCircle(Particle.ELECTRIC_SPARK, center, currentRadius - .1, 120);
 
                 // damage
-                for (Entity entity : user.getWorld().getNearbyEntities(center, 4, .5, 4)) {
-                    if (entity instanceof LivingEntity livingEntity && entity != user) {
-                        hitEntityUUIDs.add(livingEntity.getUniqueId());
+                if (ticks % 5 == 0) {
+                    for (Entity entity : user.getWorld().getNearbyEntities(center, 4, .5, 4)) {
+                        if (entity instanceof LivingEntity livingEntity && entity != user) {
+                            Bukkit.getPluginManager().callEvent(new CustomDamageEvent(livingEntity, user, damage));
+                        }
                     }
                 }
 
-                for (UUID uuid : hitEntityUUIDs) {
-                    Bukkit.getPluginManager().callEvent(new CustomDamageEvent((LivingEntity) Bukkit.getEntity(uuid), user, totalDamage));
-                }
-
-                hitEntityUUIDs.clear();
+                hitEntities.clear();
             }
         }.runTaskTimer(expertiseStylePlugin, 0L, 1L);
     }
