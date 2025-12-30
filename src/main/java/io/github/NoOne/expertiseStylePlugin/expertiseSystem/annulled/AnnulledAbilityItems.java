@@ -2,7 +2,7 @@ package io.github.NoOne.expertiseStylePlugin.expertiseSystem.annulled;
 
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemManager;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemCreator;
+import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemMaker;
 import io.github.NoOne.nMLSkills.skillSystem.Skills;
 import org.bukkit.inventory.ItemStack;
 
@@ -16,7 +16,7 @@ public class AnnulledAbilityItems extends AbilityItemManager {
     }
 
     public static ItemStack blackHole(Skills skills) {
-        return ExpertiseAbilityItemCreator.makeExpertiseAbilityItem(
+        return ExpertiseAbilityItemMaker.makeExpertiseAbilityItem(
                 "Black Hole",
                 new HashMap<>() {{
                     put("annulled", 50);

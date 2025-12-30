@@ -2,7 +2,7 @@ package io.github.NoOne.expertiseStylePlugin.expertiseSystem.assassin;
 
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemManager;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemCreator;
+import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemMaker;
 import io.github.NoOne.nMLSkills.skillSystem.Skills;
 import org.bukkit.inventory.ItemStack;
 
@@ -16,7 +16,7 @@ public class AssassinAbilityItems extends AbilityItemManager {
     }
 
     public static ItemStack slashandDash(Skills skills) {
-        return ExpertiseAbilityItemCreator.makeExpertiseAbilityItem(
+        return ExpertiseAbilityItemMaker.makeExpertiseAbilityItem(
                 "Slash & Dash",
                 new HashMap<>() {{
                     put("assassin", 1);

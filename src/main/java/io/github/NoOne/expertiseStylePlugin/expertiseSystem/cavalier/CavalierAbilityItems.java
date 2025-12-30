@@ -2,7 +2,7 @@ package io.github.NoOne.expertiseStylePlugin.expertiseSystem.cavalier;
 
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemManager;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemCreator;
+import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemMaker;
 import io.github.NoOne.nMLSkills.skillSystem.Skills;
 import org.bukkit.inventory.ItemStack;
 
@@ -18,7 +18,7 @@ public class CavalierAbilityItems extends AbilityItemManager {
     }
 
     public static ItemStack seismicSlam(Skills skills) {
-        return ExpertiseAbilityItemCreator.makeExpertiseAbilityItem(
+        return ExpertiseAbilityItemMaker.makeExpertiseAbilityItem(
                 "Seismic Slam",
                 new HashMap<>() {{
                     put("cavalier", 10);

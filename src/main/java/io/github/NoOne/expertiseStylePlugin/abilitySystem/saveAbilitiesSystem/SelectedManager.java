@@ -52,34 +52,22 @@ public class SelectedManager {
 
     public void saveProfilesToConfig() {
         for (UUID uuid : profileMap.keySet()) {
-            String id = uuid.toString();
             SelectedAbilities selectedAbilities = profileMap.get(uuid);
 
-            config.set(id + ".abilities.style", selectedAbilities.getStyle());
-            config.set(id + ".abilities.expertise1", selectedAbilities.getExpertise1());
-            config.set(id + ".abilities.expertise2", selectedAbilities.getExpertise2());
-            config.set(id + ".abilities.expertise3", selectedAbilities.getExpertise3());
+            config.set(uuid + ".abilities.style", selectedAbilities.getStyle());
+            config.set(uuid + ".abilities.expertise1", selectedAbilities.getExpertise1());
+            config.set(uuid + ".abilities.expertise2", selectedAbilities.getExpertise2());
+            config.set(uuid + ".abilities.expertise3", selectedAbilities.getExpertise3());
         }
     }
 
-    public void saveAProfileToConfig(Player player) {
-        String id = player.getUniqueId().toString();
-        SelectedAbilities selectedAbilities = profileMap.get(player.getUniqueId());
+    public void saveProfileToConfig(Player player) {
+        UUID uuid = player.getUniqueId();
+        SelectedAbilities selectedAbilities = profileMap.get(uuid);
 
-        config.set(id + ".abilities.style", selectedAbilities.getStyle());
-        config.set(id + ".abilities.expertise1", selectedAbilities.getExpertise1());
-        config.set(id + ".abilities.expertise2", selectedAbilities.getExpertise2());
-        config.set(id + ".abilities.expertise3", selectedAbilities.getExpertise3());
-    }
-
-    public void setSelectedAbility(Player player, int abilitySlot, String abilityName) {
-        String id = player.getUniqueId().toString();
-
-        switch (abilitySlot) {
-            case 1 -> config.set(id + ".abilities.style", abilityName);
-            case 2 -> config.set(id + ".abilities.expertise1", abilityName);
-            case 3 -> config.set(id + ".abilities.expertise2", abilityName);
-            case 4 -> config.set(id + ".abilities.expertise3", abilityName);
-        }
+        config.set(uuid + ".abilities.style", selectedAbilities.getStyle());
+        config.set(uuid + ".abilities.expertise1", selectedAbilities.getExpertise1());
+        config.set(uuid + ".abilities.expertise2", selectedAbilities.getExpertise2());
+        config.set(uuid + ".abilities.expertise3", selectedAbilities.getExpertise3());
     }
 }

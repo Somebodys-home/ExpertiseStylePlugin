@@ -26,6 +26,7 @@ public class ExpertiseManager {
 
         for (ItemType weapon : weapons) {
             NamespacedKey weaponKey = new NamespacedKey(expertiseStylePlugin, ItemType.getItemTypeString(weapon));
+
             if (!pdc.has(weaponKey)) {
                 weaponsToRemove.add(weapon);
             }
@@ -39,21 +40,32 @@ public class ExpertiseManager {
         List<ItemType> requiredWeapons = getWeaponsForAbility(abilityItem);
         ItemStack offhand = player.getInventory().getItemInOffHand();
 
+        // if an ability uses any weapon
         if (requiredWeapons.contains(SWORD) && requiredWeapons.contains(DAGGER) && requiredWeapons.contains(AXE) && requiredWeapons.contains(HAMMER) &&
             requiredWeapons.contains(SPEAR) && requiredWeapons.contains(GLOVE) && requiredWeapons.contains(BOW) && requiredWeapons.contains(WAND) &&
             requiredWeapons.contains(STAFF) && requiredWeapons.contains(CATALYST)) {
 
-            return (requiredWeapons.contains(ItemSystem.getItemType(mainhand)));
+            for (ItemType itemType : requiredWeapons) {
+                if (ItemSystem.isItemType(mainhand, itemType)) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
-        if (requiredWeapons.contains(SHIELD)) {
-            return (ItemSystem.getItemType(offhand) == SHIELD);
-        } else if (requiredWeapons.contains(GLOVE)) {
-            return (ItemSystem.getItemType(mainhand) == GLOVE && (ItemSystem.getItemType(offhand) == GLOVE));
+        if (requiredWeapons.contains(GLOVE)) {
+            return ItemSystem.isItemType(mainhand, GLOVE) && ItemSystem.isItemType(offhand, GLOVE);
         } else if (requiredWeapons.contains(BOW)) {
-            return (ItemSystem.getItemType(mainhand) == BOW && (ItemSystem.getItemType(offhand) == QUIVER));
+            return ItemSystem.isItemType(mainhand, BOW) && ItemSystem.isItemType(offhand, QUIVER);
         } else {
-            return (requiredWeapons.contains(ItemSystem.getItemType(mainhand)));
+            for (ItemType itemType : requiredWeapons) {
+                if (ItemSystem.isItemType(mainhand, itemType)) {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

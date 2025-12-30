@@ -26,7 +26,7 @@ public class SelectedAbilities {
         expertise3 = "§dEmpty Expertise Ability";
     }
 
-    public void resetSelectedAbilities(PlayerInventory playerInventory) {
+    public void setSelectedAbilitiesFromInventory(PlayerInventory playerInventory) {
         style = playerInventory.getItem(0).getItemMeta().getDisplayName();
         expertise1 = playerInventory.getItem(1).getItemMeta().getDisplayName();
         expertise2 = playerInventory.getItem(2).getItemMeta().getDisplayName();

@@ -4,10 +4,11 @@ import io.github.NoOne.damagePlugin.customDamage.CustomDamageEvent;
 import io.github.NoOne.damagePlugin.customDamage.DamageType;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.CooldownManager;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemCreator;
+import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemMaker;
 import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseManager;
 import io.github.NoOne.nMLPlayerStats.profileSystem.ProfileManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.LivingEntity;
@@ -28,7 +29,7 @@ import java.util.UUID;
 
 public class AbilityListener implements Listener {
     private ProfileManager profileManager;
-    private final ItemStack expertiseAbilityItem = ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem();
+    private final ItemStack expertiseAbilityItem = ExpertiseAbilityItemMaker.emptyExpertiseAbilityItem();
     private final ItemStack styleAbilityItem = AbilityItemManager.emptyStyleAbilityItem();
 
     public AbilityListener(ExpertiseStylePlugin expertiseStylePlugin) {
@@ -47,10 +48,14 @@ public class AbilityListener implements Listener {
         if (AbilityItemManager.isAnAbility(abilityItem)) { // if it's an ability item
             event.setCancelled(true);
 
-            if (abilityItem.isSimilar(AbilityItemManager.cooldownItem()) ||
-                abilityItem.isSimilar(AbilityItemManager.emptyStyleAbilityItem()) ||
-                abilityItem.isSimilar(ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem())) return;
+            // blank ability check
+            if (abilityItem.getType() == Material.LIGHT_BLUE_DYE ||
+                abilityItem.getType() == Material.GRAY_DYE ||
+                abilityItem.getType() == Material.MAGENTA_DYE) {
+                return;
+            }
 
+            // prerequisite check
             if (AbilityItemManager.hasPrerequisites(abilityItem) && !AbilityItemManager.meetsPrerequisites(player, abilityItem)) {
                 player.sendMessage("§c⚠ §nRequirements not met!§r§c ⚠");
                 return;

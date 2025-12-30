@@ -2,7 +2,7 @@ package io.github.NoOne.expertiseStylePlugin.expertiseSystem.primordial;
 
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemManager;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemCreator;
+import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemMaker;
 import io.github.NoOne.nMLSkills.skillSystem.Skills;
 import org.bukkit.inventory.ItemStack;
 
@@ -18,7 +18,7 @@ public class PrimordialAbilityItems extends AbilityItemManager {
     }
 
     public static ItemStack chuckRock(Skills skills) {
-        return ExpertiseAbilityItemCreator.makeExpertiseAbilityItem(
+        return ExpertiseAbilityItemMaker.makeExpertiseAbilityItem(
                 "Chuck Rock",
                 new HashMap<>() {{
                     put("primordial", 1);
@@ -37,7 +37,7 @@ public class PrimordialAbilityItems extends AbilityItemManager {
     }
 
     public static ItemStack pumpkinBomb(Skills skills) {
-        return ExpertiseAbilityItemCreator.makeExpertiseAbilityItem(
+        return ExpertiseAbilityItemMaker.makeExpertiseAbilityItem(
                 "Pumpkin Bomb",
                 new HashMap<>() {{
                     put("primordial", 15);
@@ -57,7 +57,7 @@ public class PrimordialAbilityItems extends AbilityItemManager {
     }
 
     public static ItemStack airBall(Skills skills) {
-        return ExpertiseAbilityItemCreator.makeExpertiseAbilityItem(
+        return ExpertiseAbilityItemMaker.makeExpertiseAbilityItem(
                 "Air Ball",
                 new HashMap<>() {{
                     put("primordial", 10);

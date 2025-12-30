@@ -4,7 +4,8 @@ import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemManager;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.cooldownSystem.CooldownManager;
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.saveAbilitiesSystem.SelectedAbilities;
-import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemCreator;
+import io.github.NoOne.expertiseStylePlugin.abilitySystem.saveAbilitiesSystem.SelectedManager;
+import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemMaker;
 import io.github.NoOne.menuSystem.Menu;
 import io.github.NoOne.menuSystem.PlayerMenuUtility;
 import org.bukkit.Material;
@@ -21,6 +22,7 @@ import java.util.*;
 public class ExpertiseLoadoutMenu extends Menu {
     private final ExpertiseStylePlugin expertiseStylePlugin;
     private final SelectedAbilities selectedAbilities;
+    private final SelectedManager selectedManager;
     private final Player player;
     private final ItemStack expertise1;
     private final ItemStack expertise2;
@@ -37,10 +39,11 @@ public class ExpertiseLoadoutMenu extends Menu {
         super(playerMenuUtility);
         player = playerMenuUtility.getOwner();
         this.expertiseStylePlugin = expertiseStylePlugin;
-        this.expertise1 = playerMenuUtility.getOwner().getInventory().getItem(1);
-        this.expertise2 = playerMenuUtility.getOwner().getInventory().getItem(2);
-        this.expertise3 = playerMenuUtility.getOwner().getInventory().getItem(3);
-        selectedAbilities = expertiseStylePlugin.getSelectedManager().getAbilityProfile(playerMenuUtility.getOwner().getUniqueId());
+        this.expertise1 = player.getInventory().getItem(1);
+        this.expertise2 = player.getInventory().getItem(2);
+        this.expertise3 = player.getInventory().getItem(3);
+        selectedManager = expertiseStylePlugin.getSelectedManager();
+        selectedAbilities = selectedManager.getAbilityProfile(player.getUniqueId());
 
         backout = new ItemStack(Material.BARRIER);
         ItemMeta backoutItemMeta = backout.getItemMeta();
@@ -80,10 +83,11 @@ public class ExpertiseLoadoutMenu extends Menu {
             if (event.getClick() == ClickType.SHIFT_RIGHT) {
                 CooldownManager.resetAllCooldowns(player);
                 player.getInventory().setItem(0, AbilityItemManager.emptyStyleAbilityItem());
-                player.getInventory().setItem(1, ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem());
-                player.getInventory().setItem(2, ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem());
-                player.getInventory().setItem(3, ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem());
+                player.getInventory().setItem(1, ExpertiseAbilityItemMaker.emptyExpertiseAbilityItem());
+                player.getInventory().setItem(2, ExpertiseAbilityItemMaker.emptyExpertiseAbilityItem());
+                player.getInventory().setItem(3, ExpertiseAbilityItemMaker.emptyExpertiseAbilityItem());
                 selectedAbilities.clearSelectedAbilities();
+                selectedManager.saveProfileToConfig(player);
 
                 new ExpertiseLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
             }
@@ -133,26 +137,26 @@ public class ExpertiseLoadoutMenu extends Menu {
                 case RIGHT -> {
                     switch (slot) {
                         case 11 -> {
-                            player.getInventory().setItem(1, ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem());
-                            selectedAbilities.setExpertise1(ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem().getItemMeta().getDisplayName());
+                            player.getInventory().setItem(1, ExpertiseAbilityItemMaker.emptyExpertiseAbilityItem());
+                            selectedAbilities.setExpertise1(ExpertiseAbilityItemMaker.emptyExpertiseAbilityItem().getItemMeta().getDisplayName());
                             CooldownManager.resetCooldown(player, 1);
-                            selectedAbilities.resetSelectedAbilities(player.getInventory());
+                            selectedAbilities.setSelectedAbilitiesFromInventory(player.getInventory());
 
                             new ExpertiseLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
                         }
                         case 13 -> {
-                            player.getInventory().setItem(2, ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem());
-                            selectedAbilities.setExpertise2(ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem().getItemMeta().getDisplayName());
+                            player.getInventory().setItem(2, ExpertiseAbilityItemMaker.emptyExpertiseAbilityItem());
+                            selectedAbilities.setExpertise2(ExpertiseAbilityItemMaker.emptyExpertiseAbilityItem().getItemMeta().getDisplayName());
                             CooldownManager.resetCooldown(player, 2);
-                            selectedAbilities.resetSelectedAbilities(player.getInventory());
+                            selectedAbilities.setSelectedAbilitiesFromInventory(player.getInventory());
 
                             new ExpertiseLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
                         }
                         case 15 -> {
-                            player.getInventory().setItem(3, ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem());
-                            selectedAbilities.setExpertise3(ExpertiseAbilityItemCreator.emptyExpertiseAbilityItem().getItemMeta().getDisplayName());
+                            player.getInventory().setItem(3, ExpertiseAbilityItemMaker.emptyExpertiseAbilityItem());
+                            selectedAbilities.setExpertise3(ExpertiseAbilityItemMaker.emptyExpertiseAbilityItem().getItemMeta().getDisplayName());
                             CooldownManager.resetCooldown(player, 3);
-                            selectedAbilities.resetSelectedAbilities(player.getInventory());
+                            selectedAbilities.setSelectedAbilitiesFromInventory(player.getInventory());
 
                             new ExpertiseLoadoutMenu(expertiseStylePlugin, playerMenuUtility).open();
                         }

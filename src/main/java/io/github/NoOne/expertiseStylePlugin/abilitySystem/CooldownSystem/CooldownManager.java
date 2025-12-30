@@ -55,8 +55,13 @@ public class CooldownManager {
             if (player != null) resetAllCooldowns(player);
         }
 
-        ongoingCooldowns.clear();
-        serverCooldownTask.cancel();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                ongoingCooldowns.clear();
+                serverCooldownTask.cancel();
+            }
+        }.runTaskLater(expertiseStylePlugin, 1L);
     }
 
     public static void putOnCooldown(Player player, int hotbarSlot, double cooldown) {

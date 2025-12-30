@@ -17,11 +17,11 @@ import java.util.*;
 
 import static io.github.NoOne.nMLItems.ItemType.*;
 
-public class ExpertiseAbilityItemCreator extends AbilityItemManager {
+public class ExpertiseAbilityItemMaker extends AbilityItemManager {
     private static ExpertiseStylePlugin expertiseStylePlugin;
     private static NamespacedKey expertiseKey;
 
-    public ExpertiseAbilityItemCreator(ExpertiseStylePlugin expertiseStylePlugin) {
+    public ExpertiseAbilityItemMaker(ExpertiseStylePlugin expertiseStylePlugin) {
         super(expertiseStylePlugin);
         this.expertiseStylePlugin = expertiseStylePlugin;
         expertiseKey = new NamespacedKey(expertiseStylePlugin, "expertise");
@@ -194,10 +194,8 @@ public class ExpertiseAbilityItemCreator extends AbilityItemManager {
             } else {
                 // Specific subset of weapons
                 for (ItemType weapon : weapons) {
-                    if (weapon == SHIELD) {
-                        lore.add("§e- " + ItemType.getItemTypeString(weapon) + " (in offhand)");
-                    } else if (weapon == BOW) {
-                        lore.add("§e- " + ItemType.getItemTypeString(weapon) + " and quiver");
+                    if (weapon == BOW) {
+                        lore.add("§e- " + ItemType.getItemTypeString(weapon) + " & quiver");
                     } else if (weapon == GLOVE) {
                         lore.add("§e- " + ItemType.getItemTypeString(weapon) + "s (both)");
                     } else if (weapon == STAFF) {
@@ -206,8 +204,7 @@ public class ExpertiseAbilityItemCreator extends AbilityItemManager {
                         lore.add("§e- " + ItemType.getItemTypeString(weapon) + "s");
                     }
 
-                    pdc.set(new NamespacedKey(expertiseStylePlugin, ItemType.getItemTypeString(weapon)),
-                            PersistentDataType.BOOLEAN, true);
+                    pdc.set(new NamespacedKey(expertiseStylePlugin, ItemType.getItemTypeString(weapon)), PersistentDataType.BOOLEAN, true);
                 }
             }
         }

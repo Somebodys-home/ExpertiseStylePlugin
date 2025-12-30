@@ -26,13 +26,13 @@ public class ExpertiseConfirmMenu extends Menu {
     public ExpertiseConfirmMenu(ExpertiseStylePlugin expertiseStylePlugin, PlayerMenuUtility playerMenuUtility, ItemStack selected, Menu previous) {
         super(playerMenuUtility);
         player = playerMenuUtility.getOwner();
-        this.expertise1 = playerMenuUtility.getOwner().getInventory().getItem(1);
-        this.expertise2 = playerMenuUtility.getOwner().getInventory().getItem(2);
-        this.expertise3 = playerMenuUtility.getOwner().getInventory().getItem(3);
+        this.expertise1 = player.getInventory().getItem(1);
+        this.expertise2 = player.getInventory().getItem(2);
+        this.expertise3 = player.getInventory().getItem(3);
         this.selected = selected;
         this.previous = previous;
         selectedManager = expertiseStylePlugin.getSelectedManager();
-        selectedAbilities = selectedManager.getAbilityProfile(playerMenuUtility.getOwner().getUniqueId());
+        selectedAbilities = selectedManager.getAbilityProfile(player.getUniqueId());
     }
 
     @Override
@@ -47,7 +47,6 @@ public class ExpertiseConfirmMenu extends Menu {
 
     @Override
     public void handleMenu(InventoryClickEvent event) {
-        String abilityName = selected.getItemMeta().getDisplayName();
         event.setCancelled(true);
 
         switch (event.getSlot()) {
@@ -58,8 +57,8 @@ public class ExpertiseConfirmMenu extends Menu {
                 }
 
                 player.getInventory().setItem(1, selected);
-                selectedAbilities.setExpertise1(abilityName);
-                selectedManager.setSelectedAbility(player, 2, abilityName);
+                selectedAbilities.setSelectedAbilitiesFromInventory(player.getInventory());
+                selectedManager.saveProfileToConfig(player);
             }
             case 13 -> {
                 if (expertise2.isSimilar(AbilityItemManager.cooldownItem())) {
@@ -68,8 +67,8 @@ public class ExpertiseConfirmMenu extends Menu {
                 }
 
                 player.getInventory().setItem(2, selected);
-                selectedAbilities.setExpertise2(abilityName);
-                selectedManager.setSelectedAbility(player, 3, abilityName);
+                selectedAbilities.setSelectedAbilitiesFromInventory(player.getInventory());
+                selectedManager.saveProfileToConfig(player);
             }
             case 15 -> {
                 if (expertise3.isSimilar(AbilityItemManager.cooldownItem())) {
@@ -78,8 +77,8 @@ public class ExpertiseConfirmMenu extends Menu {
                 }
 
                 player.getInventory().setItem(3, selected);
-                selectedAbilities.setExpertise3(abilityName);
-                selectedManager.setSelectedAbility(player, 4, abilityName);
+                selectedAbilities.setSelectedAbilitiesFromInventory(player.getInventory());
+                selectedManager.saveProfileToConfig(player);
             }
             case 22 -> previous.open();
         }

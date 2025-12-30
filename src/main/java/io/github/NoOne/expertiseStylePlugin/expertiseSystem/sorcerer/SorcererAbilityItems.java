@@ -2,7 +2,7 @@ package io.github.NoOne.expertiseStylePlugin.expertiseSystem.sorcerer;
 
 import io.github.NoOne.expertiseStylePlugin.abilitySystem.AbilityItemManager;
 import io.github.NoOne.expertiseStylePlugin.ExpertiseStylePlugin;
-import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemCreator;
+import io.github.NoOne.expertiseStylePlugin.expertiseSystem.ExpertiseAbilityItemMaker;
 import io.github.NoOne.nMLSkills.skillSystem.Skills;
 import org.bukkit.inventory.ItemStack;
 
@@ -16,7 +16,7 @@ public class SorcererAbilityItems extends AbilityItemManager {
     }
 
     public static ItemStack magicMissileEX(Skills skills) {
-        return ExpertiseAbilityItemCreator.makeExpertiseAbilityItem(
+        return ExpertiseAbilityItemMaker.makeExpertiseAbilityItem(
                 "Magic Missile EX",
                 new HashMap<>() {{
                     put("sorcerer", 1);
@@ -35,7 +35,7 @@ public class SorcererAbilityItems extends AbilityItemManager {
     }
 
     public static ItemStack dragonsBreath(Skills skills) {
-        return ExpertiseAbilityItemCreator.makeExpertiseAbilityItem(
+        return ExpertiseAbilityItemMaker.makeExpertiseAbilityItem(
                 "Dragon's Breath",
                 new HashMap<>() {{
                     put("sorcerer", 25);
