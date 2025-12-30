@@ -103,7 +103,6 @@ io\github\NoOne\expertiseStylePlugin\expertiseSystem\martialArtist\MartialArtist
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\martialArtist\MartialArtistAbilityEffects$3.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\sorcerer\SorcererAbilityItems$1.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\martialArtist\MartialArtistAbilityItems$1.class
-io\github\NoOne\expertiseStylePlugin\abilitySystem\cooldownSystem\CooldownManager$2.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\cavalier\CavalierAbilityEffects.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\annulled\AnnulledListener.class
 io\github\NoOne\expertiseStylePlugin\expertiseSystem\shieldHero\ShieldHeroAbilityItems$1.class
