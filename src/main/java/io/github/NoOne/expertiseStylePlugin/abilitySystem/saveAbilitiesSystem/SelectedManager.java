@@ -71,4 +71,15 @@ public class SelectedManager {
         config.set(id + ".abilities.expertise2", selectedAbilities.getExpertise2());
         config.set(id + ".abilities.expertise3", selectedAbilities.getExpertise3());
     }
+
+    public void setSelectedAbility(Player player, int abilitySlot, String abilityName) {
+        String id = player.getUniqueId().toString();
+
+        switch (abilitySlot) {
+            case 1 -> config.set(id + ".abilities.style", abilityName);
+            case 2 -> config.set(id + ".abilities.expertise1", abilityName);
+            case 3 -> config.set(id + ".abilities.expertise2", abilityName);
+            case 4 -> config.set(id + ".abilities.expertise3", abilityName);
+        }
+    }
 }

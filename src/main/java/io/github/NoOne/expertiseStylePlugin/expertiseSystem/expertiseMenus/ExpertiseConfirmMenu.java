@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class ExpertiseConfirmMenu extends Menu {
+    private Player player;
     private final ItemStack expertise1;
     private final ItemStack expertise2;
     private final ItemStack expertise3;
@@ -24,6 +25,7 @@ public class ExpertiseConfirmMenu extends Menu {
 
     public ExpertiseConfirmMenu(ExpertiseStylePlugin expertiseStylePlugin, PlayerMenuUtility playerMenuUtility, ItemStack selected, Menu previous) {
         super(playerMenuUtility);
+        player = playerMenuUtility.getOwner();
         this.expertise1 = playerMenuUtility.getOwner().getInventory().getItem(1);
         this.expertise2 = playerMenuUtility.getOwner().getInventory().getItem(2);
         this.expertise3 = playerMenuUtility.getOwner().getInventory().getItem(3);
@@ -45,12 +47,10 @@ public class ExpertiseConfirmMenu extends Menu {
 
     @Override
     public void handleMenu(InventoryClickEvent event) {
+        String abilityName = selected.getItemMeta().getDisplayName();
         event.setCancelled(true);
 
-        Player player = (Player) event.getWhoClicked();
-        int slot = event.getSlot();
-
-        switch (slot) {
+        switch (event.getSlot()) {
             case 11 -> {
                 if (expertise1.isSimilar(AbilityItemManager.cooldownItem())) {
                     player.sendMessage("§c⚠ §nWait for this ability to go off cooldown.§r§c ⚠");
@@ -58,8 +58,8 @@ public class ExpertiseConfirmMenu extends Menu {
                 }
 
                 player.getInventory().setItem(1, selected);
-                selectedAbilities.setExpertise1(selected.getItemMeta().getDisplayName());
-
+                selectedAbilities.setExpertise1(abilityName);
+                selectedManager.setSelectedAbility(player, 2, abilityName);
             }
             case 13 -> {
                 if (expertise2.isSimilar(AbilityItemManager.cooldownItem())) {
@@ -68,7 +68,8 @@ public class ExpertiseConfirmMenu extends Menu {
                 }
 
                 player.getInventory().setItem(2, selected);
-                selectedAbilities.setExpertise2(selected.getItemMeta().getDisplayName());
+                selectedAbilities.setExpertise2(abilityName);
+                selectedManager.setSelectedAbility(player, 3, abilityName);
             }
             case 15 -> {
                 if (expertise3.isSimilar(AbilityItemManager.cooldownItem())) {
@@ -77,12 +78,12 @@ public class ExpertiseConfirmMenu extends Menu {
                 }
 
                 player.getInventory().setItem(3, selected);
-                selectedAbilities.setExpertise3(selected.getItemMeta().getDisplayName());
+                selectedAbilities.setExpertise3(abilityName);
+                selectedManager.setSelectedAbility(player, 4, abilityName);
             }
             case 22 -> previous.open();
         }
 
-        selectedManager.addAbilityProfile(player.getUniqueId(), selectedAbilities);
         previous.open();
     }
 
